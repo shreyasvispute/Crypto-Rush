@@ -10,7 +10,7 @@ Crypto project
 - Hamza Buch
 - Ashwin Joshi
 - Alokit Gupta
-- Kamal Nayak
+- Kamal Nayal
 
 ## GitHub Repository
 
