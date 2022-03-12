@@ -12,6 +12,13 @@ Crypto-Rush, aims to provide insightful information into the crypto world rangin
 - Alokit Gupta
 - Kamal Nayal
 
+### Folder Structure
+
+    Crypto-Rush
+     |__NodeServer
+     |__cryptorush
+        |__ React App
+
 ## GitHub Repository
 
 ```

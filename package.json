@@ -1,0 +1,25 @@
+{
+  "name": "crypto-rush",
+  "version": "1.0.0",
+  "description": "CS554 final project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shreyasvispute/Crypto-Rush.git"
+  },
+  "author": "Shreyas Vispute, Hamza Shabir, Ashwin Joshi, Alokit Gupta, Kamal Nayak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shreyasvispute/Crypto-Rush/issues"
+  },
+  "homepage": "https://github.com/shreyasvispute/Crypto-Rush#readme",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3"
+  }
+}
