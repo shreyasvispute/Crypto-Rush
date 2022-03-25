@@ -1,2 +1,6 @@
 const cryptoData = require("./cryptoApi");
-module.exports = { cryptoData };
+const tweetData = require("./twitterAPI");
+module.exports = {
+    cryptoData: cryptoData,
+    tweetData: tweetData
+  };
