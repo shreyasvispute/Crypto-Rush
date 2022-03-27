@@ -1,2 +1,3 @@
 const cryptoData = require("./cryptoApi");
-module.exports = { cryptoData };
+const validations = require("./validations");
+module.exports = { cryptoData, validations };
