@@ -10,9 +10,7 @@ router.get("/map", async (req, res) => {
     let mappingData = await cryptoData.getCryptoMapping();
     res.status(200).json(mappingData);
   } catch (error) {
-    res
-      .status(error.response.status)
-      .json({ message: error.response.statusText });
+    res.status(error.response.status).json({ message: error.response.statusText });
   }
 });
 
@@ -22,9 +20,7 @@ router.get("/listings", async (req, res) => {
     let listingData = await cryptoData.getCryptoListings();
     res.status(200).json(listingData);
   } catch (error) {
-    res
-      .status(error.response.status)
-      .json({ message: error.response.statusText });
+    res.status(error.response.status).json({ message: error.response.statusText });
   }
 });
 
@@ -36,9 +32,7 @@ router.get("/quotes/:symbol", async (req, res) => {
     let quotesData = await cryptoData.getCryptoQuotes(symbol);
     res.status(200).json(quotesData);
   } catch (error) {
-    res
-      .status(error.response.status)
-      .json({ message: error.response.statusText });
+    res.status(error.response.status).json({ message: error.response.statusText });
   }
 });
 
@@ -52,9 +46,7 @@ router.get("/history/:symbol/:days", async (req, res) => {
     let historicalData = await cryptoData.getCryptoHistory(symbol, days);
     res.status(200).json(historicalData);
   } catch (error) {
-    res
-      .status(error.response.status)
-      .json({ message: error.response.statusText });
+    res.status(error.response.status).json({ message: error.response.statusText });
   }
 });
 

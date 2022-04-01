@@ -10,7 +10,7 @@ Crypto-Rush, aims to provide insightful information into the crypto world rangin
 - Hamza Buch
 - Ashwin Joshi
 - Alokit Gupta
-- Kamal Nayal
+- Kamal Nayak
 
 ### Folder Structure
 
