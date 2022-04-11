@@ -2,7 +2,7 @@
 
 CS554 final project
 
-Crypto project
+Crypto-Rush, aims to provide insightful information into the crypto world ranging from cryptocurrencies to exchanges down to NFTs with real-time and historical prices for major cryptocurrencies, news, and social media integration and graphs to make data easily comprehensible.
 
 ## Project Members
 
@@ -10,7 +10,14 @@ Crypto project
 - Hamza Buch
 - Ashwin Joshi
 - Alokit Gupta
-- Kamal Nayak
+- Kamal Nayal
+
+### Folder Structure
+
+    Crypto-Rush
+     |__NodeServer
+     |__cryptorush
+        |__ React App
 
 ## GitHub Repository
 
