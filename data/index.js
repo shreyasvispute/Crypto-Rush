@@ -3,7 +3,7 @@ const validations = require("./validations");
 const tweetData = require("./twitterAPI");
 
 module.exports = {
-    cryptoData: cryptoData,
-    tweetData: tweetData,
-    validations:validations
-  };
+  cryptoData: cryptoData,
+  tweetData: tweetData,
+  validations: validations,
+};
