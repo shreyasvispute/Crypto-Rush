@@ -19,7 +19,7 @@ function App() {
                 <div className="d-flex">
                   <img
                     src={Blockchain}
-                    alt="binterest"
+                    alt="Crypto-Rush"
                     style={{ height: 50 }}
                   />
                   <div className="icon">Crypto-Rush</div>
