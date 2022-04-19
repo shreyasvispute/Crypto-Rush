@@ -3,6 +3,19 @@ const router = express.Router();
 const dataModule = require("../data");
 const cryptoData = dataModule.cryptoData;
 const validations = dataModule.validations;
+const auth = dataModule.database;
+
+//creating user with firebase
+router.post("/signup", async (req, res) => {
+  try {
+    let mappingData = await auth.createUser(req.body.email, req.body.password);
+    res.status(200).json(mappingData);
+  } catch (error) {
+    res
+      .status(error.response.status)
+      .json({ message: error.response.statusText });
+  }
+});
 
 //Returns a mapping of all cryptocurrencies to unique CoinMarketCap ids
 router.get("/map", async (req, res) => {
