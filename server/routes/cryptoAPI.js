@@ -6,14 +6,40 @@ const validations = dataModule.validations;
 const auth = dataModule.database;
 
 //creating user with firebase
-router.post("/signup", async (req, res) => {
+router.post("/signin", async (req, res) => {
+  const { email, password } = req.body;
   try {
-    let mappingData = await auth.createUser(req.body.email, req.body.password);
-    res.status(200).json(mappingData);
+    const mappingData = await auth.signIn(email, password);
+    res.json(mappingData);
   } catch (error) {
     res
       .status(error.response.status)
       .json({ message: error.response.statusText });
+  }
+});
+router.post("/signup", async (req, res) => {
+  const { email, password } = req.body;
+  if (!email) {
+    return res.status(400).json({ error: "Email ID id required" });
+  }
+  if (!password) {
+    return res.status(400).json({ error: "Password is required" });
+  }
+
+  try {
+    validations.validateString(email);
+    validations.validateString(password);
+
+    const mappingData = await auth.createUser(email, password);
+    res.json(mappingData);
+  } catch (error) {
+    if (error.response) {
+      return res
+        .status(error.response.status)
+        .json({ message: error.response.statusText });
+    } else {
+      return res.status(500).json({ error: error.message });
+    }
   }
 });
 

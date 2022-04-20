@@ -15,7 +15,7 @@ Crypto-Rush, aims to provide insightful information into the crypto world rangin
 ### Folder Structure
 
     Crypto-Rush
-     |__NodeServer
+     |__server
      |__cryptorush
         |__ React App
 

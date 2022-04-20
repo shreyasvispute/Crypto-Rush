@@ -1,33 +1,48 @@
-const firebaseApp = require("../config/firebase");
-const { getAuth } = require("firebase/auth");
-const { createUserWithEmailAndPassword } = require("firebase/auth");
-const { getDatabase, ref, set, onValue } = require("firebase/database");
+// const { firebase, auth } = require("../config/firebase");
 
-async function saveUserData(userId, name, email) {
-  const database = getDatabase(firebaseApp);
+// async function createUser(email, password) {
+//   const userCredential = await firebase
+//     .auth()
+//     .createUserWithEmailAndPassword(auth, email, password)
+//     .catch((error) => {
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       console.log(errorCode, errorMessage);
+//     });
+//   return userCredential;
+// }
 
-  await set(ref(database, "users/" + userId), {
-    username: name,
-    email: email,
-  });
-}
+// async function signIn(email, password) {
+//   const userCredential = await firebase
+//     .auth()
+//     .signInWithEmailAndPassword(auth, email, password)
+//     .catch((error) => {
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       console.log(errorCode, errorMessage);
+//     });
+//   const user = userCredential.user;
+//   return user;
+// }
+
+// module.exports = {
+//   createUser,
+//   signIn,
+// };
+const validations = require("./validations");
+const admin = require("../config/firebase");
 
 async function createUser(email, password) {
-  const auth = getAuth();
-  const userCredential = await createUserWithEmailAndPassword(
-    auth,
+  validations.validateString(email);
+  validations.validateString(password);
+  const user = await admin.auth().createUser({
     email,
-    password
-  ).catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode, errorMessage);
+    password,
   });
-  const user = userCredential.user;
-  return user;
+
+  if (user) {
+    return user;
+  }
 }
 
-module.exports = {
-  createUser,
-  saveUserData,
-};
+module.exports = { createUser };
