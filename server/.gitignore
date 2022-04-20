@@ -7,6 +7,8 @@
 .env
 logs
 .vscode
+/cryptorush-firebase-adminsdk*
+*.json
 
 # testing
 /coverage
