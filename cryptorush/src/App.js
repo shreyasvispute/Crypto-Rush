@@ -1,13 +1,14 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import Dashboard from "./Dashboard";
-import Cryptocurrencies from "./Cryptocurrencies";
-import Exchanges from "./Exchanges";
-import NFTs from "./NFTs";
-import News from "./News";
-import Error from "./Error";
-import Blockchain from "../img/blockchain.png";
+import Dashboard from "./Components/Dashboard";
+import Cryptocurrencies from "./Components/Cryptocurrencies";
+import Exchanges from "./Components/Exchanges";
+import NFTs from "./Components/NFTs";
+import News from "./Components/News";
+import Error from "./Components/Error";
+import Blockchain from "./img/blockchain.png";
 import "./App.css";
+import NFT from "./Components/NFT";
 function App() {
   return (
     <BrowserRouter>
@@ -51,6 +52,7 @@ function App() {
             <Route path="/Cryptocurrencies" element={<Cryptocurrencies />} />
             <Route path="/Exchanges" element={<Exchanges />} />
             <Route path="/NFTs" element={<NFTs />} />
+            <Route path="/NFT/:id" element={<NFT />} />
             <Route path="/News" element={<News />} />
             <Route path="*" element={<Error />} />
           </Routes>
