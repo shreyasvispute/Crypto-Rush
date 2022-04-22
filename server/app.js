@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 const configRoutes = require("./routes");
 const WebSocket = require("ws");
@@ -9,6 +10,8 @@ require("dotenv").config();
 //const PORT = process.env.PORT || 3001; //Server PORT
 
 app.use(express.json());
+app.use(bodyParser.json());
+
 app.use(express.urlencoded({ extended: true }));
 
 configRoutes(app);
@@ -25,5 +28,5 @@ configRoutes(app);
 // };
 
 app.listen(4000, () => {
-  console.log(`Your routes will be running on http://localhost:3000`);
+  console.log(`Your routes will be running on http://localhost:4000`);
 });

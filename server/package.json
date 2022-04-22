@@ -19,8 +19,11 @@
   "homepage": "https://github.com/shreyasvispute/Crypto-Rush#readme",
   "dependencies": {
     "axios": "^0.26.1",
+    "coingecko-api": "^1.0.10",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "firebase-admin": "^10.0.2",
+    "moralis": "^1.5.9",
     "nodemon": "^2.0.15",
     "socket.io": "^4.4.1",
     "twit": "^2.2.11",

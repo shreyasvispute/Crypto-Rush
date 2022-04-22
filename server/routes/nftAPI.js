@@ -5,14 +5,20 @@ const nftData = dataModule.nftData;
 const validations = dataModule.validations;
 
 //Returns the all NFT collection chains
-router.get("/chains", async (req, res) => {
+router.get("/search/:keyword/:chain", async (req, res) => {
+  const keyword = req.params.keyword;
+  const chain = req.params.chain;
   try {
-    let collectionsData = await nftData.getNFTChains();
+    let collectionsData = await nftData.getNFTSearchData(keyword, chain);
     res.status(200).json(collectionsData);
   } catch (error) {
-    res
-      .status(error.response.status)
-      .json({ message: error.response.statusText });
+    if (error.response) {
+      return res
+        .status(error.response.status)
+        .json({ message: error.response.statusText });
+    } else {
+      res.status(500).json({ error: error.message });
+    }
   }
 });
 
