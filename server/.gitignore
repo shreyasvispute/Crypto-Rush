@@ -7,7 +7,7 @@
 .env
 logs
 .vscode
-/cryptorush-firebase-adminsdk*
+/adminsdk.json*
 *.json
 
 # testing
