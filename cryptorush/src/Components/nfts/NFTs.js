@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import Search from "./search";
-import nftNotFound from "../img/nft_imageNotFound.png";
+import Search from "../Search";
+import nftNotFound from "../../img/nft_imageNotFound.png";
 
 import { Card, Container, Col, CardGroup, Spinner, Row } from "react-bootstrap";
 

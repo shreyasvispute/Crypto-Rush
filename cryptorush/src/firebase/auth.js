@@ -14,10 +14,10 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
 
-  // const createUserAccount = async (data) => {
-  //   const res = await axios.post("/signin", data);
-  //   return res;
-  // };
+  const createUserAccount = async (data) => {
+    const res = await axios.post("/signin", data);
+    return res;
+  };
 
   const signIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
@@ -47,7 +47,9 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ currentUser, logout, signIn }}>
+    <AuthContext.Provider
+      value={{ currentUser, logout, signIn, createUserAccount }}
+    >
       {children}
     </AuthContext.Provider>
   );

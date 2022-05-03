@@ -10,13 +10,18 @@ const Login = () => {
   const navigate = useNavigate();
 
   const { signIn } = UserAuth();
+  const { currentUser } = UserAuth();
+
+  if (currentUser) {
+    navigate("/dashboard");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       debugger;
       await signIn(email, password);
-      navigate("/");
+      navigate("/dashboard");
     } catch (e) {
       console.log(e.message);
     }
