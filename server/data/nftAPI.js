@@ -39,7 +39,6 @@ async function getNFTSearchData(keyword, chain) {
       };
       nfts.push(NFTResults);
     });
-    console.log(nfts);
     return nfts;
   } else {
     throw {

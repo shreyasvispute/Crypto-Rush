@@ -1,19 +1,41 @@
-import React, { useState, useEffect } from "react";
-import firebase from "./firebaseConfig";
+import React, { useState, createContext, useEffect, useContext } from "react";
+import axios from "axios";
 
-export const AuthContext = React.createContext();
+import { auth } from "../firebase/FirebaseConfig";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
+
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
 
+  // const createUserAccount = async (data) => {
+  //   const res = await axios.post("/signin", data);
+  //   return res;
+  // };
+
+  const signIn = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const logout = () => {
+    return signOut(auth);
+  };
+
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setCurrentUser(user);
-        setLoadingUser(false);
-      }
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log(user);
+      setCurrentUser(user);
+      setLoadingUser(false);
     });
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   if (loadingUser) {
@@ -25,8 +47,14 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ currentUser }}>
+    <AuthContext.Provider value={{ currentUser, logout, signIn }}>
       {children}
     </AuthContext.Provider>
   );
+};
+
+export default AuthProvider;
+
+export const UserAuth = () => {
+  return useContext(AuthContext);
 };
