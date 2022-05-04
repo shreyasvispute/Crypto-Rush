@@ -29,9 +29,10 @@ const Login = () => {
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email address</Form.Label>
           <Form.Control
+            autoComplete="email"
             type="email"
             placeholder="Enter email"
             onChange={({ target }) => setEmail(target.value)}
@@ -41,9 +42,10 @@ const Login = () => {
           </Form.Text>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control
+            autoComplete="current-password"
             type="password"
             placeholder="Password"
             onChange={({ target }) => setPassword(target.value)}

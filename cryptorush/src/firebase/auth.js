@@ -10,6 +10,7 @@ import {
 
 const AuthContext = createContext();
 
+//Creates auth context to use it throughout the application
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
@@ -20,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       email: email,
       password: password,
     };
-    const res = await axios.post("/signup", data);
+    const res = await axios.post("login/signup", data);
     return res;
   };
 
@@ -32,9 +33,14 @@ export const AuthProvider = ({ children }) => {
     return await signOut(auth);
   };
 
+  const getUserToken = async (currentUser) => {
+    if (currentUser) {
+      const token = await currentUser.getIdToken();
+      return token;
+    }
+  };
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
       setLoadingUser(false);
     });
@@ -53,7 +59,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ currentUser, logout, signIn, createUserAccount }}
+      value={{ currentUser, logout, signIn, createUserAccount, getUserToken }}
     >
       {children}
     </AuthContext.Provider>

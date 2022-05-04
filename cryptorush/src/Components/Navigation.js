@@ -6,6 +6,7 @@ import { BoxArrowRight } from "react-bootstrap-icons";
 import Blockchain from "../img/blockchain.png";
 import { UserAuth } from "../firebase/Auth";
 
+//Navigation routes file
 const Navigation = () => {
   const { currentUser } = UserAuth();
   return <div>{currentUser ? <NavigationAuth /> : <NavigationNonAuth />}</div>;
@@ -50,7 +51,9 @@ const NavigationAuth = () => {
           </Nav>
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>
-              {currentUser.email}
+              {currentUser.displayName === null
+                ? currentUser.email
+                : currentUser.displayName}
               <Button variant="light" onClick={handleLogout}>
                 <BoxArrowRight color="black" size={30} />
               </Button>

@@ -23,7 +23,6 @@ const SignUp = () => {
     SetErrorMessage("");
     e.preventDefault();
     try {
-      debugger;
       const result = await createUserAccount(username, email, password);
       navigate("/dashboard");
     } catch (e) {
@@ -35,21 +34,20 @@ const SignUp = () => {
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>UserName</Form.Label>
+        <Form.Group className="mb-3" controlId="displayName">
+          <Form.Label>Name</Form.Label>
           <Form.Control
+            autoComplete="displayName"
             type="text"
-            placeholder="Enter username"
+            placeholder="Enter you name"
             onChange={({ target }) => setUserName(target.value)}
           />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email address</Form.Label>
           <Form.Control
+            autoComplete="email"
             type="email"
             placeholder="Enter email"
             onChange={({ target }) => setEmail(target.value)}
@@ -59,9 +57,10 @@ const SignUp = () => {
           </Form.Text>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control
+            autoComplete="current-password"
             type="password"
             placeholder="Password"
             onChange={({ target }) => setPassword(target.value)}

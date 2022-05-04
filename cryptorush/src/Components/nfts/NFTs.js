@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import Search from "../Search";
-import nftNotFound from "../../img/nft_imageNotFound.png";
 
 import { Card, Container, Col, CardGroup, Spinner, Row } from "react-bootstrap";
 
+import Search from "../Search";
+import nftNotFound from "../../img/nft_imageNotFound.png";
+import { UserAuth } from "../../firebase/Auth";
+
 const NFTs = () => {
   let card = null;
-
   const [searchData, setSearchData] = useState(undefined);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   // const [totalRecords, setTotalRecords] = useState("");
   const [pageError, setPageError] = useState(false);
   const [apiData, setApiData] = useState([]);
+
+  const { currentUser, getUserToken } = UserAuth();
 
   useEffect(() => {
     const getData = async () => {
@@ -35,7 +38,10 @@ const NFTs = () => {
         // page += 1;
         // let offset = limit * page - limit;
         const url = `/nft/search/boredape/eth`;
-        const data = await axios.get(url);
+        const token = await getUserToken(currentUser);
+        const data = await axios.get(url, {
+          headers: { authorization: `Bearer ${token}` },
+        });
 
         // let totalPages = Math.ceil(totalRecords / limit) - 1;
         // setPages(totalPages);

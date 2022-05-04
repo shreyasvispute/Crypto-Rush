@@ -4,7 +4,7 @@ import { UserAuth } from "../firebase/Auth";
 
 const Dashboard = () => {
   const { currentUser } = UserAuth();
-  console.log(currentUser.email);
+  console.log(currentUser);
   return (
     <div>
       <Container className="mainContainer">
