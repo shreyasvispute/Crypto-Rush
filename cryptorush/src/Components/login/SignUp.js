@@ -4,12 +4,15 @@ import { UserAuth } from "../../firebase/Auth";
 
 import { Button, Container, Form } from "react-bootstrap";
 
-const Login = () => {
+const SignUp = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [username, setUserName] = useState();
+  const [errorMessage, SetErrorMessage] = useState("");
+
   const navigate = useNavigate();
 
-  const { signIn } = UserAuth();
+  const { createUserAccount } = UserAuth();
   const { currentUser } = UserAuth();
 
   if (currentUser) {
@@ -17,11 +20,14 @@ const Login = () => {
   }
 
   const handleSubmit = async (e) => {
+    SetErrorMessage("");
     e.preventDefault();
     try {
-      await signIn(email, password);
+      debugger;
+      const result = await createUserAccount(username, email, password);
       navigate("/dashboard");
     } catch (e) {
+      SetErrorMessage(e.response.data.error);
       console.log(e.message);
     }
   };
@@ -29,6 +35,18 @@ const Login = () => {
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>UserName</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter username"
+            onChange={({ target }) => setUserName(target.value)}
+          />
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -57,4 +75,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

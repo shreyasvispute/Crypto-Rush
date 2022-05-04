@@ -14,8 +14,13 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
 
-  const createUserAccount = async (data) => {
-    const res = await axios.post("/signin", data);
+  const createUserAccount = async (username, email, password) => {
+    const data = {
+      displayName: username,
+      email: email,
+      password: password,
+    };
+    const res = await axios.post("/signup", data);
     return res;
   };
 
@@ -23,8 +28,8 @@ export const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const logout = () => {
-    return signOut(auth);
+  const logout = async () => {
+    return await signOut(auth);
   };
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import React from "react";
-import { Navigate, Link } from "react-router-dom";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
+import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { BoxArrowRight } from "react-bootstrap-icons";
 
 import Blockchain from "../img/blockchain.png";
 import { UserAuth } from "../firebase/Auth";
@@ -11,6 +12,17 @@ const Navigation = () => {
 };
 
 const NavigationAuth = () => {
+  const navigate = useNavigate();
+  const { currentUser, logout } = UserAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/");
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -36,6 +48,14 @@ const NavigationAuth = () => {
               News
             </Nav.Link>
           </Nav>
+          <Navbar.Collapse className="justify-content-end">
+            <Navbar.Text>
+              {currentUser.email}
+              <Button variant="light" onClick={handleLogout}>
+                <BoxArrowRight color="black" size={30} />
+              </Button>
+            </Navbar.Text>
+          </Navbar.Collapse>
         </Navbar.Collapse>
       </Container>
     </Navbar>
@@ -54,10 +74,10 @@ const NavigationNonAuth = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/login">
+            <Nav.Link as={Link} to="/">
               Login
             </Nav.Link>
-            <Nav.Link as={Link} to="/signIn">
+            <Nav.Link as={Link} to="/signup">
               SignUp
             </Nav.Link>
           </Nav>

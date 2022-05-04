@@ -13,6 +13,7 @@ import Login from "./Components/login/login";
 import AuthProvider from "./firebase/Auth";
 import PrivateRoute from "./Components/PrivateRoutes";
 import Navigation from "./Components/Navigation";
+import SignUp from "./Components/login/SignUp";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <div>
             <Routes>
               <Route path="/" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
 
               <Route
                 path="/dashboard"
