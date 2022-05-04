@@ -3,45 +3,6 @@ const router = express.Router();
 const dataModule = require("../data");
 const cryptoData = dataModule.cryptoData;
 const validations = dataModule.validations;
-const auth = dataModule.database;
-
-//creating user with firebase
-router.post("/signin", async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const mappingData = await auth.signIn(email, password);
-    res.json(mappingData);
-  } catch (error) {
-    res
-      .status(error.response.status)
-      .json({ message: error.response.statusText });
-  }
-});
-router.post("/signup", async (req, res) => {
-  const { email, password } = req.body;
-  if (!email) {
-    return res.status(400).json({ error: "Email ID id required" });
-  }
-  if (!password) {
-    return res.status(400).json({ error: "Password is required" });
-  }
-
-  try {
-    validations.validateString(email);
-    validations.validateString(password);
-
-    const mappingData = await auth.createUser(email, password);
-    res.json(mappingData);
-  } catch (error) {
-    if (error.response) {
-      return res
-        .status(error.response.status)
-        .json({ message: error.response.statusText });
-    } else {
-      return res.status(500).json({ error: error.message });
-    }
-  }
-});
 
 //Returns a mapping of all cryptocurrencies to unique CoinMarketCap ids
 router.get("/map", async (req, res) => {
