@@ -1,7 +1,7 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
 import axios from "axios";
 
-import { auth } from "../firebase/FirebaseConfig";
+import { auth } from "./FirebaseConfig";
 import {
   signInWithEmailAndPassword,
   signOut,
