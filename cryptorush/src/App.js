@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import Dashboard from "./Components/Dashboard";
 import Cryptocurrencies from "./Components/Cryptocurrencies";
+import Cryptocurrency from "./Components/Cryptocurrency";
 import Exchanges from "./Components/Exchanges";
 import NFTs from "./Components/NFTs";
 import News from "./Components/News";
@@ -49,7 +50,8 @@ function App() {
         <div>
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/Cryptocurrencies" element={<Cryptocurrencies />} />
+            <Route path="/cryptocurrencies" element={<Cryptocurrencies />} />
+            <Route path="/cryptocurreny/:id" element={<Cryptocurrency />} />
             <Route path="/Exchanges" element={<Exchanges />} />
             <Route path="/NFTs" element={<NFTs />} />
             <Route path="/NFT/:id" element={<NFT />} />
