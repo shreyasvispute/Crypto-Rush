@@ -103,7 +103,7 @@ const NFTs = () => {
 
           <Card.Body>
             {
-              <Link to={`/NFT/${data.tokenAddress}`}>
+              <Link to={`/NFT/${data.tokenAddress}/${data.tokenId}/eth`}>
                 <Card.Title>{data.nftName}</Card.Title>
               </Link>
             }

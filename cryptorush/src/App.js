@@ -62,7 +62,7 @@ function App() {
                 }
               />
               <Route
-                path="/NFT/:id"
+                path="/NFT/:id/:tokenId/:chain"
                 element={
                   <PrivateRoute>
                     <NFT />

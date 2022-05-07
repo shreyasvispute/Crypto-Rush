@@ -7,7 +7,7 @@ const WebSocket = require("ws");
 //to access .env file variables
 require("dotenv").config();
 
-//const PORT = process.env.PORT || 3001; //Server PORT
+const PORT = process.env.PORT || 4001; //Server PORT
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -27,6 +27,6 @@ configRoutes(app);
 //   console.log(msg.data);
 // };
 
-app.listen(4000, () => {
-  console.log(`Your routes will be running on http://localhost:4000`);
+app.listen(PORT, () => {
+  console.log(`Your routes will be running on http://localhost:${PORT}`);
 });
