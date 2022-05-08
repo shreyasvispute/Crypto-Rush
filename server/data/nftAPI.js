@@ -74,10 +74,12 @@ async function getNFT(address, id, chain) {
   tokenIdMetadata.metadata = JSON.parse(tokenIdMetadata.metadata);
   const tokenPrice = await fetchTokenPrice(chain, address);
   const trades = await nftTrades(chain, address);
+  // const natTokPrice = await nativeTokenPrice(address, chain);
 
-  tokenIdMetadata["tokenPrice"] = tokenPrice;
-  // const price = Moralis.Units.ETH(offering.price);
-  // const priceHexString = BigInt(price).toString(16);
+  const price = await Moralis.Units.FromWei(tokenPrice);
+
+  tokenIdMetadata["tokenPrice"] = price;
+  tokenIdMetadata["trades"] = trades.result;
 
   // const NFTResults = {
   //   tokenAddress: tokenIdMetadata.token_address,
@@ -97,10 +99,9 @@ const fetchTokenPrice = async (chain, address) => {
     days: "3",
   };
   const NFTLowestPrice = await Moralis.Web3API.token.getNFTLowestPrice(options);
-  if (NFTLowestPrice) {
-    return (
-      (NFTLowestPrice.nativePrice.value / price.usdPrice) * Math.pow(10, 10)
-    );
+  if (NFTLowestPrice?.price) {
+    return NFTLowestPrice.price;
+    // (NFTLowestPrice.nativePrice.value / price.usdPrice) * Math.pow(10, 10)
   } else {
     return null;
   }
@@ -116,12 +117,15 @@ const nftTrades = async (chain, address) => {
   return NFTTrades;
 };
 
-const getEllipsisTxt = (str, n = 6) => {
-  if (str) {
-    return `${str.substr(0, n)}...${str.substr(str.length - n, str.length)}`;
-  }
-  return "";
-};
+// const nativeTokenPrice = async (address, chain) => {
+//   //Get token price on PancakeSwap v2 BSC
+//   const options = {
+//     address: address,
+//     chain: chain,
+//   };
+//   const price = await Moralis.Web3API.token.getTokenPrice(options);
+//   return price;
+// };
 
 module.exports = {
   getAllNFT,
