@@ -10,25 +10,6 @@ const CMC_LISTINGS_API_URL = process.env.CMC_LISTINGS_API_URL;
 const CMC_QUOTES_API_URL = process.env.CMC_QUOTES_API_URL;
 const CRYPTO_COMPARE_HISTORY_URL = process.env.CRYPTO_COMPARE_HISTORY_URL;
 
-//NFT collection API
-var config = {
-  method: "get",
-  url: "https://api.nftport.xyz/v0/nfts?chain=polygon&page_size=50&continuation=&include=default",
-  headers: {
-    Authorization: "676ea439-d323-44c4-874e-130a69978815",
-  },
-};
-
-//Individual NFT collection
-
-var config_collection = {
-  method: "get",
-  url: "https://api.nftport.xyz/v0/nfts/0x0000000000001b84b1cb32787b0d64758d019317/3259539015542658014133428223780909702996875844377967948435992532495689056256?chain=ethereum&refresh_metadata=false",
-  headers: {
-    Authorization: "676ea439-d323-44c4-874e-130a69978815",
-  },
-};
-
 //Returns a mapping of all cryptocurrencies to unique CoinMarketCap ids
 async function getCryptoMapping() {
   const { data } = await axios.get(CMC_MAP_API_URL, {
