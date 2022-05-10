@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
-import { useState } from "react";
 
 import Dashboard from "./Components/Dashboard";
 import Cryptocurrencies from "./Components/Cryptocurrencies";
@@ -62,7 +61,7 @@ function App() {
                 }
               />
               <Route
-                path="/NFT/:id"
+                path="/NFT/:id/:tokenId/:chain"
                 element={
                   <PrivateRoute>
                     <NFT />
