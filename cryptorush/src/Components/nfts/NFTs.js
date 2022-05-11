@@ -37,7 +37,7 @@ const NFTs = () => {
 
         // page += 1;
         // let offset = limit * page - limit;
-        const url = `/nft/search/boredape/eth`;
+        const url = `/nft/search/cool%20cats/eth`;
         const token = await getUserToken(currentUser);
         const data = await axios.get(url, {
           headers: { authorization: `Bearer ${token}` },
@@ -103,7 +103,7 @@ const NFTs = () => {
 
           <Card.Body>
             {
-              <Link to={`/NFT/${data.tokenAddress}`}>
+              <Link to={`/NFT/${data.tokenAddress}/${data.tokenId}/eth`}>
                 <Card.Title>{data.nftName}</Card.Title>
               </Link>
             }
