@@ -78,7 +78,7 @@ const News = () => {
 
         // page += 1;
         // let offset = limit * page - limit;
-        const url = `http://localhost:4000/news`;
+        const url = `http://localhost:4000/tweets`;
         //const token = await getUserToken(currentUser);
         const data = await axios.get(url);
         console.log("data",data.data);
@@ -117,7 +117,7 @@ const News = () => {
       try {
         setPageError(false);
 
-        const url = `http://localhost:4000/news/${searchTerm}`;
+        const url = `http://localhost:4000/tweets/${searchTerm}`;
         const data = await axios.get(url);
         // setTotalRecords(data.length);
         setLoading(false);
@@ -177,7 +177,7 @@ const News = () => {
     <Container>
           <Container className="headRow">
             <Row className="titleAlign">
-              <h1>NEWS</h1>
+              <h1>TWEETS</h1>
             </Row>
 
             <Row>

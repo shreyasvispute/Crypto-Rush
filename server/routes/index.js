@@ -10,6 +10,7 @@ const constructorMethod = (app) => {
   app.use("/login", login);
   app.use("/tweets", tweets);
   app.use("/cryptocurrency", crypto);
+  app.use("/news", news);
   app.use("/nft", nft);
   app.use("*", (req, res) => {
     res.status(404).json({ error: "Path Not Found" });
