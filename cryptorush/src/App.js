@@ -38,13 +38,22 @@ function App() {
                 }
               />
               <Route
-                path="/Cryptocurrencies"
+                path="/Cryptocurrency"
                 element={
                   <PrivateRoute>
                     <Cryptocurrencies />
                   </PrivateRoute>
                 }
               />
+              <Route
+                path="/Cryptocurreny/:symbol"
+                element={
+                  <PrivateRoute>
+                    <Cryptocurrency />
+                  </PrivateRoute>
+                }
+              />
+
               <Route
                 path="/Exchanges"
                 element={
@@ -88,6 +97,14 @@ function App() {
               />
             </Routes>
           </div>
+          <footer className="footer text-white">
+            <p className="float-end">
+              <a className="text-white" variant="light" href="#">
+                Back to top
+              </a>
+            </p>
+            <p>©2022 Crypto-Rush. All Rights Reserved.</p>
+          </footer>
         </div>
       </AuthProvider>
     </BrowserRouter>

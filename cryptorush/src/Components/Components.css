@@ -4,3 +4,28 @@
 .headRow {
   margin-bottom: 2%;
 }
+
+.negativeChange {
+  color: red;
+}
+
+.positiveChange {
+  color: green;
+}
+
+.cryptoList {
+  padding-top: 12px !important;
+}
+
+.chartDropdown {
+  padding-top: 20px;
+  padding-left: 88px !important;
+}
+
+.searchBox {
+  padding-bottom: 20px;
+}
+
+.paginateComponent {
+  padding-top: 15px;
+}

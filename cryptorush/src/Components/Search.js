@@ -8,7 +8,7 @@ const Search = (props) => {
 
   return (
     <Form
-      className="d-flex"
+      className="d-flex searchBox"
       onSubmit={(e) => {
         e.preventDefault();
       }}
