@@ -3,6 +3,7 @@ import "./App.css";
 
 import Dashboard from "./Components/Dashboard";
 import Cryptocurrencies from "./Components/Cryptocurrencies";
+import Cryptocurrency from "./Components/Cryptocurrency";
 import Exchanges from "./Components/Exchanges";
 import NFTs from "./Components/nfts/NFTs";
 import News from "./Components/News";
@@ -36,13 +37,22 @@ function App() {
                 }
               />
               <Route
-                path="/Cryptocurrencies"
+                path="/Cryptocurrency"
                 element={
                   <PrivateRoute>
                     <Cryptocurrencies />
                   </PrivateRoute>
                 }
               />
+              <Route
+                path="/Cryptocurreny/:symbol"
+                element={
+                  <PrivateRoute>
+                    <Cryptocurrency />
+                  </PrivateRoute>
+                }
+              />
+
               <Route
                 path="/Exchanges"
                 element={
@@ -86,6 +96,14 @@ function App() {
               />
             </Routes>
           </div>
+          <footer className="footer text-white">
+            <p className="float-end">
+              <a className="text-white" variant="light" href="#">
+                Back to top
+              </a>
+            </p>
+            <p>©2022 Crypto-Rush. All Rights Reserved.</p>
+          </footer>
         </div>
       </AuthProvider>
     </BrowserRouter>
