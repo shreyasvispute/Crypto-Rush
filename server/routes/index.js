@@ -2,6 +2,7 @@ const crypto = require("./cryptoAPI");
 const nft = require("./nftAPI");
 const tweets = require("./twitterApi");
 const login = require("./login");
+const news  = require("./newsApi");
 
 //Call your respective apis here
 
