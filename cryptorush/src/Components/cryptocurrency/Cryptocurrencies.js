@@ -3,16 +3,18 @@ import {
   Col,
   Row,
   Spinner,
-  Card,
+  Button,
   ListGroup,
   ListGroupItem,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Error from "./Error";
+import Error from "../Error";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import Search from "./Search";
+import Search from "../Search";
 import ReactPaginate from "react-paginate";
+import { UserAuth } from "../../firebase/Auth";
+import AddToDashboard from "../AddToDashboard";
 
 const Cryptocurrencies = () => {
   const [loading, setLoading] = useState(true);
@@ -20,6 +22,7 @@ const Cryptocurrencies = () => {
   const [cryptoData, setCryptoData] = useState(undefined);
   const [searchData, setSearchData] = useState([]);
   const [error, setError] = useState(false);
+  const { currentUser, getUserToken } = UserAuth();
 
   // We start with an empty list of items.
   const [currentItems, setCurrentItems] = useState(null);
@@ -34,7 +37,7 @@ const Cryptocurrencies = () => {
     // Fetch items from another resources.
     if (cryptoData) {
       const endOffset = itemOffset + itemsPerPage;
-      console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+      //console.log(`Loading items from ${itemOffset} to ${endOffset}`);
       setCurrentItems(cryptoData.slice(itemOffset, endOffset));
       setPageCount(Math.ceil(cryptoData.length / itemsPerPage));
     }
@@ -58,7 +61,11 @@ const Cryptocurrencies = () => {
   //Function to make HTTP request to get data
   async function getCryptoData() {
     try {
-      const { data } = await axios.get(cryptoDataURL);
+      // const { data } = await axios.get(cryptoDataURL);
+      const token = await getUserToken(currentUser);
+      const { data } = await axios.get(cryptoDataURL, {
+        headers: { authorization: `Bearer ${token}` },
+      });
       return data;
     } catch (e) {
       console.log("Unable to fetch data.");
@@ -68,7 +75,11 @@ const Cryptocurrencies = () => {
   //Function to make HTTP request to get data
   async function getCryptoSearchData() {
     try {
-      const { data } = await axios.get(cryptoSearchDataURL);
+      // const { data } = await axios.get(cryptoSearchDataURL);
+      const token = await getUserToken(currentUser);
+      const { data } = await axios.get(cryptoSearchDataURL, {
+        headers: { authorization: `Bearer ${token}` },
+      });
       return data;
     } catch (e) {
       console.log("Unable to fetch data.");
@@ -232,6 +243,7 @@ const Cryptocurrencies = () => {
               <ListGroupItem variant="primary">
                 <Row>
                   <Col></Col>
+                  <Col></Col>
                   <Col>Symbol</Col>
                   <Col>Name</Col>
                   <Col>Price</Col>
@@ -248,13 +260,21 @@ const Cryptocurrencies = () => {
                         variant="secondary"
                         className="cryptoList"
                       >
-                        <Link to={`/cryptocurreny/${element.symbol}`}>
+                        <Link
+                          to={`/Cryptocurreny/${element.symbol.toLowerCase()}`}
+                        >
                           <Row>
+                            <Col>
+                              <AddToDashboard
+                                element={element}
+                                asset="Cryptocurrency"
+                              />
+                            </Col>
                             <Col>
                               <img
                                 src={element.logo}
                                 alt={element.name}
-                                style={{ height: 42 }}
+                                className="cryptoLogo"
                               />
                             </Col>
                             <Col>{element.symbol}</Col>
@@ -294,6 +314,9 @@ const Cryptocurrencies = () => {
                       >
                         <Link to={`/cryptocurreny/${element.symbol}`}>
                           <Row>
+                            <Col>
+                              <AddToDashboard element={element} />
+                            </Col>
                             <Col>
                               <img
                                 src={element.logo}
@@ -335,12 +358,12 @@ const Cryptocurrencies = () => {
           <Col></Col>
           <Col md={8} className="paginateComponent">
             <ReactPaginate
-              nextLabel="next >"
+              nextLabel="Next >"
               onPageChange={handlePageClick}
               pageRangeDisplayed={3}
               marginPagesDisplayed={2}
               pageCount={pageCount}
-              previousLabel="< previous"
+              previousLabel="< Previous"
               pageClassName="page-item"
               pageLinkClassName="page-link"
               previousClassName="page-item"

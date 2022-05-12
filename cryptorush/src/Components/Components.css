@@ -33,6 +33,10 @@ html {
   padding-top: 15px;
 }
 
+.cryptoLogo {
+  height: 42px !important;
+}
+
 .nftimg {
   height: 450px;
   width: 400px;
