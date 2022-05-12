@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
-import { useState } from "react";
 
 import Dashboard from "./Components/Dashboard";
-import Cryptocurrencies from "./Components/Cryptocurrencies";
+import Cryptocurrencies from "./Components/cryptocurrency/Cryptocurrencies";
+import Cryptocurrency from "./Components/cryptocurrency/Cryptocurrency";
 import Exchanges from "./Components/Exchanges";
 import NFTs from "./Components/nfts/NFTs";
 import News from "./Components/News";
@@ -37,13 +37,22 @@ function App() {
                 }
               />
               <Route
-                path="/Cryptocurrencies"
+                path="/Cryptocurrency"
                 element={
                   <PrivateRoute>
                     <Cryptocurrencies />
                   </PrivateRoute>
                 }
               />
+              <Route
+                path="/Cryptocurreny/:symbol"
+                element={
+                  <PrivateRoute>
+                    <Cryptocurrency />
+                  </PrivateRoute>
+                }
+              />
+
               <Route
                 path="/Exchanges"
                 element={
@@ -62,7 +71,7 @@ function App() {
                 }
               />
               <Route
-                path="/NFT/:id"
+                path="/NFT/:id/:tokenId/:chain"
                 element={
                   <PrivateRoute>
                     <NFT />
@@ -87,6 +96,14 @@ function App() {
               />
             </Routes>
           </div>
+          <footer className="footer text-white">
+            <p className="float-end">
+              <a className="text-white" variant="light" href="#">
+                Back to top
+              </a>
+            </p>
+            <p>©2022 Crypto-Rush. All Rights Reserved.</p>
+          </footer>
         </div>
       </AuthProvider>
     </BrowserRouter>

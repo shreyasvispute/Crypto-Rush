@@ -1,23 +1,64 @@
+import { Container, Col, Row } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import { Card, CardGroup } from "react-bootstrap";
+import Search from "./Search";
+//import {useSelector,useDispatch} from 'react-redux';
 
-import { Card, Container, Col, CardGroup, Spinner, Row } from "react-bootstrap";
+/*import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Grid,
+  Typography,
+  makeStyles,
+  Button
+} from '@material-ui/core';
 
-import Search from "../Search";
-import nftNotFound from "../../img/nft_imageNotFound.png";
-import { UserAuth } from "../../firebase/Auth";
+const useStyles = makeStyles({
+  card: {
+    maxWidth: 250,
+    height: 'auto',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    borderRadius: 5,
+    border: '1px solid #1e8678',
+    boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);'
+  },
+  titleHead: {
+    borderBottom: '1px solid #1e8678',
+    fontWeight: 'bold'
+  },
+  grid: {
+    flexGrow: 1,
+    flexDirection: 'row'
+  },
+  media: {
+    height: '100%',
+    width: '100%'
+  },
+  button: {
+    color: '#1e8678',
+    fontWeight: 'bold',
+    fontSize: 12
+  }
+});*/
 
-const NFTs = () => {
-  let card = null;
+
+const News = () => {
+
+  //const classes = useStyles();
+  const [loading, setLoading] = useState(true);
+  const [showsData, setShowsData] = useState(undefined);
+  //const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(undefined);
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);
-  // const [totalRecords, setTotalRecords] = useState("");
+
   const [pageError, setPageError] = useState(false);
   const [apiData, setApiData] = useState([]);
 
-  const { currentUser, getUserToken } = UserAuth();
 
   useEffect(() => {
     const getData = async () => {
@@ -37,11 +78,12 @@ const NFTs = () => {
 
         // page += 1;
         // let offset = limit * page - limit;
-        const url = `/nft/search/cool%20cats/eth`;
-        const token = await getUserToken(currentUser);
-        const data = await axios.get(url, {
-          headers: { authorization: `Bearer ${token}` },
-        });
+        const url = `http://localhost:4000/tweets`;
+        //const token = await getUserToken(currentUser);
+        const data = await axios.get(url);
+        console.log("data",data.data);
+
+
 
         // let totalPages = Math.ceil(totalRecords / limit) - 1;
         // setPages(totalPages);
@@ -51,27 +93,31 @@ const NFTs = () => {
         // } else {
         //   setNextState(true);
         // }
-        setApiData(data.data);
-        setLoading(false);
+        //setApiData(data.data);
+        //setLoading(false);
 
         if (data.data.length === 0) {
           setPageError(true);
         } else {
           setPageError(false);
+          setLoading(false);
+          setApiData(data.data);
+          setShowsData(data.data);
         }
       } catch (error) {
-        // setPageError(true);
+        setPageError(true);
         console.log(error);
       }
     };
     getData();
   }, []);
+
   useEffect(() => {
     async function searchNFTs(searchTerm) {
       try {
         setPageError(false);
 
-        const url = `/nft/search/${searchTerm}/eth`;
+        const url = `http://localhost:4000/tweets/${searchTerm}`;
         const data = await axios.get(url);
         // setTotalRecords(data.length);
         setLoading(false);
@@ -93,83 +139,52 @@ const NFTs = () => {
 
   const buildCard = (data) => {
     return (
-      <div key={data.tokenId} className="col sm-4">
-        <Card style={{ width: "16rem" }}>
-          {data.image ? (
-            <Card.Img alt={data.nftName} variant="top" src={data.image} />
-          ) : (
-            <Card.Img alt={data.nftName} variant="top" src={nftNotFound} />
-          )}
-
-          <Card.Body>
-            {
-              <Link to={`/NFT/${data.tokenAddress}/${data.tokenId}/eth`}>
-                <Card.Title>{data.nftName}</Card.Title>
-              </Link>
-            }
-            {/* <Card.Text>{data.description}</Card.Text> */}
-          </Card.Body>
-        </Card>
+      <div key={data.author} className="col sm-4">
+        <Card style={{ width: '18rem' }}>
+  <Card.Img variant="top" src = {data.urlToImage}  />
+  <Card.Body>
+    <Card.Title>{data.title}</Card.Title>
+    <Card.Text>
+      {data.content}
+    </Card.Text>
+  </Card.Body>
+  <Card.Body>
+    <Card.Link href="#">Card Link</Card.Link>
+    <Card.Link href="#">Another Link</Card.Link>
+  </Card.Body>
+</Card>
       </div>
     );
   };
 
+  let card;
+
   if (searchTerm) {
-    card =
+   card =
       searchData &&
       searchData.map((characters) => {
         return buildCard(characters);
       });
   } else {
-    card =
+   card =
       apiData &&
       apiData.map((characterData) => {
         return buildCard(characterData);
       });
   }
 
-  if (pageError) {
-    return (
-      <Container>
-        <Container className="headRow">
-          <Row className="titleAlign">
-            <h1>NFTs</h1>
-          </Row>
-
-          <Row>
-            <Col>
-              <Search page="NFTs" searchValue={searchValue}></Search>
-            </Col>
-          </Row>
-          <Row>
-            <h1>Not FOUND</h1>
-          </Row>
-        </Container>
-      </Container>
-    );
-  } else {
-    if (loading) {
-      return (
-        <div>
-          <Container>
-            <Spinner animation="border" variant="danger" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </Container>
-        </div>
-      );
-    } else {
-      return (
-        <Container>
+  return(
+    <Container>
           <Container className="headRow">
             <Row className="titleAlign">
-              <h1>NFTs</h1>
+              <h1>TWEETS</h1>
             </Row>
 
             <Row>
-              <Col>
-                <Search page="NFTs" searchValue={searchValue}></Search>
-              </Col>
+            <Col>
+              <Search page="NFTs" searchValue={searchValue}></Search>
+            </Col>
+      
               {/* <Col sm className="makeCenter filterMargin">
                 {paginate && (
                   <Paginate
@@ -191,9 +206,8 @@ const NFTs = () => {
           </Container>
           <CardGroup>{card}</CardGroup>
         </Container>
-      );
-    }
-  }
+  )
+
 };
 
-export default NFTs;
+export default News;
