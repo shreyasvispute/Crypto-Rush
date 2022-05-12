@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import Error from "./Error";
+import Error from "../Error";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Spinner, Dropdown, Card } from "react-bootstrap";
 import CandleStickChart from "./CandleStickChart";
-import { HourglassSplit } from "react-bootstrap-icons";
+import { UserAuth } from "../../firebase/Auth";
 
 const Cryptocurrency = () => {
   const [loading, setLoading] = useState(true);
@@ -15,6 +15,7 @@ const Cryptocurrency = () => {
     value: 24,
   });
   const [error, setError] = useState(false);
+  const { currentUser, getUserToken } = UserAuth();
 
   const { symbol } = useParams();
 
@@ -45,7 +46,11 @@ const Cryptocurrency = () => {
   //Function to make HTTP request to get data
   async function getCryptoData() {
     try {
-      const { data } = await axios.get(cryptoDataURL);
+      // const { data } = await axios.get(cryptoDataURL);
+      const token = await getUserToken(currentUser);
+      const { data } = await axios.get(cryptoDataURL, {
+        headers: { authorization: `Bearer ${token}` },
+      });
       return data;
     } catch (e) {
       console.log("Unable to fetch data.");
@@ -54,7 +59,11 @@ const Cryptocurrency = () => {
 
   async function getChartData() {
     try {
-      const { data } = await axios.get(chartDataURL);
+      // const { data } = await axios.get(chartDataURL);
+      const token = await getUserToken(currentUser);
+      const { data } = await axios.get(chartDataURL, {
+        headers: { authorization: `Bearer ${token}` },
+      });
       return data;
     } catch (e) {
       console.log("Unable to fetch data.");
@@ -158,7 +167,7 @@ const Cryptocurrency = () => {
                     <img
                       src={cryptoData.logo}
                       alt={cryptoData.name}
-                      className="navbar-brand"
+                      className="navbar-brand cryptoLogo"
                     />{" "}
                     {cryptoData.symbol}
                   </Card.Header>

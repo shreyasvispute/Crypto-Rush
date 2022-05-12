@@ -1,4 +1,4 @@
-const admin = require("./config/firebase");
+const { admin } = require("./config/firebase");
 
 const getAuthToken = (req, res, next) => {
   if (

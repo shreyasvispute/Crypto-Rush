@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 
 import Dashboard from "./Components/Dashboard";
-import Cryptocurrencies from "./Components/Cryptocurrencies";
-import Cryptocurrency from "./Components/Cryptocurrency";
+import Cryptocurrencies from "./Components/cryptocurrency/Cryptocurrencies";
+import Cryptocurrency from "./Components/cryptocurrency/Cryptocurrency";
 import Exchanges from "./Components/Exchanges";
 import NFTs from "./Components/nfts/NFTs";
 import News from "./Components/News";
