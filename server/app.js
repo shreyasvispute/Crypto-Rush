@@ -3,9 +3,10 @@ const bodyParser = require("body-parser");
 const app = express();
 const configRoutes = require("./routes");
 const WebSocket = require("ws");
-
+var cors = require('cors');
 //to access .env file variables
 require("dotenv").config();
+app.use(cors());
 
 const PORT = process.env.PORT || 4001; //Server PORT
 

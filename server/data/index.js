@@ -4,6 +4,7 @@ const validations = require("./validations");
 const tweetData = require("./twitterAPI");
 const exchangeData = require("./exchangeApi");
 const database = require("./firebaseData");
+const newsData = require("./newsApi");
 
 module.exports = {
   cryptoData: cryptoData,
@@ -12,4 +13,5 @@ module.exports = {
   validations: validations,
   exchangeData: exchangeData,
   database: database,
+  newsData: newsData
 };
