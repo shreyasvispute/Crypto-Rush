@@ -1,113 +1,156 @@
-import React, { useEffect, useState } from "react";
-import nftNotFound from "../img/nft_imageNotFound.png";
-
-import { Card, Container,  CardGroup, Spinner, Row } from "react-bootstrap";
-import Table from 'react-bootstrap/Table'
-
-const Exchanges= () => {
-  
-  let card = null;
-
-  const [loading, setLoading] = useState(true);
-  const [pageError, setPageError] = useState(false);
-  const [apiData, setApiData] = useState([]);
+import { Container, Col, Row } from "react-bootstrap";
+import ExchangeInfo from './ExchangeInfo'
+import { makeStyles, Typography, Link, LinearProgress} from '@material-ui/core';
+import ReactHtmlParser from 'react-html-parser'
+import {useParams} from 'react-router-dom'
+import { useState, useEffect } from "react";
+import axios from 'axios'
 
 
-    
-   
+console.clear();
+const useStyles = makeStyles((theme) =>({
+  container: {
+    display: "flex",
+    [theme.breakpoints.down("md")]: {
+      flexDirection: "column",
+      alignItems: "center",
+    },
+  },
+  sidebar: {
+    width: "30%",
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+    },
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: 25,
+    borderRight: "2px solid grey",
+  },
+  heading: {
+    fontWeight: "bold",
+    marginBottom: 20,
+    fontFamily: "Montserrat",
+  },
+  description: {
+    width: "100%",
+    fontFamily: "Montserrat",
+    padding: 25,
+    paddingBottom: 15,
+    paddingTop: 0,
+    textAlign: "center",
+  },
+  marketData:{
+    alignSelf:'start',
+    padding:25,
+    paddingTop:10,
+    width:'100%',
+    [theme.breakpoints.down("md")] :{
+      display:'flex',
+      justifyContent:'space-around',
+    },
+    [theme.breakpoints.down("sm")] :{
+      flexDirection:'column',
+      alignItems:'center',
+      [theme.breakpoints.down("sm")]:{
+        alignItems:'start'
+      } 
+
+    }
+
+
+  }
+
+
+}));
+
+function Exchange(){
+
+  const {id} = useParams()
+  const[exchange,setExchange] = useState();
+
+
+
+
+
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const CoinGecko = require('coingecko-api');
-        const CoinGeckoClient = new CoinGecko();
-        let pData = await CoinGeckoClient.ping();
+    
 
-        let data = await CoinGeckoClient.exchanges.all();
-      
-        setApiData(data.data);
-        setLoading(false);  
-
-        if (data.data.length === 0) {
-          setPageError(true);
-        } else {
-          setPageError(false);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getData();
+    const fetchExchange = async() => {
+      const { data } =  await axios.get(`https://api.coingecko.com/api/v3/exchanges/${id}`);
+      setExchange(data);
+  };
+  fetchExchange();
   }, []);
 
-  const buildCard = (data) => {
-    return (
-      <div key={data.id} className="col sm-4">
-        <Table striped bordered hover variant="dark">
-          <thead>
-            <tr>
-              <th>Exchange</th>
-              <th>Trust Score</th>
-              <th>24h Volume(Normalized)</th>
-              <th>24h Volume</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td> <img alt={data.name} variant="top" src={data.image}/>{data.name}</td>
-              <td>{data.trust_score}</td>
-              <td>{data.trade_volume_24h_btc_normalized}</td>
-              <td>{data.trade_volume_24h_btc}</td>
-            </tr>
-          </tbody>
-        </Table>
-      </div>
-    );
-  };
+  const classes = useStyles();
 
-    card =
-      apiData &&
-      apiData.map((characterData) => {
-        return buildCard(characterData);
-      });
+  if(!exchange) return <LinearProgress style={{backgroundColor:'gold'}}></LinearProgress>
 
-  if (pageError) {
-    return (
-      <Container>
-        <Container className="headRow">
-          <Row className="titleAlign">
-            <h1>Exchange</h1>
-          </Row>
-          <Row>
-            <h1>Not FOUND</h1>
-          </Row>
-        </Container>
-      </Container>
-    );
-  } else {
-    if (loading) {
-      return (
-        <div>
-          <Container>
-            <Spinner animation="border" variant="danger" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </Container>
-        </div>
-      );
-    } else {
-      return (
-        <Container>
-          <Container className="headRow">
-            <Row className="titleAlign">
-              <h1>Exchanges</h1>
-            </Row>
-          </Container>
-          <CardGroup>{card}</CardGroup>
-        </Container>
-      );
-    }
-  }
+  return (
+    <div className={classes.container}>
+      <div className={classes.sidebar}>
+          <img
+             src= {exchange?.image}
+             alt={exchange?.name}
+             height='100'
+             style={{marginBottom:20}}
+            />
+            <Typography variant='h3' className={classes.heading}>
+                {exchange && exchange.name ? exchange.name : <p>Not available</p>}
+            </Typography>
+            <Typography variant='subtitle1' className={classes.description}>
+                {exchange && exchange.description ? ReactHtmlParser(exchange.description.split('. ')[0]) : <p> Description Not available</p>}
+                {exchange && exchange.url ? exchange.url : <p>Not available</p>}
+            </Typography>
+
+
+            <div className={classes.marketData}>
+
+            <span style={{display:'flex'}}>
+                    <Typography variant ='h6'  className={classes.heading}>Year Established:</Typography>
+                    &nbsp;&nbsp;
+                    <Typography variant ='h6'  style={{fontFamily:'Montserrant'}}>
+                    {exchange && exchange.year_established ? exchange.year_established : <p>Not available</p>}
+                    </Typography>
+
+                </span>
+
+
+            <span style={{display:'flex'}}>
+                    <Typography variant ='h6'  className={classes.heading}>Trust score:</Typography>
+                    &nbsp;&nbsp;
+                    <Typography variant ='h6'  style={{fontFamily:'Montserrant'}}>
+                          {exchange && exchange.trust_score ? exchange.trust_score : <p> Trust score Not available</p>}
+                    </Typography>
+
+                </span>
+
+                <span style={{display:'flex'}}>
+                    <Typography variant ='h6'  className={classes.heading}>Trust score rank:</Typography>
+                    &nbsp;&nbsp;
+                    <Typography variant ='h6'  style={{fontFamily:'Montserrant'}}>
+                          {exchange && exchange.trust_score_rank ? exchange.trust_score_rank : <p> Trust score rank Not available</p>}
+                    </Typography>
+                    </span>
+
+                    <span style={{display:'flex'}}>
+                    <Typography variant ='h6'  className={classes.heading}>Trade Vol 24h btc:</Typography>
+                    &nbsp;&nbsp;
+                    <Typography variant ='h6'  style={{fontFamily:'Montserrant'}}>
+                          {exchange && exchange.trade_volume_24h_btc ? exchange.trade_volume_24h_btc.toFixed(2) : <p> Trust score rank Not available</p>}
+                    </Typography>
+                    </span>
+          
+            </div>
+          </div>
+       chart
+       <ExchangeInfo exchange={exchange}>
+
+       </ExchangeInfo>
+    </div>
+  )
+  
 };
 
-export default Exchanges;
-
+export default Exchange;
