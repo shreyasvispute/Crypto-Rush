@@ -1,4 +1,9 @@
 const admin = require("firebase-admin");
+const {
+  getFirestore,
+  Timestamp,
+  FieldValue,
+} = require("firebase-admin/firestore");
 require("dotenv").config();
 
 const keys = {
@@ -19,4 +24,7 @@ admin.initializeApp({
   databaseURL: "https://cryptorush-6aa31-default-rtdb.firebaseio.com",
 });
 
-module.exports = admin;
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore();
+
+module.exports = { admin, db };
