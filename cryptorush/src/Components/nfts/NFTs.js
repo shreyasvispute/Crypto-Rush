@@ -28,7 +28,7 @@ const NFTs = () => {
 
   const { currentUser, getUserToken } = UserAuth();
 
-  let itemsPerPage = 10;
+  let itemsPerPage = 12;
 
   useEffect(() => {
     // Fetch items from another resources.
@@ -51,20 +51,6 @@ const NFTs = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        // let page = Number(params.page);
-        // if (isNaN(page)) {
-        //   setPageError(true);
-        //   return;
-        // }
-        // if (page === 0) {
-        //   setPrevState(false);
-        //   page = 0;
-        // } else {
-        //   setPrevState(true);
-        // }
-
-        // page += 1;
-        // let offset = limit * page - limit;
         const url = `/nft/search/cool%20cat/eth`;
         const token = await getUserToken(currentUser);
 
