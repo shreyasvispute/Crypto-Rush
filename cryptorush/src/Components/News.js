@@ -176,15 +176,12 @@ const News = () => {
   return(
     <Container>
           <Container className="headRow">
-            <Row className="titleAlign">
-              <h1>NEWS</h1>
-            </Row>
-
             <Row>
-            <Col>
-              <Search page="NFTs" searchValue={searchValue}></Search>
-            </Col>
-      
+              <Col></Col>
+              <Col>
+                <Search page="NFTs" searchValue={searchValue}></Search>
+              </Col>
+              <Col></Col>
               {/* <Col sm className="makeCenter filterMargin">
                 {paginate && (
                   <Paginate

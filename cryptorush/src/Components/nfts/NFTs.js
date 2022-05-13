@@ -162,14 +162,12 @@ const NFTs = () => {
       return (
         <Container>
           <Container className="headRow">
-            <Row className="titleAlign">
-              <h1>NFTs</h1>
-            </Row>
-
             <Row>
-              <Col>
+              <Col></Col>
+              <Col xs={4}>
                 <Search page="NFTs" searchValue={searchValue}></Search>
               </Col>
+              <Col></Col>
               {/* <Col sm className="makeCenter filterMargin">
                 {paginate && (
                   <Paginate

@@ -122,6 +122,19 @@ const Exchanges = () => {
   }, [searchTerm]);
 
 
+  function convertToInternationalCurrencySystem(labelValue) {
+    // Nine Zeroes for Billions
+    return Math.abs(Number(labelValue)) >= 1.0e9
+      ? (Math.abs(Number(labelValue)) / 1.0e9).toFixed(2) + "B"
+      : // Six Zeroes for Millions
+      Math.abs(Number(labelValue)) >= 1.0e6
+      ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(2) + "M"
+      : // Three Zeroes for Thousands
+      Math.abs(Number(labelValue)) >= 1.0e3
+      ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(2) + "K"
+      : Math.abs(Number(labelValue));
+  }
+
   const searchValue = async (value) => {
     if (value) {
       setSearchTerm(value.trim());
@@ -182,8 +195,8 @@ const Exchanges = () => {
                               {element.name}
                             </Col>
                             <Col>{element.trust_score}</Col>
-                            <Col>{element.trade_volume_24h_btc_normalized}</Col>
-                            <Col>{element.trade_volume_24h_btc}</Col>
+                            <Col>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc_normalized)}</Col>
+                            <Col>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc)}</Col>
                           </Row>
                         </Link>
                       </ListGroupItem>
@@ -208,8 +221,8 @@ const Exchanges = () => {
                               {element.name}
                             </Col>
                             <Col>{element.trust_score}</Col>
-                            <Col>{element.trade_volume_24h_btc_normalized}</Col>
-                            <Col>{element.trade_volume_24h_btc}</Col>
+                            <Col>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc_normalized)}</Col>
+                            <Col>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc)}</Col>
                           </Row>
                         </Link>
                       </ListGroupItem>
