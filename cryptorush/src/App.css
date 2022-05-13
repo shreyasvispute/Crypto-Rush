@@ -64,3 +64,11 @@ html {
 a:link {
   text-decoration: none;
 }
+.paginateDesign {
+  display: flex;
+  align-content: stretch;
+  justify-content: center;
+}
+.filterMargin {
+  margin-top: 8px !important;
+}
