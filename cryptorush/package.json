@@ -28,7 +28,7 @@
     "chart.js": "^3.7.1",
     "coingecko-api": "^1.0.10",
     "react-chartjs-2": "^4.1.0",
-    "react-html-parser": "^2.0.2",
+    "react-html-parser": "^2.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
