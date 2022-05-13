@@ -67,6 +67,47 @@ async function getCryptoListings() {
   }
 }
 
+//Returns the latest listings of all cryptocurrencies
+async function getCryptoListingsByList(cryptoCSVlist) {
+  let cryptoList = cryptoCSVlist.split(",");
+  let result = [];
+  let csvList = "";
+  const { data } = await axios.get(CMC_LISTINGS_API_URL, {
+    headers: {
+      "X-CMC_PRO_API_KEY": CMC_API_KEY,
+    },
+  });
+  let filteredList = [];
+  if (data.status.error_code === 0) {
+    let cryptoData = data.data;
+    cryptoData.forEach((element) => {
+      if (cryptoList.includes(element.symbol)) {
+        filteredList.push(element);
+        if (csvList === "") {
+          csvList = element.slug;
+        } else {
+          csvList = csvList + "," + element.slug;
+        }
+      }
+    });
+    let metadata = await getCryptoMetadataByList(csvList);
+
+    let metadataArr = Object.values(metadata);
+
+    for (let i = 0; i < filteredList.length; i++) {
+      result.push({
+        ...filteredList[i],
+        ...metadataArr.find((innerItem) => innerItem.id === filteredList[i].id),
+      });
+    }
+    return result;
+  } else {
+    throw {
+      response: { status: 404, statusText: `No data found.` },
+    };
+  }
+}
+
 //Returns the latest listing for a cryptocurrency
 async function getCryptoMetadataById(Id) {
   validations.validateNumber(Id, "ID");
@@ -276,4 +317,5 @@ module.exports = {
   getCryptoHistoryByHours,
   getCryptoQuotesById,
   searchCrypto,
+  getCryptoListingsByList,
 };
