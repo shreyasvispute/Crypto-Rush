@@ -23,7 +23,6 @@ const Cryptocurrencies = () => {
   const [searchData, setSearchData] = useState([]);
   const [error, setError] = useState(false);
   const { currentUser, getUserToken } = UserAuth();
-  const [socketData, setSocketData] = useState([0]);
 
   // We start with an empty list of items.
   const [currentItems, setCurrentItems] = useState(null);
@@ -33,21 +32,6 @@ const Cryptocurrencies = () => {
   const [itemOffset, setItemOffset] = useState(0);
 
   let itemsPerPage = 20;
-
-  useEffect(() => {
-    const pricesWs = new WebSocket(
-      // "wss://ws.coincap.io/prices?assets=bitcoin,ethereum,monero,litecoin"
-      "wss://ws.coincap.io/prices?assets=ALL"
-    );
-    pricesWs.onmessage = function (msg) {
-      try {
-        setSocketData(JSON.parse(msg.data));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    return () => pricesWs.close();
-  }, []);
 
   useEffect(() => {
     // Fetch items from another resources.

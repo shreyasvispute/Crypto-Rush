@@ -1,10 +1,35 @@
-import { Container, Col, Row, ListGroup, ListGroupItem } from "react-bootstrap";
+import {
+  Container,
+  Col,
+  Row,
+  ListGroup,
+  ListGroupItem,
+  Table,
+} from "react-bootstrap";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 import { UserAuth } from "../../firebase/Auth";
 import AddToDashboard from "../dashboard/AddToDashboard";
 
 const CryptocurrencyList = (props) => {
   const { currentUser, getUserToken } = UserAuth();
+  const [socketData, setSocketData] = useState([0]);
+
+  useEffect(() => {
+    const pricesWs = new WebSocket(
+      // "wss://ws.coincap.io/prices?assets=bitcoin,ethereum,monero,litecoin"
+      "wss://ws.coincap.io/prices?assets=ALL"
+    );
+    pricesWs.onmessage = function (msg) {
+      try {
+        setSocketData(JSON.parse(msg.data));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    return () => pricesWs.close();
+  }, []);
 
   function convertToInternationalCurrencySystem(labelValue) {
     // Nine Zeroes for Billions
@@ -26,78 +51,87 @@ const CryptocurrencyList = (props) => {
   if (props.cryptoData) {
     return (
       <Container>
-        <Row>
-          <Col>
-            <ListGroup>
-              <ListGroupItem variant="primary">
-                <Row>
-                  <Col></Col>
-                  <Col></Col>
-                  <Col>Symbol</Col>
-                  <Col>Name</Col>
-                  <Col>Price</Col>
-                  <Col>Market Cap</Col>
-                  <Col>24H Volume</Col>
-                  <Col>24H Change</Col>
-                </Row>
-              </ListGroupItem>
-              {props.cryptoData.map((element) => {
-                return (
-                  <ListGroupItem
-                    key={element.id}
-                    variant="secondary"
-                    className="cryptoList"
-                  >
-                    {/* <Link to={`/Cryptocurreny/${element.symbol.toLowerCase()}`}> */}
-                    <Row>
-                      <Col>
-                        <AddToDashboard
-                          element={element}
-                          asset="Cryptocurrency"
-                        />
-                      </Col>
-                      <Link
-                        className="cryptoList"
-                        to={`/Cryptocurreny/${element.symbol.toLowerCase()}`}
-                      >
-                        <Col>
-                          <img
-                            src={element.logo}
-                            alt={element.name}
-                            className="cryptoLogo"
-                          />
-                        </Col>
-                        <Col>{element.symbol}</Col>
-                        <Col>{element.name}</Col>
-                        {/* </Link> */}
-                        <Col>{formatPrice(element.quote.USD.price)}</Col>
-                        <Col>
-                          {convertToInternationalCurrencySystem(
-                            element.quote.USD.market_cap
-                          )}
-                        </Col>
-                        <Col>
-                          {convertToInternationalCurrencySystem(
-                            element.quote.USD.volume_24h
-                          )}
-                        </Col>
-                        {element.quote.USD.volume_change_24h > 0 ? (
-                          <Col className="positiveChange">
-                            {element.quote.USD.volume_change_24h + "%"}
-                          </Col>
-                        ) : (
-                          <Col className="negativeChange">
-                            {element.quote.USD.volume_change_24h + "%"}
-                          </Col>
-                        )}
-                      </Link>
-                    </Row>
-                  </ListGroupItem>
-                );
-              })}
-            </ListGroup>
-          </Col>
-        </Row>
+        <Table>
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th>Symbol</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Market Cap</th>
+              <th>24H Volume</th>
+              <th>24H Change</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.cryptoData.map((element) => {
+              let priceChangeColor;
+              if (
+                socketData &&
+                socketData[element.name.split(" ").join("-").toLowerCase()] >
+                  element.quote.USD.price
+              ) {
+                priceChangeColor = "greenColumn";
+              } else {
+                priceChangeColor = "redColumn";
+              }
+
+              return (
+                <tr key={element.id}>
+                  <td>
+                    <AddToDashboard element={element} asset="Cryptocurrency" />
+                  </td>
+                  <td>
+                    {" "}
+                    <img
+                      src={element.logo}
+                      alt={element.name}
+                      className="cryptoLogo"
+                    />
+                  </td>
+                  <td>{element.symbol}</td>
+                  <td>{element.name}</td>
+                  {socketData &&
+                  socketData[
+                    element.name.split(" ").join("-").toLowerCase()
+                  ] ? (
+                    <td className={priceChangeColor}>
+                      {formatPrice(
+                        socketData[
+                          element.name.split(" ").join("-").toLowerCase()
+                        ]
+                      )}
+                    </td>
+                  ) : (
+                    <td>{formatPrice(element.quote.USD.price)}</td>
+                  )}{" "}
+                  <td>
+                    {" "}
+                    {convertToInternationalCurrencySystem(
+                      element.quote.USD.market_cap
+                    )}
+                  </td>
+                  <td>
+                    {" "}
+                    {convertToInternationalCurrencySystem(
+                      element.quote.USD.volume_24h
+                    )}
+                  </td>
+                  {element.quote.USD.volume_change_24h > 0 ? (
+                    <td className="positiveChange">
+                      {element.quote.USD.volume_change_24h + "%"}
+                    </td>
+                  ) : (
+                    <td className="negativeChange">
+                      {element.quote.USD.volume_change_24h + "%"}
+                    </td>
+                  )}
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
       </Container>
     );
   }
