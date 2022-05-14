@@ -121,6 +121,20 @@ const Exchanges = () => {
     }
   }, [searchTerm]);
 
+
+  function convertToInternationalCurrencySystem(labelValue) {
+    // Nine Zeroes for Billions
+    return Math.abs(Number(labelValue)) >= 1.0e9
+      ? (Math.abs(Number(labelValue)) / 1.0e9).toFixed(2) + "B"
+      : // Six Zeroes for Millions
+      Math.abs(Number(labelValue)) >= 1.0e6
+      ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(2) + "M"
+      : // Three Zeroes for Thousands
+      Math.abs(Number(labelValue)) >= 1.0e3
+      ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(2) + "K"
+      : Math.abs(Number(labelValue));
+  }
+
   const searchValue = async (value) => {
     if (value) {
       setSearchTerm(value.trim());
@@ -183,8 +197,8 @@ const Exchanges = () => {
                           </td>
                           <td>{element.name}</td>
                           <td>{element.trust_score}</td>
-                          <td>{element.trade_volume_24h_btc_normalized}</td>
-                          <td>{element.trade_volume_24h_btc}</td>
+                          <td>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc_normalized)}</td>
+                          <td>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc)}</td>
                         </tr>
                       );
                     })
@@ -203,8 +217,8 @@ const Exchanges = () => {
                           </td>
                           <td>{e.name}</td>
                           <td>{e.trust_score}</td>
-                          <td>{e.trade_volume_24h_btc_normalized}</td>
-                          <td>{e.trade_volume_24h_btc}</td>
+                          <td>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc_normalized)}</td>
+                          <td>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc)}</td>
                         </tr>
                       );
                     })}
