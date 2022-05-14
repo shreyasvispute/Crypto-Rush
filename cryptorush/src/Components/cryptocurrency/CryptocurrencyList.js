@@ -83,7 +83,6 @@ const CryptocurrencyList = (props) => {
                     <AddToDashboard element={element} asset="Cryptocurrency" />
                   </td>
                   <td>
-                    {" "}
                     <img
                       src={element.logo}
                       alt={element.name}
@@ -105,15 +104,13 @@ const CryptocurrencyList = (props) => {
                     </td>
                   ) : (
                     <td>{formatPrice(element.quote.USD.price)}</td>
-                  )}{" "}
+                  )}
                   <td>
-                    {" "}
                     {convertToInternationalCurrencySystem(
                       element.quote.USD.market_cap
                     )}
                   </td>
                   <td>
-                    {" "}
                     {convertToInternationalCurrencySystem(
                       element.quote.USD.volume_24h
                     )}
