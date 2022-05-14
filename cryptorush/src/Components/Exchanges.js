@@ -122,6 +122,19 @@ const Exchanges = () => {
   }, [searchTerm]);
 
 
+  function convertToInternationalCurrencySystem(labelValue) {
+    // Nine Zeroes for Billions
+    return Math.abs(Number(labelValue)) >= 1.0e9
+      ? (Math.abs(Number(labelValue)) / 1.0e9).toFixed(2) + "B"
+      : // Six Zeroes for Millions
+      Math.abs(Number(labelValue)) >= 1.0e6
+      ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(2) + "M"
+      : // Three Zeroes for Thousands
+      Math.abs(Number(labelValue)) >= 1.0e3
+      ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(2) + "K"
+      : Math.abs(Number(labelValue));
+  }
+
   const searchValue = async (value) => {
     if (value) {
       setSearchTerm(value.trim());
@@ -170,7 +183,7 @@ const Exchanges = () => {
                         className="cryptoList"
                       >
                         <Link
-                          to={`/Exchange/${element.id}`}
+                          to={`/Exchanges/${element.id}`}
                         >
                           <Row>
                             <Col>
@@ -182,8 +195,8 @@ const Exchanges = () => {
                               {element.name}
                             </Col>
                             <Col>{element.trust_score}</Col>
-                            <Col>{element.trade_volume_24h_btc_normalized}</Col>
-                            <Col>{element.trade_volume_24h_btc}</Col>
+                            <Col>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc_normalized)}</Col>
+                            <Col>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc)}</Col>
                           </Row>
                         </Link>
                       </ListGroupItem>
@@ -197,7 +210,7 @@ const Exchanges = () => {
                         variant="secondary"
                         className="cryptoList"
                       >
-                        <Link to={`/Exchange/${element.id}`}>
+                        <Link to={`/Exchanges/${element.id}`}>
                           <Row>
                             <Col>
                               <img
@@ -208,8 +221,8 @@ const Exchanges = () => {
                               {element.name}
                             </Col>
                             <Col>{element.trust_score}</Col>
-                            <Col>{element.trade_volume_24h_btc_normalized}</Col>
-                            <Col>{element.trade_volume_24h_btc}</Col>
+                            <Col>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc_normalized)}</Col>
+                            <Col>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc)}</Col>
                           </Row>
                         </Link>
                       </ListGroupItem>

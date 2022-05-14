@@ -17,6 +17,7 @@ import Navigation from "./Components/Navigation";
 import SignUp from "./Components/login/SignUp";
 import DashboardContext from "./context/dashboardContext";
 import reducer from "./reducers/dashboardReducer";
+import Exchange from "./Components/Exchange";
 
 function App() {
   const [dashboard, dashboardDispatch] = useReducer(
@@ -71,6 +72,16 @@ function App() {
                   }
                 />
                 <Route
+                  path="/Exchanges/:id"
+                  element={
+                    <PrivateRoute>
+                      {" "}
+                      <Exchange />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                
                   path="/NFTs"
                   element={
                     <PrivateRoute>

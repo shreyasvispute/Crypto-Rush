@@ -1,213 +1,144 @@
-import { Container, Col, Row } from "react-bootstrap";
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import { Card, CardGroup } from "react-bootstrap";
-import Search from "./Search";
-//import {useSelector,useDispatch} from 'react-redux';
+// import * as React from 'react';
+// import { useEffect, useState } from "react";
+// import { Link, useParams } from "react-router-dom";
+// import axios from "axios";
+// import { styled } from '@mui/material/styles';
+// import Card from '@mui/material/Card';
+// import CardHeader from '@mui/material/CardHeader';
+// import CardMedia from '@mui/material/CardMedia';
+// import CardContent from '@mui/material/CardContent';
+// import CardActions from '@mui/material/CardActions';
+// import Collapse from '@mui/material/Collapse';
+// import Avatar from '@mui/material/Avatar';
+// import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+// import Typography from '@mui/material/Typography';
+// import { red } from '@mui/material/colors';
+// import FavoriteIcon from '@mui/icons-material/Favorite';
+// import ShareIcon from '@mui/icons-material/Share';
+// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-/*import {
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Grid,
-  Typography,
-  makeStyles,
-  Button
-} from '@material-ui/core';
+// import {Container, Spinner, Row } from "react-bootstrap";
 
-const useStyles = makeStyles({
-  card: {
-    maxWidth: 250,
-    height: 'auto',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    borderRadius: 5,
-    border: '1px solid #1e8678',
-    boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);'
-  },
-  titleHead: {
-    borderBottom: '1px solid #1e8678',
-    fontWeight: 'bold'
-  },
-  grid: {
-    flexGrow: 1,
-    flexDirection: 'row'
-  },
-  media: {
-    height: '100%',
-    width: '100%'
-  },
-  button: {
-    color: '#1e8678',
-    fontWeight: 'bold',
-    fontSize: 12
-  }
-});*/
+// // interface ExpandMoreProps extends IconButtonProps {
+// //   expand: boolean;
+// // }
 
+// // const ExpandMore = styled((props: ExpandMoreProps) => {
+// //   const { expand, ...other } = props;
+// //   return <IconButton {...other} />;
+// // })(({ theme, expand }) => ({
+// //   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+// //   marginLeft: 'auto',
+// //   transition: theme.transitions.create('transform', {
+// //     duration: theme.transitions.duration.shortest,
+// //   }),
+// // }));
 
-const News = () => {
+// const News = () => {
 
-  //const classes = useStyles();
-  const [loading, setLoading] = useState(true);
-  const [showsData, setShowsData] = useState(undefined);
-  //const [searchTerm, setSearchTerm] = useState("");
-  const [searchData, setSearchData] = useState(undefined);
-  const [searchTerm, setSearchTerm] = useState("");
+//   let card = null;
+//   const [expanded, setExpanded] = React.useState(false);
+//   const [loading, setLoading] = useState(true);
+//   const [pageError, setPageError] = useState(false);
+//   const [apiData, setApiData] = useState([]);
 
-  const [pageError, setPageError] = useState(false);
-  const [apiData, setApiData] = useState([]);
+//   //const {page} = useParams()
+//   useEffect(() => {
+//     const getData = async () => {
+//       try {
+//         const url = `http://localhost:4000/news`;
+//         const data = await axios.get(url);
 
+//         setApiData(data.data);
+//         setLoading(false)
+//         console.log(data.data)
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        let limit = 20;
-        // let page = Number(params.page);
-        // if (isNaN(page)) {
-        //   setPageError(true);
-        //   return;
-        // }
-        // if (page === 0) {
-        //   setPrevState(false);
-        //   page = 0;
-        // } else {
-        //   setPrevState(true);
-        // }
+//         if (data.data.length === 0) {
+//           setPageError(true);
+//         } else {
+//           setPageError(false);
+//         }
+//       } catch (error) {
+//         console.log(error);
+//       }
+//     };
+//     getData();
+//   }, []);
 
-        // page += 1;
-        // let offset = limit * page - limit;
-        const url = `http://localhost:4000/news`;
-        //const token = await getUserToken(currentUser);
-        const data = await axios.get(url);
-        console.log("data",data.data);
+//   const handleExpandClick = () => {
+//     setExpanded(!expanded);
+//   };
 
+//   if (pageError) {
+//     return (
+//       <Container>
+//         <Container className="headRow">
+//           <Row className="titleAlign">
+//             <h1>News</h1>
+//           </Row>
+//           <Row>
+//             <h1>Not FOUND</h1>
+//           </Row>
+//         </Container>
+//       </Container>
+//     );
+//   } else if (loading) {
+//       return (
+//         <div>
+//           <Container>
+//             <Spinner animation="border" variant="danger" role="status">
+//               <span className="visually-hidden">Loading...</span>
+//             </Spinner>
+//           </Container>
+//         </div>
+//       );
+//     }
+    
+//   else{return(
+//       <div>
+//         {apiData && apiData.map(data=>{
+//         <Card sx={{ maxWidth: 345 }}>
+        
+//         <CardHeader
+//           avatar={
+//             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+//               R
+//             </Avatar>
+//           }
+//           action={
+//             <IconButton aria-label="settings">
+//               <MoreVertIcon />
+//             </IconButton>
+//           }
+//           title={data.title}
+//           subheader={data.publishedAt}
+//         />
+//         <CardMedia
+//           component="img"
+//           height="194"
+//           src = {data.urlToImage}
+//           image={data.urlToImage}
+//           alt= {data.author}
+//         />
+//         <CardContent>
+//           <Typography variant="body2" color="text.secondary">
+//             {data.description}
+//           </Typography>
+//         </CardContent>
+//         <CardActions disableSpacing>
+//         </CardActions>
+//         <Collapse in={expanded} timeout="auto" unmountOnExit>
+//           <CardContent>
+//             <Typography paragraph>
+//               {data.content}
+//             </Typography>
+//           </CardContent>
+//         </Collapse>
+//       </Card>
+//       })}
+//     </div>
+//   )}
+// }
 
-
-        // let totalPages = Math.ceil(totalRecords / limit) - 1;
-        // setPages(totalPages);
-
-        // if (page - 1 === totalPages) {
-        //   setNextState(false);
-        // } else {
-        //   setNextState(true);
-        // }
-        //setApiData(data.data);
-        //setLoading(false);
-
-        if (data.data.length === 0) {
-          setPageError(true);
-        } else {
-          setPageError(false);
-          setLoading(false);
-          setApiData(data.data);
-          setShowsData(data.data);
-        }
-      } catch (error) {
-        setPageError(true);
-        console.log(error);
-      }
-    };
-    getData();
-  }, []);
-
-  useEffect(() => {
-    async function searchNFTs(searchTerm) {
-      try {
-        setPageError(false);
-
-        const url = `http://localhost:4000/news/${searchTerm}`;
-        const data = await axios.get(url);
-        // setTotalRecords(data.length);
-        setLoading(false);
-        setSearchData(data.data);
-      } catch (error) {
-        setPageError(true);
-        console.log(error);
-      }
-    }
-    if (searchTerm) {
-      // setPaginate(false);
-      searchNFTs(searchTerm);
-    }
-  }, [searchTerm]);
-
-  const searchValue = async (value) => {
-    setSearchTerm(value);
-  };
-
-  const buildCard = (data) => {
-    return (
-      <div key={data.author} className="col sm-4">
-        <Card style={{ width: '18rem' }}>
-  <Card.Img variant="top" src = {data.urlToImage}  />
-  <Card.Body>
-    <Card.Title>{data.title}</Card.Title>
-    <Card.Text>
-      {data.content}
-    </Card.Text>
-  </Card.Body>
-  <Card.Body>
-    <Card.Link href="#">Card Link</Card.Link>
-    <Card.Link href="#">Another Link</Card.Link>
-  </Card.Body>
-</Card>
-      </div>
-    );
-  };
-
-  let card;
-
-  if (searchTerm) {
-   card =
-      searchData &&
-      searchData.map((characters) => {
-        return buildCard(characters);
-      });
-  } else {
-   card =
-      apiData &&
-      apiData.map((characterData) => {
-        return buildCard(characterData);
-      });
-  }
-
-  return(
-    <Container>
-          <Container className="headRow">
-            <Row className="titleAlign">
-              <h1>NEWS</h1>
-            </Row>
-
-            <Row>
-            <Col>
-              <Search page="NFTs" searchValue={searchValue}></Search>
-            </Col>
-      
-              {/* <Col sm className="makeCenter filterMargin">
-                {paginate && (
-                  <Paginate
-                    pageNum={params.page}
-                    prevState={isPrev}
-                    nextState={isNext}
-                    page="characters"
-                    currentPage={
-                      Number(params.page) < 0 ? 0 : Number(params.page)
-                    }
-                    totalPages={pages}
-                  ></Paginate>
-                )}
-              </Col> */}
-              {/* <Col sm className="makeCenter filterMargin">
-                Total Records Count: {totalRecords}
-              </Col> */}
-            </Row>
-          </Container>
-          <CardGroup>{card}</CardGroup>
-        </Container>
-  )
-
-};
-
-export default News;
+// export default News;
