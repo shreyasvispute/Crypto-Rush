@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import {useParams} from 'react-router-dom'
 // import { chartDays } from "../config/data";
-import  SelectButton from './SelectButton'
+import ReactApexChart from "react-apexcharts";
+
 import Chart from 'chart.js/auto';
 
 import {
@@ -12,7 +13,7 @@ import {
     makeStyles
   } from "@material-ui/core";
 import { Card, Container,  CardGroup, Spinner, Row } from "react-bootstrap";
-import {Line} from 'react-chartjs-2'
+import {Line, Bar,Candlestick} from 'react-chartjs-2'
   console.clear();
   const useStyles = makeStyles((theme) => ({
     container: {
@@ -49,12 +50,14 @@ import {Line} from 'react-chartjs-2'
   
     const fetchHistData = async() =>{
       try {
-        const CoinGecko = require('coingecko-api');
-        const CoinGeckoClient = new CoinGecko();
-        let data = await CoinGeckoClient.exchanges.fetchVolumeChart(`${id}`, {
-          days: days,
-        });
-       
+        // const CoinGecko = require('coingecko-api');
+        // const CoinGeckoClient = new CoinGecko();
+        // let data = await CoinGeckoClient.exchanges.fetchVolumeChart(`${id}`, {
+        //   days: days,
+        // });
+
+      let data = await axios.get(`/Exchanges/${id}/volume_chart/${days}`)
+      // console.log(data.data)
         setflag(true);
       setHistExchangeData(data.data);
 
@@ -74,9 +77,6 @@ import {Line} from 'react-chartjs-2'
        fetchHistData()
    }, [days])
 
- 
-
-   console.log(histExchangeData)
 
    const graphData = 
     {
@@ -98,6 +98,53 @@ import {Line} from 'react-chartjs-2'
 
     
     }
+
+  //   let chartData = {
+  //     series: [{
+  //       name: "Volumne",
+  //       data: histExchangeData.map((exch) => exch[1]),
+  //   }],
+  //   options: {
+  //     chart: {
+  //       height: 350,
+  //       width: "100%",
+  //       type: 'line',
+  //       zoom: {
+  //         enabled: false
+  //       },
+
+  //     }
+  //   },
+  //   dataLabels: {
+  //     enabled: true
+  //   },
+  //   stroke: {
+  //     curve: 'straight'
+  //   },
+  //   title: {
+  //     text: `Volumne chart for Past ${days} Days )`,
+  //     align: 'center'
+  //   },
+  //   grid: {
+  //     row: {
+  //       colors: ['#f3f3f3', 'transparent'], 
+  //       opacity: 0.5
+  //     },
+  //   },
+  //   xaxis: {
+  //     categories: histExchangeData.map((gdata) =>{
+  //       let date = new Date(gdata[0]);
+  //       let time =
+  //       date.getHours() > 12
+  //         ? `${date.getHours() - 12}:${date.getMinutes()}PM`
+  //         : `${date.getHours()}:${date.getMinutes()}AM`;
+  //        return days === 1 ? time : date.toLocaleDateString();
+    
+  //   }),
+  //   }
+  // }
+  
+  
    
    
    const darkTheme = createTheme({
@@ -110,14 +157,9 @@ import {Line} from 'react-chartjs-2'
   });
 
 
+const classes = useStyles();
 
-
-    const classes = useStyles();
-
-
-
-    
-    if (pageError) {
+if (pageError) {
       return (
         <Container>
           <Container className="headRow">
@@ -152,7 +194,7 @@ import {Line} from 'react-chartjs-2'
                     size={250}
                     thickness={1}
                   />
-                  ) : (
+                  ):(
                    
                    <>
                   <Line data ={graphData} options={{
@@ -162,6 +204,7 @@ import {Line} from 'react-chartjs-2'
                       },
                     },
                   }}/>
+                  {/* <ReactApexChart options={chartData.options} series={chartData.series} height={500} width ={750}/> */}
                    
                     <div
                         style={{
@@ -171,14 +214,30 @@ import {Line} from 'react-chartjs-2'
                           width: "100%",
                         }}
             >
-              <button  onClick={() => {
+              <button style={{
+                background:'#084298',
+                color:'white'}}
+              
+              onClick={() => {
                 setDays(1);
                          }}> 24 Hours</button>
-              <button  onClick={() => {setDays(14);
+              <button style={{
+                background:'#084298',
+                color:'white'}}
+              
+              onClick={() => {setDays(14);
                   }}> 14 days</button>
-              <button onClick={() => {setDays(30);
+              <button style={{
+                background:'#084298',
+                color:'white'}}
+              
+              onClick={() => {setDays(30);
                   }}> 30 days</button>
-              <button onClick={() => {setDays(90);
+              <button 
+                style={{
+                  background:'#084298',
+                  color:'white'}}
+              onClick={() => {setDays(90);
                   }}> 90 days</button>
             </div>
                    </>

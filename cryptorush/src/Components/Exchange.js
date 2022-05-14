@@ -1,7 +1,7 @@
 import { Container, Col, Row } from "react-bootstrap";
 import ExchangeInfo from './ExchangeInfo'
 import { makeStyles, Typography, Link, LinearProgress} from '@material-ui/core';
-import ReactHtmlParser from 'react-html-parser'
+//import ReactHtmlParser from 'react-html-parser'
 import {useParams} from 'react-router-dom'
 import { useState, useEffect } from "react";
 import axios from 'axios'
@@ -69,16 +69,13 @@ function Exchange(){
   const {id} = useParams()
   const[exchange,setExchange] = useState();
 
-
-
-
-
-  useEffect(() => {
+useEffect(() => {
     
 
     const fetchExchange = async() => {
-      const { data } =  await axios.get(`https://api.coingecko.com/api/v3/exchanges/${id}`);
-      setExchange(data);
+      const { data } =  await axios.get(`/Exchanges/${id}`);
+      // console.log(data)
+      setExchange(data.data);
   };
   fetchExchange();
   }, []);
@@ -100,8 +97,15 @@ function Exchange(){
                 {exchange && exchange.name ? exchange.name : <p>Not available</p>}
             </Typography>
             <Typography variant='subtitle1' className={classes.description}>
-                {exchange && exchange.description ? ReactHtmlParser(exchange.description.split('. ')[0]) : <p> Description Not available</p>}
+                {exchange && exchange.description ?exchange.description.split('. ')[0] : <p> Description Not available</p>}
                 {exchange && exchange.url ? exchange.url : <p>Not available</p>}
+               
+            </Typography>
+            <Typography variant='subtitle1' className={classes.description}>
+               Facebook:{exchange && exchange.facebook_url ? exchange.facebook_url : <p>Facebook url Not available</p>}
+            </Typography>
+            <Typography variant='subtitle1' className={classes.description}>
+               Twitter handle: {exchange && exchange.twitter_handle ? exchange.twitter_handle : <p>Twitter handle Not available</p>}
             </Typography>
 
 
@@ -112,6 +116,24 @@ function Exchange(){
                     &nbsp;&nbsp;
                     <Typography variant ='h6'  style={{fontFamily:'Montserrant'}}>
                     {exchange && exchange.year_established ? exchange.year_established : <p>Not available</p>}
+                    </Typography>
+
+                </span>
+
+                <span style={{display:'flex'}}>
+                    <Typography variant ='h6'  className={classes.heading}>Centralized:</Typography>
+                    &nbsp;&nbsp;
+                    <Typography variant ='h6'  style={{fontFamily:'Montserrant'}}>
+                    {exchange && exchange.centralized === true ? 'True' : <p>False</p>}
+                    </Typography>
+
+                </span>
+
+                <span style={{display:'flex'}}>
+                    <Typography variant ='h6'  className={classes.heading}>Country:</Typography>
+                    &nbsp;&nbsp;
+                    <Typography variant ='h6'  style={{fontFamily:'Montserrant'}}>
+                    {exchange && exchange.country? exchange.country : <p>Country not availabe</p>}
                     </Typography>
 
                 </span>
@@ -144,7 +166,6 @@ function Exchange(){
           
             </div>
           </div>
-       chart
        <ExchangeInfo exchange={exchange}>
 
        </ExchangeInfo>
@@ -154,3 +175,4 @@ function Exchange(){
 };
 
 export default Exchange;
+
