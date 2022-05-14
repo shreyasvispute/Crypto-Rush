@@ -47,7 +47,9 @@ const reducer = (state, action) => {
         return [...prevState];
       } else {
         const user = prevState[index];
-        user.dashboard.Cryptocurrency.push(payload.cryptocurrency);
+        if (!user.dashboard.Cryptocurrency.includes(payload.cryptocurrency)) {
+          user.dashboard.Cryptocurrency.push(payload.cryptocurrency);
+        }
         prevState[index] = user;
         return [...prevState];
       }
@@ -60,7 +62,9 @@ const reducer = (state, action) => {
         return [...prevState];
       } else {
         const user = prevState[index];
-        user.dashboard.NFT.push(payload.NFT);
+        if (!user.dashboard.NFT.includes(payload.NFT)) {
+          user.dashboard.NFT.push(payload.NFT);
+        }
         prevState[index] = user;
         return [...prevState];
       }

@@ -1,5 +1,5 @@
 import { Button } from "react-bootstrap";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { UserAuth } from "../../firebase/Auth";
 
 import dashboardContext from "../../context/dashboardContext";
@@ -11,7 +11,7 @@ const AddToDashboard = (props) => {
   let userCryptoInfo = [];
   let userNFTInfo = [];
 
-  const setStateURL = `/store/setState`;
+  // const setStateURL = `/store/setState`;
   const updateStateURL = `/store/updateState`;
 
   async function updateStateInDB() {
@@ -19,9 +19,8 @@ const AddToDashboard = (props) => {
       debugger;
       let dashboard = context;
       const token = await getUserToken(currentUser);
-      const { data } = await axios.post(updateStateURL, {
+      const { data } = await axios.post(updateStateURL, dashboard, {
         headers: { authorization: `Bearer ${token}` },
-        dashboard,
       });
     } catch (ex) {
       console.log(ex);
@@ -34,52 +33,55 @@ const AddToDashboard = (props) => {
   }
 
   async function addToDashboard(element, asset) {
-    if ((asset = "Cryptocurrency")) {
-      context.dashboardDispatch({
+    debugger;
+    if (asset === "Cryptocurrency") {
+      await context.dashboardDispatch({
         type: "ADD_CRYPTO_TO_DASHBOARD",
         payload: {
           user: currentUser.uid,
           cryptocurrency: element.symbol,
         },
       });
-      await updateStateInDB();
+      // await updateStateInDB();
     } else {
-      context.dashboardDispatch({
+      await context.dashboardDispatch({
         type: "ADD_NFT_TO_DASHBOARD",
         payload: {
           user: currentUser.uid,
           NFT: element.symbol,
         },
       });
-      await updateStateInDB();
+      // await updateStateInDB();
     }
+    await updateStateInDB();
     console.log("Conext" + context);
   }
 
   async function removeFromDashboard(element, asset) {
-    if ((asset = "Cryptocurrency")) {
-      context.dashboardDispatch({
+    if (asset === "Cryptocurrency") {
+      await context.dashboardDispatch({
         type: "REMOVE_CRYPTO_FROM_DASHBOARD",
         payload: {
           user: currentUser.uid,
           cryptocurrency: element.symbol,
         },
       });
-      await updateStateInDB();
+      // await updateStateInDB();
     } else {
-      context.dashboardDispatch({
+      await context.dashboardDispatch({
         type: "REMOVE_NFT_FROM_DASHBOARD",
         payload: {
           user: currentUser.uid,
           NFT: element.symbol,
         },
       });
-      await updateStateInDB();
+      // await updateStateInDB();
     }
+    await updateStateInDB();
     console.log("Conext" + context);
   }
 
-  if (props.asset == "Cryptocurrency") {
+  if (props.asset === "Cryptocurrency") {
     return (
       // {userCryptoInfo.  (props.element.symbol) ?
       <div>
@@ -101,7 +103,7 @@ const AddToDashboard = (props) => {
         )}
       </div>
     );
-  } else if (props.asset == "NFT") {
+  } else if (props.asset === "NFT") {
     return (
       // {userCryptoInfo.  (props.element.symbol) ?
       <div>

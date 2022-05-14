@@ -46,10 +46,10 @@ async function storeStateToDB(state) {
 
 async function updateStateInDB(state) {
   try {
-    const updateRef = db.collection("dashboard").doc(state.dashboard[0].user);
+    const updateRef = db.collection("dashboard").doc(state[0].user);
 
     const res = await updateRef.update({
-      dashboard: state.dashboard[0].dashboard,
+      dashboard: state[0].dashboard,
     });
 
     if (res) {
