@@ -15,9 +15,9 @@ import AuthProvider from "./firebase/Auth";
 import PrivateRoute from "./Components/PrivateRoutes";
 import Navigation from "./Components/Navigation";
 import SignUp from "./Components/login/SignUp";
-import Exchange from './Components/Exchange'
 import DashboardContext from "./context/dashboardContext";
 import reducer from "./reducers/dashboardReducer";
+import Exchange from "./Components/Exchange";
 
 function App() {
   const [dashboard, dashboardDispatch] = useReducer(
@@ -62,56 +62,67 @@ function App() {
                   }
                 />
 
-              <Route
-                path="/Exchanges"
-                element={
-                  <PrivateRoute>
-                    {" "}
-                    <Exchanges />
-                  </PrivateRoute>
-                }
-              />
                 <Route
-                path="/Exchanges/:id"
-                element={
-                  <PrivateRoute>
-                    <Exchange />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/NFTs"
-                element={
-                  <PrivateRoute>
-                    <NFTs />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/NFT/:id/:tokenId/:chain"
-                element={
-                  <PrivateRoute>
-                    <NFT />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/News"
-                element={
-                  <PrivateRoute>
-                    <News />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="*"
-                element={
-                  <PrivateRoute>
-                    <Error />
-                  </PrivateRoute>
-                }
-              />
-            </Routes>
+                  path="/Exchanges"
+                  element={
+                    <PrivateRoute>
+                      {" "}
+                      <Exchanges />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/Exchanges/:id"
+                  element={
+                    <PrivateRoute>
+                      {" "}
+                      <Exchange />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                
+                  path="/NFTs"
+                  element={
+                    <PrivateRoute>
+                      <NFTs />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/NFT/:id/:tokenId/:chain"
+                  element={
+                    <PrivateRoute>
+                      <NFT />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/News"
+                  element={
+                    <PrivateRoute>
+                      <News />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="*"
+                  element={
+                    <PrivateRoute>
+                      <Error />
+                    </PrivateRoute>
+                  }
+                />
+              </Routes>
+            </div>
+            <footer className="footer text-white">
+              <p className="float-end">
+                <a className="text-white" variant="light" href="#">
+                  Back to top
+                </a>
+              </p>
+              <p>©2022 Crypto-Rush. All Rights Reserved.</p>
+            </footer>
           </div>
         </DashboardContext.Provider>
       </AuthProvider>

@@ -1,7 +1,7 @@
 import { Container, Col, Row } from "react-bootstrap";
 import ExchangeInfo from './ExchangeInfo'
 import { makeStyles, Typography, Link, LinearProgress} from '@material-ui/core';
-import ReactHtmlParser from 'react-html-parser'
+//import ReactHtmlParser from 'react-html-parser'
 import {useParams} from 'react-router-dom'
 import { useState, useEffect } from "react";
 import axios from 'axios'
@@ -97,7 +97,7 @@ useEffect(() => {
                 {exchange && exchange.name ? exchange.name : <p>Not available</p>}
             </Typography>
             <Typography variant='subtitle1' className={classes.description}>
-                {exchange && exchange.description ? ReactHtmlParser(exchange.description.split('. ')[0]) : <p> Description Not available</p>}
+                {exchange && exchange.description ?exchange.description.split('. ')[0] : <p> Description Not available</p>}
                 {exchange && exchange.url ? exchange.url : <p>Not available</p>}
                
             </Typography>

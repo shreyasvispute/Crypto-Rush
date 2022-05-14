@@ -4,7 +4,6 @@ import {useParams} from 'react-router-dom'
 // import { chartDays } from "../config/data";
 import ReactApexChart from "react-apexcharts";
 
-import  SelectButton from './SelectButton'
 import Chart from 'chart.js/auto';
 
 import {
@@ -15,7 +14,6 @@ import {
   } from "@material-ui/core";
 import { Card, Container,  CardGroup, Spinner, Row } from "react-bootstrap";
 import {Line, Bar,Candlestick} from 'react-chartjs-2'
-import {Line} from 'react-chartjs-2'
   console.clear();
   const useStyles = makeStyles((theme) => ({
     container: {
