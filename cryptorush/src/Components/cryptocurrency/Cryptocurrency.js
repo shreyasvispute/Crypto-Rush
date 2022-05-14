@@ -2,9 +2,18 @@ import { useState, useEffect } from "react";
 import Error from "../Error";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col, Spinner, Dropdown, Card } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Spinner,
+  Dropdown,
+  Card,
+  ListGroup,
+} from "react-bootstrap";
 import CandleStickChart from "./CandleStickChart";
 import { UserAuth } from "../../firebase/Auth";
+import AddToDashboard from "../dashboard/AddToDashboard";
 
 const Cryptocurrency = () => {
   const [loading, setLoading] = useState(true);
@@ -17,8 +26,25 @@ const Cryptocurrency = () => {
   const [error, setError] = useState(false);
   const { currentUser, getUserToken } = UserAuth();
 
-  const { symbol } = useParams();
+  function convertToInternationalCurrencySystem(labelValue) {
+    // Nine Zeroes for Billions
+    return Math.abs(Number(labelValue)) >= 1.0e9
+      ? (Math.abs(Number(labelValue)) / 1.0e9).toFixed(2) + "B"
+      : // Six Zeroes for Millions
+      Math.abs(Number(labelValue)) >= 1.0e6
+      ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(2) + "M"
+      : // Three Zeroes for Thousands
+      Math.abs(Number(labelValue)) >= 1.0e3
+      ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(2) + "K"
+      : Math.abs(Number(labelValue));
+  }
 
+  function formatPrice(n) {
+    return "$" + (Math.round(n * 100) / 100).toLocaleString();
+  }
+
+  const { symbol } = useParams();
+  debugger;
   let dropdownItems = [
     "24 hours",
     "7 days",
@@ -46,6 +72,7 @@ const Cryptocurrency = () => {
   //Function to make HTTP request to get data
   async function getCryptoData() {
     try {
+      debugger;
       // const { data } = await axios.get(cryptoDataURL);
       const token = await getUserToken(currentUser);
       const { data } = await axios.get(cryptoDataURL, {
@@ -73,6 +100,7 @@ const Cryptocurrency = () => {
   useEffect(() => {
     async function fetchData() {
       try {
+        debugger;
         // setCurrentPage(Number(page));
         const data = await getCryptoData();
         const chartingData = await getChartData();
@@ -162,6 +190,109 @@ const Cryptocurrency = () => {
           <Container className="mainContainer">
             <Row>
               <Col>
+                <h1>
+                  <img
+                    src={cryptoData.logo}
+                    alt={cryptoData.name}
+                    className="navbar-brand"
+                  />
+                  {cryptoData.name} {cryptoData.symbol}
+                </h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h2>{formatPrice(cryptoData.quote.USD.price)}</h2>
+
+                {cryptoData.quote.USD.volume_change_24h > 0 ? (
+                  <td className="positiveChange">
+                    {"+" + cryptoData.quote.USD.volume_change_24h + "%"}
+                  </td>
+                ) : (
+                  <td className="negativeChange">
+                    {cryptoData.quote.USD.volume_change_24h + "%"}
+                  </td>
+                )}
+              </Col>
+              <Col md={1}>
+                <AddToDashboard element={cryptoData} asset="Cryptocurrency" />
+              </Col>
+            </Row>
+
+            <Row>
+              <Col>
+                <div>Description</div>
+              </Col>
+              <Col className="chartDropdown" md={2}>
+                <Dropdown>
+                  <Dropdown.Toggle
+                    variant="outline-secondary"
+                    id="dropdown-basic"
+                  >
+                    {chartDuration.duration}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {dropdownItems.map((element) => {
+                      return (
+                        <Dropdown.Item
+                          key={element}
+                          onClick={() => changeInterval(element)}
+                        >
+                          {element}
+                        </Dropdown.Item>
+                      );
+                    })}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Col>
+            </Row>
+            <Row>
+              <Col>{cryptoData.description}</Col>
+              <Col>
+                <CandleStickChart chartData={chartData} />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <ListGroup horizontal>
+                  <ListGroup.Item>
+                    <Row>Rank</Row>
+                    <Row>{cryptoData.cmc_rank}</Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>Market Cap</Row>
+                    <Row>
+                      {convertToInternationalCurrencySystem(
+                        cryptoData.quote.USD.volume_change_24h
+                      )}
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>Volume 24h</Row>
+                    <Row>
+                      {convertToInternationalCurrencySystem(
+                        cryptoData.quote.USD.volume_24h
+                      )}
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>Circulating supply</Row>
+                    <Row>
+                      {convertToInternationalCurrencySystem(
+                        cryptoData.quote.USD.volume_change_24h
+                      )}
+                    </Row>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Col>
+            </Row>
+          </Container>
+        )}
+
+        {/* {!error && (
+          <Container className="mainContainer">
+            <Row>
+              <Col>
                 <Card>
                   <Card.Header>
                     <img
@@ -213,7 +344,7 @@ const Cryptocurrency = () => {
               </Col>
             </Row>
           </Container>
-        )}
+        )} */}
       </div>
     );
   }
