@@ -5,9 +5,9 @@ const tweetdata = dataModule.tweetData;
 
 router.get("/", async(req, res) => {
     try {
-      console.log("here");
+      //console.log("here");
       const result = await tweetdata.getAlltweets();
-      console.log(result);
+      //console.log(result);
       res.json(result);
       return;
     } catch (error) {
@@ -17,14 +17,14 @@ router.get("/", async(req, res) => {
 
 router.get("/:keyWord", async(req, res) => {
   try {
-    console.log("here");
+    //console.log("here");
     let request = req.params.keyWord;
 
     if(typeof request != "string" ){
       throw `invalid input `;
     }
     const result = await tweetdata.getAlltweets(request);
-    console.log(result);
+    //console.log(result);
     res.json(result);
     return;
   } catch (error) {

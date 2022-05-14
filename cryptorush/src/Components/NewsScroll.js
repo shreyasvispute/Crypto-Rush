@@ -1,24 +1,30 @@
 import { Container, Col, Row } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {useParams} from 'react-router-dom'
 import axios from "axios";
 import { Card, CardGroup } from "react-bootstrap";
-import twitterLogo from "../img/twitter_logo.png"
+import {Link} from "react-router-dom";
 
-const Tweets = () => {
 
+
+
+
+
+const NewsScroll = () => {
   const [loading, setLoading] = useState(true);
-  const [showsData, setShowsData] = useState(undefined);  
-
+  const [showsData, setShowsData] = useState(undefined);
   const [pageError, setPageError] = useState(false);
   const [apiData, setApiData] = useState([]);
-  const {id} = useParams()
+ const {id} = useParams()
+ console.log(id)
   useEffect(() => {
     const getData = async () => {
       try {
-        let limit = 10;
-        const url = `http://localhost:4000/tweets/${id}`;
+        const url = `http://localhost:4000/news/${id}`;
+        //const token = await getUserToken(currentUser);
         const data = await axios.get(url);
+      
+
 
         if (data.data.length === 0) {
           setPageError(true);
@@ -34,7 +40,7 @@ const Tweets = () => {
       }
     };
     getData();
-  }, []);
+  }, [id]);
 
  
 
@@ -42,18 +48,17 @@ const Tweets = () => {
 
   const buildCard = (data) => {
     return (
-      <div key={data.id} className="col sm-4">
+      <div key={data.url} className="col sm-4">
         <CardGroup>
-          <Card style={{ width: '3rem',height: '3rem' } }>
-          <Card.Img variant="top" style={{width:'1rem',height:'3rem'}} src = {twitterLogo}  />
-          <Card.Header>{data.created_at}</Card.Header>
-          <Card.Body>
-            <Card.Title>{data.user.name}</Card.Title>
-            <Card.Text>{data.text}</Card.Text>
-          </Card.Body>
-          <Card.Footer>Retweets:{data.retweet_count}</Card.Footer>
-          </Card>
-        </CardGroup>
+        <Card style={{ width: '3rem',height: '3rem' } }>
+  <Card.Img variant="top" src = {data.urlToImage}  />
+  <Card.Body>
+    <Card.Title>{data.title}</Card.Title>
+    <Card.Link href={data.url}>Read News</Card.Link>
+    
+  </Card.Body>
+</Card>
+</CardGroup>
       </div>
     );
   };
@@ -71,11 +76,16 @@ const Tweets = () => {
 
     <Container>
           <Container className="headRow">
+             <CardGroup>{card}</CardGroup>
           </Container>
-        <CardGroup>{card}</CardGroup>
+        
+         
+         
+        
         </Container>
+        
   )
 
 };
 
-export default Tweets;
+export default NewsScroll;
