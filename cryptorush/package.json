@@ -21,7 +21,10 @@
     "react-paginate": "^8.1.3",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@emotion/styled": "latest",
+    "@mui/icons-material": "latest",
+    "@mui/material": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
