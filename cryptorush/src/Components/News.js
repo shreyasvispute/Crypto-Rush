@@ -35,110 +35,102 @@
 // //   }),
 // // }));
 
-// const News = () => {
+const News = () => {
+  //   let card = null;
+  //   const [expanded, setExpanded] = React.useState(false);
+  //   const [loading, setLoading] = useState(true);
+  //   const [pageError, setPageError] = useState(false);
+  //   const [apiData, setApiData] = useState([]);
+  //   //const {page} = useParams()
+  //   useEffect(() => {
+  //     const getData = async () => {
+  //       try {
+  //         const url = `http://localhost:4000/news`;
+  //         const data = await axios.get(url);
+  //         setApiData(data.data);
+  //         setLoading(false)
+  //         console.log(data.data)
+  //         if (data.data.length === 0) {
+  //           setPageError(true);
+  //         } else {
+  //           setPageError(false);
+  //         }
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     };
+  //     getData();
+  //   }, []);
+  //   const handleExpandClick = () => {
+  //     setExpanded(!expanded);
+  //   };
+  //   if (pageError) {
+  //     return (
+  //       <Container>
+  //         <Container className="headRow">
+  //           <Row className="titleAlign">
+  //             <h1>News</h1>
+  //           </Row>
+  //           <Row>
+  //             <h1>Not FOUND</h1>
+  //           </Row>
+  //         </Container>
+  //       </Container>
+  //     );
+  //   } else if (loading) {
+  //       return (
+  //         <div>
+  //           <Container>
+  //             <Spinner animation="border" variant="danger" role="status">
+  //               <span className="visually-hidden">Loading...</span>
+  //             </Spinner>
+  //           </Container>
+  //         </div>
+  //       );
+  //     }
+  //   else{return(
+  //       <div>
+  //         {apiData && apiData.map(data=>{
+  //         <Card sx={{ maxWidth: 345 }}>
+  //         <CardHeader
+  //           avatar={
+  //             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+  //               R
+  //             </Avatar>
+  //           }
+  //           action={
+  //             <IconButton aria-label="settings">
+  //               <MoreVertIcon />
+  //             </IconButton>
+  //           }
+  //           title={data.title}
+  //           subheader={data.publishedAt}
+  //         />
+  //         <CardMedia
+  //           component="img"
+  //           height="194"
+  //           src = {data.urlToImage}
+  //           image={data.urlToImage}
+  //           alt= {data.author}
+  //         />
+  //         <CardContent>
+  //           <Typography variant="body2" color="text.secondary">
+  //             {data.description}
+  //           </Typography>
+  //         </CardContent>
+  //         <CardActions disableSpacing>
+  //         </CardActions>
+  //         <Collapse in={expanded} timeout="auto" unmountOnExit>
+  //           <CardContent>
+  //             <Typography paragraph>
+  //               {data.content}
+  //             </Typography>
+  //           </CardContent>
+  //         </Collapse>
+  //       </Card>
+  //       })}
+  //     </div>
+  //   )}
+};
 
-//   let card = null;
-//   const [expanded, setExpanded] = React.useState(false);
-//   const [loading, setLoading] = useState(true);
-//   const [pageError, setPageError] = useState(false);
-//   const [apiData, setApiData] = useState([]);
-
-//   //const {page} = useParams()
-//   useEffect(() => {
-//     const getData = async () => {
-//       try {
-//         const url = `http://localhost:4000/news`;
-//         const data = await axios.get(url);
-
-//         setApiData(data.data);
-//         setLoading(false)
-//         console.log(data.data)
-
-//         if (data.data.length === 0) {
-//           setPageError(true);
-//         } else {
-//           setPageError(false);
-//         }
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     };
-//     getData();
-//   }, []);
-
-//   const handleExpandClick = () => {
-//     setExpanded(!expanded);
-//   };
-
-//   if (pageError) {
-//     return (
-//       <Container>
-//         <Container className="headRow">
-//           <Row className="titleAlign">
-//             <h1>News</h1>
-//           </Row>
-//           <Row>
-//             <h1>Not FOUND</h1>
-//           </Row>
-//         </Container>
-//       </Container>
-//     );
-//   } else if (loading) {
-//       return (
-//         <div>
-//           <Container>
-//             <Spinner animation="border" variant="danger" role="status">
-//               <span className="visually-hidden">Loading...</span>
-//             </Spinner>
-//           </Container>
-//         </div>
-//       );
-//     }
-    
-//   else{return(
-//       <div>
-//         {apiData && apiData.map(data=>{
-//         <Card sx={{ maxWidth: 345 }}>
-        
-//         <CardHeader
-//           avatar={
-//             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-//               R
-//             </Avatar>
-//           }
-//           action={
-//             <IconButton aria-label="settings">
-//               <MoreVertIcon />
-//             </IconButton>
-//           }
-//           title={data.title}
-//           subheader={data.publishedAt}
-//         />
-//         <CardMedia
-//           component="img"
-//           height="194"
-//           src = {data.urlToImage}
-//           image={data.urlToImage}
-//           alt= {data.author}
-//         />
-//         <CardContent>
-//           <Typography variant="body2" color="text.secondary">
-//             {data.description}
-//           </Typography>
-//         </CardContent>
-//         <CardActions disableSpacing>
-//         </CardActions>
-//         <Collapse in={expanded} timeout="auto" unmountOnExit>
-//           <CardContent>
-//             <Typography paragraph>
-//               {data.content}
-//             </Typography>
-//           </CardContent>
-//         </Collapse>
-//       </Card>
-//       })}
-//     </div>
-//   )}
-// }
-
-// export default News;
+export default News;

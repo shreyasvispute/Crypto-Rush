@@ -1,12 +1,4 @@
-import {
-  Container,
-  Col,
-  Row,
-  Spinner,
-  ListGroup,
-  ListGroupItem,
-  Table,
-} from "react-bootstrap";
+import { Container, Col, Row, Spinner, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Error from "./Error";
 import axios from "axios";

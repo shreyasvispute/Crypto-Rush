@@ -66,7 +66,6 @@ function App() {
                   path="/Exchanges"
                   element={
                     <PrivateRoute>
-                      {" "}
                       <Exchanges />
                     </PrivateRoute>
                   }
@@ -75,13 +74,11 @@ function App() {
                   path="/Exchanges/:id"
                   element={
                     <PrivateRoute>
-                      {" "}
                       <Exchange />
                     </PrivateRoute>
                   }
                 />
                 <Route
-                
                   path="/NFTs"
                   element={
                     <PrivateRoute>

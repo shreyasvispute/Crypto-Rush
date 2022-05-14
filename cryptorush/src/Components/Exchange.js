@@ -1,4 +1,4 @@
-// import { Container, Col, Row } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 // import ExchangeInfo from "./ExchangeInfo";
 // import {
 //   makeStyles,
@@ -63,152 +63,152 @@
 //   },
 // }));
 
-// function Exchange() {
-//   const { id } = useParams();
-//   const [exchange, setExchange] = useState();
+function Exchange() {
+  //   const { id } = useParams();
+  //   const [exchange, setExchange] = useState();
 
-//   useEffect(() => {
-//     const fetchExchange = async () => {
-//       const { data } = await axios.get(`/Exchanges/${id}`);
-//       // console.log(data)
-//       setExchange(data.data);
-//     };
-//     fetchExchange();
-//   }, []);
+  //   useEffect(() => {
+  //     const fetchExchange = async () => {
+  //       const { data } = await axios.get(`/Exchanges/${id}`);
+  //       // console.log(data)
+  //       setExchange(data.data);
+  //     };
+  //     fetchExchange();
+  //   }, []);
 
-//   const classes = useStyles();
+  //   const classes = useStyles();
 
-//   if (!exchange)
-//     return (
-//       <LinearProgress style={{ backgroundColor: "gold" }}></LinearProgress>
-//     );
+  //   if (!exchange)
+  //     return (
+  //       <LinearProgress style={{ backgroundColor: "gold" }}></LinearProgress>
+  //     );
 
-//   return (
-//     <div className={classes.container}>
-//       <div className={classes.sidebar}>
-//         <img
-//           src={exchange?.image}
-//           alt={exchange?.name}
-//           height="100"
-//           style={{ marginBottom: 20 }}
-//         />
-//         <Typography variant="h3" className={classes.heading}>
-//           {exchange && exchange.name ? exchange.name : <p>Not available</p>}
-//         </Typography>
-//         <Typography variant="subtitle1" className={classes.description}>
-//           {exchange && exchange.description ? (
-//             exchange.description.split(". ")[0]
-//           ) : (
-//             <p> Description Not available</p>
-//           )}
-//           {exchange && exchange.url ? exchange.url : <p>Not available</p>}
-//         </Typography>
-//         <Typography variant="subtitle1" className={classes.description}>
-//           Facebook:
-//           {exchange && exchange.facebook_url ? (
-//             exchange.facebook_url
-//           ) : (
-//             <p>Facebook url Not available</p>
-//           )}
-//         </Typography>
-//         <Typography variant="subtitle1" className={classes.description}>
-//           Twitter handle:{" "}
-//           {exchange && exchange.twitter_handle ? (
-//             exchange.twitter_handle
-//           ) : (
-//             <p>Twitter handle Not available</p>
-//           )}
-//         </Typography>
+  return (
+    <div>
+      {/* <div className={classes.sidebar}>
+        <img
+          src={exchange?.image}
+          alt={exchange?.name}
+          height="100"
+          style={{ marginBottom: 20 }}
+        />
+        <Typography variant="h3" className={classes.heading}>
+          {exchange && exchange.name ? exchange.name : <p>Not available</p>}
+        </Typography>
+        <Typography variant="subtitle1" className={classes.description}>
+          {exchange && exchange.description ? (
+            exchange.description.split(". ")[0]
+          ) : (
+            <p> Description Not available</p>
+          )}
+          {exchange && exchange.url ? exchange.url : <p>Not available</p>}
+        </Typography>
+        <Typography variant="subtitle1" className={classes.description}>
+          Facebook:
+          {exchange && exchange.facebook_url ? (
+            exchange.facebook_url
+          ) : (
+            <p>Facebook url Not available</p>
+          )}
+        </Typography>
+        <Typography variant="subtitle1" className={classes.description}>
+          Twitter handle:{" "}
+          {exchange && exchange.twitter_handle ? (
+            exchange.twitter_handle
+          ) : (
+            <p>Twitter handle Not available</p>
+          )}
+        </Typography>
 
-//         <div className={classes.marketData}>
-//           <span style={{ display: "flex" }}>
-//             <Typography variant="h6" className={classes.heading}>
-//               Year Established:
-//             </Typography>
-//             &nbsp;&nbsp;
-//             <Typography variant="h6" style={{ fontFamily: "Montserrant" }}>
-//               {exchange && exchange.year_established ? (
-//                 exchange.year_established
-//               ) : (
-//                 <p>Not available</p>
-//               )}
-//             </Typography>
-//           </span>
+        <div className={classes.marketData}>
+          <span style={{ display: "flex" }}>
+            <Typography variant="h6" className={classes.heading}>
+              Year Established:
+            </Typography>
+            &nbsp;&nbsp;
+            <Typography variant="h6" style={{ fontFamily: "Montserrant" }}>
+              {exchange && exchange.year_established ? (
+                exchange.year_established
+              ) : (
+                <p>Not available</p>
+              )}
+            </Typography>
+          </span>
 
-//           <span style={{ display: "flex" }}>
-//             <Typography variant="h6" className={classes.heading}>
-//               Centralized:
-//             </Typography>
-//             &nbsp;&nbsp;
-//             <Typography variant="h6" style={{ fontFamily: "Montserrant" }}>
-//               {exchange && exchange.centralized === true ? (
-//                 "True"
-//               ) : (
-//                 <p>False</p>
-//               )}
-//             </Typography>
-//           </span>
+          <span style={{ display: "flex" }}>
+            <Typography variant="h6" className={classes.heading}>
+              Centralized:
+            </Typography>
+            &nbsp;&nbsp;
+            <Typography variant="h6" style={{ fontFamily: "Montserrant" }}>
+              {exchange && exchange.centralized === true ? (
+                "True"
+              ) : (
+                <p>False</p>
+              )}
+            </Typography>
+          </span>
 
-//           <span style={{ display: "flex" }}>
-//             <Typography variant="h6" className={classes.heading}>
-//               Country:
-//             </Typography>
-//             &nbsp;&nbsp;
-//             <Typography variant="h6" style={{ fontFamily: "Montserrant" }}>
-//               {exchange && exchange.country ? (
-//                 exchange.country
-//               ) : (
-//                 <p>Country not availabe</p>
-//               )}
-//             </Typography>
-//           </span>
+          <span style={{ display: "flex" }}>
+            <Typography variant="h6" className={classes.heading}>
+              Country:
+            </Typography>
+            &nbsp;&nbsp;
+            <Typography variant="h6" style={{ fontFamily: "Montserrant" }}>
+              {exchange && exchange.country ? (
+                exchange.country
+              ) : (
+                <p>Country not availabe</p>
+              )}
+            </Typography>
+          </span>
 
-//           <span style={{ display: "flex" }}>
-//             <Typography variant="h6" className={classes.heading}>
-//               Trust score:
-//             </Typography>
-//             &nbsp;&nbsp;
-//             <Typography variant="h6" style={{ fontFamily: "Montserrant" }}>
-//               {exchange && exchange.trust_score ? (
-//                 exchange.trust_score
-//               ) : (
-//                 <p> Trust score Not available</p>
-//               )}
-//             </Typography>
-//           </span>
+          <span style={{ display: "flex" }}>
+            <Typography variant="h6" className={classes.heading}>
+              Trust score:
+            </Typography>
+            &nbsp;&nbsp;
+            <Typography variant="h6" style={{ fontFamily: "Montserrant" }}>
+              {exchange && exchange.trust_score ? (
+                exchange.trust_score
+              ) : (
+                <p> Trust score Not available</p>
+              )}
+            </Typography>
+          </span>
 
-//           <span style={{ display: "flex" }}>
-//             <Typography variant="h6" className={classes.heading}>
-//               Trust score rank:
-//             </Typography>
-//             &nbsp;&nbsp;
-//             <Typography variant="h6" style={{ fontFamily: "Montserrant" }}>
-//               {exchange && exchange.trust_score_rank ? (
-//                 exchange.trust_score_rank
-//               ) : (
-//                 <p> Trust score rank Not available</p>
-//               )}
-//             </Typography>
-//           </span>
+          <span style={{ display: "flex" }}>
+            <Typography variant="h6" className={classes.heading}>
+              Trust score rank:
+            </Typography>
+            &nbsp;&nbsp;
+            <Typography variant="h6" style={{ fontFamily: "Montserrant" }}>
+              {exchange && exchange.trust_score_rank ? (
+                exchange.trust_score_rank
+              ) : (
+                <p> Trust score rank Not available</p>
+              )}
+            </Typography>
+          </span>
 
-//           <span style={{ display: "flex" }}>
-//             <Typography variant="h6" className={classes.heading}>
-//               Trade Vol 24h btc:
-//             </Typography>
-//             &nbsp;&nbsp;
-//             <Typography variant="h6" style={{ fontFamily: "Montserrant" }}>
-//               {exchange && exchange.trade_volume_24h_btc ? (
-//                 exchange.trade_volume_24h_btc.toFixed(2)
-//               ) : (
-//                 <p> Trust score rank Not available</p>
-//               )}
-//             </Typography>
-//           </span>
-//         </div>
-//       </div>
-//       <ExchangeInfo exchange={exchange}></ExchangeInfo>
-//     </div>
-//   );
-// }
+          <span style={{ display: "flex" }}>
+            <Typography variant="h6" className={classes.heading}>
+              Trade Vol 24h btc:
+            </Typography>
+            &nbsp;&nbsp;
+            <Typography variant="h6" style={{ fontFamily: "Montserrant" }}>
+              {exchange && exchange.trade_volume_24h_btc ? (
+                exchange.trade_volume_24h_btc.toFixed(2)
+              ) : (
+                <p> Trust score rank Not available</p>
+              )}
+            </Typography>
+          </span>
+        </div>
+      </div>
+      <ExchangeInfo exchange={exchange}></ExchangeInfo> */}
+    </div>
+  );
+}
 
-// export default Exchange;
+export default Exchange;
