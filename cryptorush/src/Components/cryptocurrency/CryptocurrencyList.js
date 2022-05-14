@@ -80,7 +80,11 @@ const CryptocurrencyList = (props) => {
               return (
                 <tr key={element.id}>
                   <td>
-                    <AddToDashboard element={element} asset="Cryptocurrency" />
+                    <AddToDashboard
+                      element={element}
+                      asset="Cryptocurrency"
+                      className="addOnAsset"
+                    />
                   </td>
                   <td>
                     <img
@@ -117,7 +121,7 @@ const CryptocurrencyList = (props) => {
                   </td>
                   {element.quote.USD.volume_change_24h > 0 ? (
                     <td className="positiveChange">
-                      {element.quote.USD.volume_change_24h + "%"}
+                      {"+" + element.quote.USD.volume_change_24h + "%"}
                     </td>
                   ) : (
                     <td className="negativeChange">

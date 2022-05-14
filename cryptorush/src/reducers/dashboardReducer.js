@@ -81,7 +81,10 @@ const reducer = (state, action) => {
           (e) => e === payload.cryptocurrency
         );
 
-        prevState[index].dashboard.Cryptocurrency.splice(cryptoIndex, 1);
+        if (cryptoIndex !== -1) {
+          prevState[index].dashboard.Cryptocurrency.splice(cryptoIndex, 1);
+          return [...prevState];
+        }
         return [...prevState];
       }
 
