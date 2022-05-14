@@ -21,6 +21,19 @@ const NFT = () => {
 
   let { id, tokenId, chain } = useParams();
 
+  const getImage = (imageurl) => {
+    const ipfsURL = "https://ipfs.io/ipfs/";
+
+    let imageURL = "";
+    if (imageurl.includes("ipfs://ipfs")) {
+      imageURL = imageurl.replace("ipfs://ipfs", ipfsURL);
+    } else if (imageurl.includes("ipfs://")) {
+      imageURL = imageurl.replace("ipfs://", ipfsURL);
+    } else {
+      imageURL = imageurl;
+    }
+    return imageURL;
+  };
   useEffect(() => {
     async function getNFT(id, tokenId, chain) {
       try {
@@ -60,7 +73,7 @@ const NFT = () => {
                   {" "}
                   <Image
                     className="nftimg"
-                    src={nftData.metadata.image}
+                    src={getImage(nftData.metadata.image)}
                   ></Image>
                 </Col>
               </Row>
