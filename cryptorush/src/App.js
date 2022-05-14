@@ -14,6 +14,7 @@ import AuthProvider from "./firebase/Auth";
 import PrivateRoute from "./Components/PrivateRoutes";
 import Navigation from "./Components/Navigation";
 import SignUp from "./Components/login/SignUp";
+import Exchange from './Components/Exchange'
 
 function App() {
   return (
@@ -59,6 +60,14 @@ function App() {
                   <PrivateRoute>
                     {" "}
                     <Exchanges />
+                  </PrivateRoute>
+                }
+              />
+                <Route
+                path="/Exchanges/:id"
+                element={
+                  <PrivateRoute>
+                    <Exchange />
                   </PrivateRoute>
                 }
               />
