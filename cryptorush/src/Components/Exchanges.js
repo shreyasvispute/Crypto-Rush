@@ -121,7 +121,6 @@ const Exchanges = () => {
     }
   }, [searchTerm]);
 
-
   function convertToInternationalCurrencySystem(labelValue) {
     // Nine Zeroes for Billions
     return Math.abs(Number(labelValue)) >= 1.0e9
@@ -191,8 +190,16 @@ const Exchanges = () => {
                           </td>
                           <td>{element.name}</td>
                           <td>{element.trust_score}</td>
-                          <td>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc_normalized)}</td>
-                          <td>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc)}</td>
+                          <td>
+                            {convertToInternationalCurrencySystem(
+                              element.trade_volume_24h_btc_normalized
+                            )}
+                          </td>
+                          <td>
+                            {convertToInternationalCurrencySystem(
+                              element.trade_volume_24h_btc
+                            )}
+                          </td>
                         </tr>
                       );
                     })
@@ -214,8 +221,16 @@ const Exchanges = () => {
                             <Link to={`/Exchange/${e.id}`}>{e.name}</Link>
                           </td>
                           <td>{e.trust_score}</td>
-                          <td>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc_normalized)}</td>
-                          <td>{convertToInternationalCurrencySystem(element.trade_volume_24h_btc)}</td>
+                          <td>
+                            {convertToInternationalCurrencySystem(
+                              e.trade_volume_24h_btc_normalized
+                            )}
+                          </td>
+                          <td>
+                            {convertToInternationalCurrencySystem(
+                              e.trade_volume_24h_btc
+                            )}
+                          </td>
                         </tr>
                       );
                     })}
