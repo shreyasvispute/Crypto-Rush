@@ -62,3 +62,7 @@ h1 {
 .row {
   margin: 10px !important;
 }
+
+.cryptoList {
+  display: contents;
+}

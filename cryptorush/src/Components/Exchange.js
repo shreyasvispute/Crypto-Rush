@@ -166,7 +166,6 @@ useEffect(() => {
           
             </div>
           </div>
-       
        <ExchangeInfo exchange={exchange}>
 
        </ExchangeInfo>

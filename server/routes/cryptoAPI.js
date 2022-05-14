@@ -30,6 +30,18 @@ router.get("/listings", checkIfAuthenticated, async (req, res) => {
 });
 
 //Returns the latest listings of all cryptocurrencies
+router.get("/listings/:list", checkIfAuthenticated, async (req, res) => {
+  try {
+    let listingData = await cryptoData.getCryptoListingsByList(req.params.list);
+    res.status(200).json(listingData);
+  } catch (error) {
+    res
+      .status(error.response.status)
+      .json({ message: error.response.statusText });
+  }
+});
+
+//Returns the latest listings of all cryptocurrencies
 router.get("/search/:searchTerm", checkIfAuthenticated, async (req, res) => {
   try {
     let searchTerm = req.params.searchTerm;

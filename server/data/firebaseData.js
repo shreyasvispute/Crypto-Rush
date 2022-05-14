@@ -48,7 +48,7 @@ async function updateStateInDB(state) {
       return false;
     }
   } catch (e) {
-    console.error("Error adding document: ", e);
+    console.error("Error updating document: ", e);
   }
 }
 
