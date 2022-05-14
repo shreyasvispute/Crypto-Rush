@@ -14,18 +14,26 @@ async function createUser(displayName, email, password) {
   });
 
   if (user) {
+    new_state = {
+      user: user.uid,
+      dashboard: {
+        Cryptocurrency: [],
+        NFT: [],
+      },
+    };
+    await storeStateToDB(new_state);
     return user;
   }
 }
 
 async function storeStateToDB(state) {
   try {
-    const docRef = db.collection("dashboard").doc(state.user);
-    await docRef.set({
+    const new_state = {
       user: state.user,
       dashboard: state.dashboard,
-    });
-    if (docRef.id) {
+    };
+    const res = await db.collection("dashboard").doc(state.user).set(new_state);
+    if (res) {
       return true;
     } else {
       return false;
@@ -38,9 +46,11 @@ async function storeStateToDB(state) {
 
 async function updateStateInDB(state) {
   try {
-    const updateRef = db.collection("dashboard").doc(state.user);
+    const updateRef = db.collection("dashboard").doc(state.dashboard[0].user);
 
-    const res = await updateRef.update({ dashboard: state.dashboard });
+    const res = await updateRef.update({
+      dashboard: state.dashboard[0].dashboard,
+    });
 
     if (res) {
       return true;

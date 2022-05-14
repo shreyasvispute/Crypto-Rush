@@ -7,7 +7,7 @@ const validations = dataModule.validations;
 
 router.post("/setState", async (req, res) => {
   try {
-    let state = req.body.state;
+    let state = req.body.dashboard;
     let stateStored = await firebaseData.storeStateToDB(state);
     res.status(200).json(stateStored);
   } catch (error) {
@@ -28,9 +28,9 @@ router.get("/getState/:user", async (req, res) => {
   }
 });
 
-router.get("/updateState/", async (req, res) => {
+router.post("/updateState/", async (req, res) => {
   try {
-    let state = req.body.state;
+    let state = req.body.dashboard;
     let fetchedState = await firebaseData.updateStateInDB(state);
     res.status(200).json(fetchedState);
   } catch (error) {

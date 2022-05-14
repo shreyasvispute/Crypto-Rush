@@ -1,10 +1,8 @@
-import { v4 as uuid } from "uuid";
-
 const initialState = [
   {
-    user: "test",
+    user: "",
     dashboard: {
-      Cryptocurrency: ["BTC", "ETH"],
+      Cryptocurrency: [],
       NFT: [],
     },
   },
@@ -16,9 +14,21 @@ const reducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case "SET_INITIAL_STATE":
+      debugger;
+      let initialState = [
+        {
+          user: payload.dashboard.user,
+          dashboard: {
+            Cryptocurrency: payload.dashboard.dashboard.Cryptocurrency,
+            NFT: payload.dashboard.dashboard.NFT,
+          },
+        },
+      ];
+      return [...initialState];
     case "ADD_USER":
-      return [
-        ...state,
+      debugger;
+      let new_state = [
         {
           user: payload.user,
           dashboard: {
@@ -27,6 +37,7 @@ const reducer = (state, action) => {
           },
         },
       ];
+      return [new_state];
 
     case "ADD_CRYPTO_TO_DASHBOARD":
       debugger;
@@ -42,6 +53,7 @@ const reducer = (state, action) => {
       }
 
     case "ADD_NFT_TO_DASHBOARD":
+      debugger;
       prevState = [...state];
       index = prevState.findIndex((x) => x.user === payload.user);
       if (index === -1) {
