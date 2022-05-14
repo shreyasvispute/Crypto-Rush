@@ -13,7 +13,7 @@ function getAlltweets(keyword) {
     if (keyword) {
       Twitter_client.get(
         "search/tweets",
-        { q: `#${keyword} since:2021-12-15`, count: 1 },
+        { q: `#${keyword} since:2021-12-15`, count: 10 },
         function (err, data, response) {
           const tweets = data.statuses;
           return resolve(tweets);
@@ -22,7 +22,7 @@ function getAlltweets(keyword) {
     } else {
       Twitter_client.get(
         "search/tweets",
-        { q: `#crypto since:2021-12-15`, count: 2 },
+        { q: `#crypto since:2021-12-15`, count: 10 },
         function (err, data, response) {
           const tweets = data.statuses;
           return resolve(tweets);

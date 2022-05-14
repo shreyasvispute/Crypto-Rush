@@ -3,38 +3,14 @@ import axios from 'axios';
 import {useParams} from 'react-router-dom'
 // import { chartDays } from "../config/data";
 import ReactApexChart from "react-apexcharts";
-
+import Tweets from './Tweets';
 import Chart from 'chart.js/auto';
-
-import {
-    CircularProgress,
-    createTheme,
-    ThemeProvider,
-    makeStyles
-  } from "@material-ui/core";
 import { Card, Container,  CardGroup, Spinner, Row } from "react-bootstrap";
 import {Line, Bar,Candlestick} from 'react-chartjs-2'
   console.clear();
-  const useStyles = makeStyles((theme) => ({
-    container: {
-      width: "75%",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 25,
-      padding: 40,
-      [theme.breakpoints.down("md")]: {
-        width: "100%",
-        marginTop: 0,
-        padding: 20,
-        paddingTop: 0,
-      },
-    },
-  }));
+  
 
-
-  const ExchangeInfo= (exchange) => {
+  const ExchangeInfo= () => {
 
     const {id} = useParams()
 
@@ -50,14 +26,9 @@ import {Line, Bar,Candlestick} from 'react-chartjs-2'
   
     const fetchHistData = async() =>{
       try {
-        // const CoinGecko = require('coingecko-api');
-        // const CoinGeckoClient = new CoinGecko();
-        // let data = await CoinGeckoClient.exchanges.fetchVolumeChart(`${id}`, {
-        //   days: days,
-        // });
 
       let data = await axios.get(`/Exchanges/${id}/volume_chart/${days}`)
-      // console.log(data.data)
+      
         setflag(true);
       setHistExchangeData(data.data);
 
@@ -96,8 +67,7 @@ import {Line, Bar,Candlestick} from 'react-chartjs-2'
   }
    ],
 
-    
-    }
+}
 
   //   let chartData = {
   //     series: [{
@@ -146,18 +116,10 @@ import {Line, Bar,Candlestick} from 'react-chartjs-2'
   
   
    
-   
-   const darkTheme = createTheme({
-    palette: {
-      primary: {
-        main: "#fff",
-      },
-      type: "dark",
-    },
-  });
+ 
 
 
-const classes = useStyles();
+
 
 if (pageError) {
       return (
@@ -185,11 +147,12 @@ if (pageError) {
         );
       } else {
         return (
-          <ThemeProvider theme={darkTheme}>
-          <div className={classes.container}>
+          <Container className="mainContainer">
+
+          <div >
                 {
                   (!histExchangeData | flag===false) ? (
-                    <CircularProgress
+                    <Spinner
                     style={{ color: "gold" }}
                     size={250}
                     thickness={1}
@@ -239,23 +202,23 @@ if (pageError) {
                   color:'white'}}
               onClick={() => {setDays(90);
                   }}> 90 days</button>
+
+                  
             </div>
+            
                    </>
                    
                    
                   )
                   
                 }
-                
+               
           </div>
-   </ThemeProvider>
+          
+   </Container>
         );
       }
-    }
-
-
-
-   
+    }   
 }
 
 export default ExchangeInfo
