@@ -183,7 +183,7 @@ const Exchanges = () => {
                         className="cryptoList"
                       >
                         <Link
-                          to={`/Exchange/${element.id}`}
+                          to={`/Exchanges/${element.id}`}
                         >
                           <Row>
                             <Col>
@@ -210,7 +210,7 @@ const Exchanges = () => {
                         variant="secondary"
                         className="cryptoList"
                       >
-                        <Link to={`/Exchange/${element.id}`}>
+                        <Link to={`/Exchanges/${element.id}`}>
                           <Row>
                             <Col>
                               <img
