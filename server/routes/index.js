@@ -13,7 +13,7 @@ const constructorMethod = (app) => {
   app.use("/tweets", tweets);
   app.use("/cryptocurrency", crypto);
   app.use("/news", news);
-  app.use("/exchanges",exchange)
+  app.use("/Exchanges",exchange)
   app.use("/nft", nft);
   app.use("/store", store);
   app.use("*", (req, res) => {

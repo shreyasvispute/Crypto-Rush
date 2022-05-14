@@ -183,10 +183,6 @@ const NFTs = () => {
       return (
         <Container>
           <Container className="headRow">
-            <Row className="titleAlign">
-              <h1>NFTs</h1>
-            </Row>
-
             <Row>
               <Col>
                 <Search page="NFT" searchValue={searchValue}></Search>

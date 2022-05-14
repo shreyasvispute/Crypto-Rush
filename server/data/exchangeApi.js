@@ -113,6 +113,24 @@ async function getExchangeById(id){
     }
   }
 }
+async function getExchangeVolById(id,days){
+  validations.validateString(id, "id");
+  // Make calls
+  // let pData = await CoinGeckoClient.ping();
+  // let idData = await CoinGeckoClient.exchanges.fetch(id);
+  // let idData = await CoinGeckoClient.exchanges.fetchVolumeChart(`${id}`, {
+  //         days: days,
+  //       });
+  let idData =  await axios.get(`https://api.coingecko.com/api/v3/exchanges/${id}/volume_chart?days=${days}`)
+  // console.log(idData.data)
+  if(idData.status===200){
+    return idData.data;
+  }else{
+    throw {
+      response: { status: 404, statusText: `No data found.` },
+    }
+  }
+}
 
 async function getTickers(id){
   validations.validateString(id, "id");
@@ -135,5 +153,6 @@ module.exports = {
     getExchangeList,
     getExchangeById,
     getTickers,
-    searchExchange
+    searchExchange,
+  getExchangeVolById
   };

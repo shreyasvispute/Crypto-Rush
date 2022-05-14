@@ -45,6 +45,18 @@ router.get("/:id/tickers", async (req, res) => {
       res.json(error)
   }
 });
+router.get("/:id/volume_chart/:days", async (req, res) => {
+  try {
+    let exchangeId = req.params.id;
+    let days = req.params.days;
+    validations.validateString(exchangeId,"exchangeId");
+    let exchangeDataId = await exchangeData.getExchangeVolById(exchangeId,days);
+    //console.log(exchangeDataId)
+    res.status(200).json(exchangeDataId)
+  } catch (error) {
+      res.json(error)
+  }
+});
 
 router.get("/search/:searchTerm", async (req, res) => {
   try {
