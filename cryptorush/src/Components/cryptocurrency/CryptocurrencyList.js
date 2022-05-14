@@ -87,13 +87,11 @@ const CryptocurrencyList = (props) => {
                     />
                   </td>
                   <td>
-                    <Link to={`/Cryptocurrency/${element.symbol}`}>
-                      <img
-                        src={element.logo}
-                        alt={element.name}
-                        className="cryptoLogo"
-                      />
-                    </Link>
+                    <img
+                      src={element.logo}
+                      alt={element.name}
+                      className="cryptoLogo"
+                    />
                   </td>
                   <td>{element.symbol}</td>
                   <td>{element.name}</td>
@@ -110,15 +108,13 @@ const CryptocurrencyList = (props) => {
                     </td>
                   ) : (
                     <td>{formatPrice(element.quote.USD.price)}</td>
-                  )}{" "}
+                  )}
                   <td>
-                    {" "}
                     {convertToInternationalCurrencySystem(
                       element.quote.USD.market_cap
                     )}
                   </td>
                   <td>
-                    {" "}
                     {convertToInternationalCurrencySystem(
                       element.quote.USD.volume_24h
                     )}
