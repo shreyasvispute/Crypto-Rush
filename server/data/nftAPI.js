@@ -14,11 +14,21 @@ const ipfsURL = "https://ipfs.io/ipfs/";
 
 //Returns the all NFT search results
 async function getAllNFT(keyword, chain) {
-  const options = { q: keyword, chain: chain, filter: "name", limit: 20 };
+  const options = {
+    q: keyword,
+    chain: chain,
+    filter: "name",
+    limit: 500,
+  };
 
   await Moralis.start({ serverUrl, appId, masterKey });
   const nfts = [];
   const NFTs = await Moralis.Web3API.token.searchNFTs(options);
+  const NFTObject = {
+    page: NFTs.page,
+    pageSize: NFTs.page_size,
+    total: NFTs.total,
+  };
   if (NFTs.result.length > 0) {
     for (let x of NFTs.result) {
       const nftFromCache = await checkNFTFromCache(x.token_id);
@@ -40,17 +50,18 @@ async function getAllNFT(keyword, chain) {
           image: imageURL,
           nftName: data.name,
         };
-        // const insertPokemon = await redisClient.hSet(
-        //   "nftCache",
-        //   x.token_id,
-        //   JSON.stringify(NFTResults)
-        // );
+        const insertPokemon = await redisClient.hSet(
+          "nftCache",
+          x.token_id,
+          JSON.stringify(NFTResults)
+        );
         nfts.push(NFTResults);
       } else {
         nfts.push(nftFromCache);
       }
     }
-    return nfts;
+    NFTObject["results"] = nfts;
+    return NFTObject;
   } else {
     throw {
       response: { status: 404, statusText: `No data found.` },
@@ -75,8 +86,10 @@ async function getNFT(address, id, chain) {
   const tokenPrice = await fetchTokenPrice(chain, address);
   const trades = await nftTrades(chain, address);
   // const natTokPrice = await nativeTokenPrice(address, chain);
-
-  const price = await Moralis.Units.FromWei(tokenPrice);
+  let price;
+  if (tokenPrice) {
+    price = await Moralis.Units.FromWei(tokenPrice);
+  }
 
   tokenIdMetadata["tokenPrice"] = price;
   tokenIdMetadata["trades"] = trades.result;
@@ -98,7 +111,11 @@ const fetchTokenPrice = async (chain, address) => {
     chain: chain,
     days: "3",
   };
-  const NFTLowestPrice = await Moralis.Web3API.token.getNFTLowestPrice(options);
+  const NFTLowestPrice = await Moralis.Web3API.token
+    .getNFTLowestPrice(options)
+    .catch((e) => {
+      console.log(e.message);
+    });
   if (NFTLowestPrice?.price) {
     return NFTLowestPrice.price;
     // (NFTLowestPrice.nativePrice.value / price.usdPrice) * Math.pow(10, 10)
@@ -116,16 +133,6 @@ const nftTrades = async (chain, address) => {
   const NFTTrades = await Moralis.Web3API.token.getNFTTrades(options);
   return NFTTrades;
 };
-
-// const nativeTokenPrice = async (address, chain) => {
-//   //Get token price on PancakeSwap v2 BSC
-//   const options = {
-//     address: address,
-//     chain: chain,
-//   };
-//   const price = await Moralis.Web3API.token.getTokenPrice(options);
-//   return price;
-// };
 
 module.exports = {
   getAllNFT,
