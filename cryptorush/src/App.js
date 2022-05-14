@@ -53,7 +53,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/Cryptocurreny/:symbol"
+                  path="/Cryptocurrency/:symbol"
                   element={
                     <PrivateRoute>
                       <Cryptocurrency />

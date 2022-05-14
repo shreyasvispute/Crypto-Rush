@@ -91,14 +91,14 @@ const AddToDashboard = (props) => {
             variant="outline-primary"
             onClick={() => removeFromDashboard(props.element, props.asset)}
           >
-            - Remove
+            Remove
           </Button>
         ) : (
           <Button
             variant="primary"
             onClick={() => addToDashboard(props.element, props.asset)}
           >
-            + Add
+            Add
           </Button>
         )}
       </div>
@@ -114,14 +114,14 @@ const AddToDashboard = (props) => {
             onClick={() => removeFromDashboard(props.element, props.asset)}
             disabled
           >
-            - Remove
+            Remove
           </Button>
         ) : (
           <Button
             variant="primary"
             onClick={() => addToDashboard(props.element, props.asset)}
           >
-            + Add
+            Add
           </Button>
         )}
       </div>
