@@ -262,8 +262,8 @@ const Cryptocurrencies = () => {
                 <Row>
                   <Col></Col>
                   <Col></Col>
-                  <Col>Symbol</Col>
                   <Col>Name</Col>
+                  <Col>Symbol</Col>
                   <Col>Price</Col>
                   <Col>Market Cap</Col>
                   <Col>24H Volume</Col>
@@ -272,6 +272,18 @@ const Cryptocurrencies = () => {
               </ListGroupItem>
               {searchTerm && searchData.length > 0
                 ? searchData.map((element) => {
+                    let priceChangeColor;
+                    if (
+                      socketData &&
+                      socketData[
+                        element.name.split(" ").join("-").toLowerCase()
+                      ] > element.quote.USD.price
+                    ) {
+                      priceChangeColor = "greenColumn";
+                    } else {
+                      priceChangeColor = "redColumn";
+                    }
+
                     return (
                       <ListGroupItem key={element.id} className="cryptoList">
                         <Link
@@ -290,14 +302,16 @@ const Cryptocurrencies = () => {
                                 alt={element.name}
                                 className="cryptoLogo"
                               />
+                              <Row>
+                                <Col>{element.symbol}</Col>
+                                <Col>{element.name}</Col>
+                              </Row>
                             </Col>
-                            <Col>{element.symbol}</Col>
-                            <Col>{element.name}</Col>
                             {socketData &&
                             socketData[
                               element.name.split(" ").join("-").toLowerCase()
                             ] ? (
-                              <Col>
+                              <Col className={priceChangeColor}>
                                 {formatPrice(
                                   socketData[
                                     element.name
@@ -336,8 +350,20 @@ const Cryptocurrencies = () => {
                   })
                 : currentItems &&
                   currentItems.map((element) => {
+                    let priceChangeColor;
+                    if (
+                      socketData &&
+                      socketData[
+                        element.name.split(" ").join("-").toLowerCase()
+                      ] > element.quote.USD.price
+                    ) {
+                      priceChangeColor = "greenColumn";
+                    } else {
+                      priceChangeColor = "redColumn";
+                    }
+
                     return (
-                      <ListGroupItem key={element.id} className="cryptoList">
+                      <ListGroupItem key={element.id} className={`cryptoList`}>
                         <Link to={`/cryptocurreny/${element.symbol}`}>
                           <Row>
                             <Col>
@@ -347,16 +373,16 @@ const Cryptocurrencies = () => {
                               <img
                                 src={element.logo}
                                 alt={element.name}
-                                style={{ height: 42 }}
+                                className="cryptoLogo"
                               />
                             </Col>
-                            <Col>{element.symbol}</Col>
                             <Col>{element.name}</Col>
+                            <Col>{element.symbol}</Col>
                             {socketData &&
                             socketData[
                               element.name.split(" ").join("-").toLowerCase()
                             ] ? (
-                              <Col>
+                              <Col className={priceChangeColor}>
                                 {formatPrice(
                                   socketData[
                                     element.name

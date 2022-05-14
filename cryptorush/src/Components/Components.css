@@ -34,7 +34,7 @@ html {
 }
 
 .cryptoLogo {
-  height: 42px !important;
+  height: 30px !important;
 }
 
 .nftimg {
@@ -61,4 +61,14 @@ h1 {
 }
 .row {
   margin: 10px !important;
+}
+.cryptosymbol {
+  font-size: 12px;
+}
+.cryptoLinks {
+  white-space: nowrap;
+}
+.cryptoLinks:hover {
+  cursor: hand;
+  text-decoration: underline;
 }

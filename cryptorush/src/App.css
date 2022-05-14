@@ -44,6 +44,7 @@
 html {
   min-height: 100%;
   position: relative;
+  font-size: 14px;
 }
 
 .appContainer {
@@ -71,4 +72,14 @@ a:link {
 }
 .filterMargin {
   margin-top: 8px !important;
+}
+.greenColumn {
+  transition: background 0.35s ease 0s;
+  /* color: rgba(24, 198, 131, 0.19) !important; */
+  color: crimson;
+}
+.redColumn {
+  transition: background 0.35s ease 0s;
+  /* color: #fddcd9 !important; */
+  color: lime;
 }
