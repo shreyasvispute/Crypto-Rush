@@ -4,6 +4,8 @@ import { UserAuth } from "../../firebase/Auth";
 
 import { Button, Container, Form, Alert, Row, Col } from "react-bootstrap";
 
+import Blockchain from "../../img/blockchain.png";
+
 const Login = () => {
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
@@ -93,79 +95,100 @@ const Login = () => {
   }
 
   return (
-    <Container>
-      <Form id="login-form" onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="emailField">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            ref={(node) => {
-              emailField = node;
-            }}
-            autoComplete="email"
-            type="email"
-            placeholder="Enter email"
-            onChange={({ target }) => setField("emailField", target.value)}
-            isInvalid={!!errors.emailField}
-          />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-          <Form.Control.Feedback type="invalid">
-            {errors.emailField}
-          </Form.Control.Feedback>
-        </Form.Group>
+    <Container className="loginbox">
+      <Row>
+        <Col className="loginIcon">
+          {" "}
+          <div className="d-flex">
+            <img src={Blockchain} alt="Crypto-Rush" style={{ height: 80 }} />
+            <div className="appname">
+              Crypto- <span className="rush-red">Rush</span>
+            </div>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form id="login-form" onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="emailField">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                ref={(node) => {
+                  emailField = node;
+                }}
+                autoComplete="email"
+                type="email"
+                placeholder="Enter email"
+                onChange={({ target }) => setField("emailField", target.value)}
+                isInvalid={!!errors.emailField}
+              />
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+              </Form.Text>
+              <Form.Control.Feedback type="invalid">
+                {errors.emailField}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-        <Form.Group className="mb-3" controlId="passwordField">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            ref={(node) => {
-              passwordField = node;
-            }}
-            autoComplete="current-password"
-            type="password"
-            placeholder="Password"
-            onChange={({ target }) => setField("passwordField", target.value)}
-            isInvalid={!!errors.passwordField}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.passwordField}
-          </Form.Control.Feedback>
-        </Form.Group>
+            <Form.Group className="mb-3" controlId="passwordField">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                ref={(node) => {
+                  passwordField = node;
+                }}
+                autoComplete="current-password"
+                type="password"
+                placeholder="Password"
+                onChange={({ target }) =>
+                  setField("passwordField", target.value)
+                }
+                isInvalid={!!errors.passwordField}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.passwordField}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-        {firebaseError && (
-          <Alert key="error" variant="danger">
-            {firebaseErrorMessage}
-          </Alert>
-        )}
-        <Row>
-          <Col sm={1}>
-            {" "}
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Col>
-          <Col sm={3}>
-            {" "}
-            <Button
-              variant="light"
-              className="btn btn-outline-danger"
-              onClick={SocialSignIn}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="currentColor"
-                className="bi bi-google"
-                viewBox="0 0 16 16"
-              >
-                <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
-              </svg>
-              {"  "}Sign In
-            </Button>
-          </Col>
-        </Row>
-      </Form>
+            {firebaseError && (
+              <Alert key="error" variant="danger">
+                {firebaseErrorMessage}
+              </Alert>
+            )}
+            <Row>
+              <Col className="loginButton">
+                {" "}
+                <Button
+                  variant="light"
+                  className="btn btn-outline-primary"
+                  type="submit"
+                >
+                  Submit
+                </Button>
+              </Col>
+              <Col className="loginButton">
+                {" "}
+                <Button
+                  variant="light"
+                  className="btn btn-outline-danger"
+                  onClick={SocialSignIn}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    className="bi bi-google"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                  </svg>
+                  {"  "}Sign In
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </Col>
+      </Row>
     </Container>
   );
 };
