@@ -220,7 +220,9 @@ const Cryptocurrency = () => {
             </Row>
 
             <Row>
-              <Col></Col>
+              <Col>
+                <div>Description</div>
+              </Col>
               <Col className="chartDropdown" md={2}>
                 <Dropdown>
                   <Dropdown.Toggle
@@ -245,6 +247,7 @@ const Cryptocurrency = () => {
               </Col>
             </Row>
             <Row>
+              <Col>{cryptoData.description}</Col>
               <Col>
                 <CandleStickChart chartData={chartData} />
               </Col>

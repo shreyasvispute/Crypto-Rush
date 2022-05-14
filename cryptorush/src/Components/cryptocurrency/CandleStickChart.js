@@ -338,7 +338,7 @@ const CandleStickChart = (props) => {
   //   }, []);
 
   return (
-    <Container className="mainContainer">
+    <Container className="mainContainer chartComponent">
       <Chart
         options={chartingData.options}
         series={chartingData.series}

@@ -58,6 +58,7 @@ const AddToDashboard = (props) => {
   }
 
   async function removeFromDashboard(element, asset) {
+    debugger;
     if (asset === "Cryptocurrency") {
       await context.dashboardDispatch({
         type: "REMOVE_CRYPTO_FROM_DASHBOARD",
@@ -112,7 +113,6 @@ const AddToDashboard = (props) => {
           <Button
             variant="outline-primary"
             onClick={() => removeFromDashboard(props.element, props.asset)}
-            disabled
           >
             Remove
           </Button>
