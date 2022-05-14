@@ -18,7 +18,7 @@ router.get("/map", checkIfAuthenticated, async (req, res) => {
 });
 
 //Returns the latest listings of all cryptocurrencies
-router.get("/listings", checkIfAuthenticated, async (req, res) => {
+router.get("/listings", async (req, res) => {
   try {
     let listingData = await cryptoData.getCryptoListings();
     res.status(200).json(listingData);

@@ -5,7 +5,7 @@ const dataModule = require("../data");
 const firebaseData = dataModule.database;
 const validations = dataModule.validations;
 
-router.post("/setState", async (req, res) => {
+router.post("/setState", checkIfAuthenticated, async (req, res) => {
   try {
     let state = req.body.dashboard;
     let stateStored = await firebaseData.storeStateToDB(state);
@@ -17,7 +17,7 @@ router.post("/setState", async (req, res) => {
   }
 });
 
-router.get("/getState/:user", async (req, res) => {
+router.get("/getState/:user", checkIfAuthenticated, async (req, res) => {
   try {
     let fetchedState = await firebaseData.fetchStateFromDB(req.params.user);
     res.status(200).json(fetchedState);
@@ -28,7 +28,7 @@ router.get("/getState/:user", async (req, res) => {
   }
 });
 
-router.post("/updateState/", async (req, res) => {
+router.post("/updateState/", checkIfAuthenticated, async (req, res) => {
   try {
     let state = req.body.dashboard;
     let fetchedState = await firebaseData.updateStateInDB(state);
@@ -40,7 +40,7 @@ router.post("/updateState/", async (req, res) => {
   }
 });
 
-router.get("/deleteState/:user", async (req, res) => {
+router.get("/deleteState/:user", checkIfAuthenticated, async (req, res) => {
   try {
     let fetchedState = await firebaseData.deleteStateFromDB(req.params.user);
     res.status(200).json(fetchedState);
