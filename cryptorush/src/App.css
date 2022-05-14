@@ -81,5 +81,5 @@ a:link {
 .redColumn {
   transition: background 0.35s ease 0s;
   /* color: #fddcd9 !important; */
-  color: lime;
+  color: green;
 }
