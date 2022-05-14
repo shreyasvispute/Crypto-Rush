@@ -23,6 +23,7 @@ const Cryptocurrencies = () => {
   const [searchData, setSearchData] = useState([]);
   const [error, setError] = useState(false);
   const { currentUser, getUserToken } = UserAuth();
+  const [socketData, setSocketData] = useState([0]);
 
   // We start with an empty list of items.
   const [currentItems, setCurrentItems] = useState(null);
@@ -32,6 +33,21 @@ const Cryptocurrencies = () => {
   const [itemOffset, setItemOffset] = useState(0);
 
   let itemsPerPage = 20;
+
+  useEffect(() => {
+    const pricesWs = new WebSocket(
+      // "wss://ws.coincap.io/prices?assets=bitcoin,ethereum,monero,litecoin"
+      "wss://ws.coincap.io/prices?assets=ALL"
+    );
+    pricesWs.onmessage = function (msg) {
+      try {
+        setSocketData(JSON.parse(msg.data));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    return () => pricesWs.close();
+  }, []);
 
   useEffect(() => {
     // Fetch items from another resources.
@@ -109,7 +125,6 @@ const Cryptocurrencies = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        debugger;
         const data = await getCryptoSearchData(searchTerm);
         if (data) {
           setSearchData(data);
@@ -121,7 +136,6 @@ const Cryptocurrencies = () => {
       }
     }
     if (searchTerm) {
-      debugger;
       // setPagination(false);
       fetchData();
     } else {
@@ -194,6 +208,10 @@ const Cryptocurrencies = () => {
   //     });
   // }
 
+  // if (socketData) {
+  //   return <>{socketData["bitcoin"]}</>;
+  // }
+
   if (loading) {
     return (
       <Container>
@@ -255,11 +273,7 @@ const Cryptocurrencies = () => {
               {searchTerm && searchData.length > 0
                 ? searchData.map((element) => {
                     return (
-                      <ListGroupItem
-                        key={element.id}
-                        variant="secondary"
-                        className="cryptoList"
-                      >
+                      <ListGroupItem key={element.id} className="cryptoList">
                         <Link
                           to={`/Cryptocurreny/${element.symbol.toLowerCase()}`}
                         >
@@ -279,7 +293,23 @@ const Cryptocurrencies = () => {
                             </Col>
                             <Col>{element.symbol}</Col>
                             <Col>{element.name}</Col>
-                            <Col>{formatPrice(element.quote.USD.price)}</Col>
+                            {socketData &&
+                            socketData[
+                              element.name.split(" ").join("-").toLowerCase()
+                            ] ? (
+                              <Col>
+                                {formatPrice(
+                                  socketData[
+                                    element.name
+                                      .split(" ")
+                                      .join("-")
+                                      .toLowerCase()
+                                  ]
+                                )}
+                              </Col>
+                            ) : (
+                              <Col>{formatPrice(element.quote.USD.price)}</Col>
+                            )}{" "}
                             <Col>
                               {convertToInternationalCurrencySystem(
                                 element.quote.USD.market_cap
@@ -307,11 +337,7 @@ const Cryptocurrencies = () => {
                 : currentItems &&
                   currentItems.map((element) => {
                     return (
-                      <ListGroupItem
-                        key={element.id}
-                        variant="secondary"
-                        className="cryptoList"
-                      >
+                      <ListGroupItem key={element.id} className="cryptoList">
                         <Link to={`/cryptocurreny/${element.symbol}`}>
                           <Row>
                             <Col>
@@ -326,7 +352,23 @@ const Cryptocurrencies = () => {
                             </Col>
                             <Col>{element.symbol}</Col>
                             <Col>{element.name}</Col>
-                            <Col>{formatPrice(element.quote.USD.price)}</Col>
+                            {socketData &&
+                            socketData[
+                              element.name.split(" ").join("-").toLowerCase()
+                            ] ? (
+                              <Col>
+                                {formatPrice(
+                                  socketData[
+                                    element.name
+                                      .split(" ")
+                                      .join("-")
+                                      .toLowerCase()
+                                  ]
+                                )}
+                              </Col>
+                            ) : (
+                              <Col>{formatPrice(element.quote.USD.price)}</Col>
+                            )}{" "}
                             <Col>
                               {convertToInternationalCurrencySystem(
                                 element.quote.USD.market_cap
