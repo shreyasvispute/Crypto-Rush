@@ -2,10 +2,9 @@ import { v4 as uuid } from "uuid";
 
 const initialState = [
   {
-    id: uuid(),
-    user: "Trader1",
-    portfolio: {
-      Cryptocurrency: [],
+    user: "test",
+    dashboard: {
+      Cryptocurrency: ["BTC", "ETH"],
       NFT: [],
     },
   },
@@ -30,6 +29,7 @@ const reducer = (state, action) => {
       ];
 
     case "ADD_CRYPTO_TO_DASHBOARD":
+      debugger;
       prevState = [...state];
       index = prevState.findIndex((x) => x.user === payload.user);
       if (index === -1) {
@@ -37,11 +37,6 @@ const reducer = (state, action) => {
       } else {
         const user = prevState[index];
         user.dashboard.Cryptocurrency.push(payload.cryptocurrency);
-        // const newArray = prevState.map((x) => {
-        //   if (x.id === payload.id) {
-        //     x.selected = x.selected ? false : true;
-        //   }
-        // });
         prevState[index] = user;
         return [...prevState];
       }
@@ -53,13 +48,38 @@ const reducer = (state, action) => {
         return [...prevState];
       } else {
         const user = prevState[index];
-        user.dashboard.NFT.push(payload.cryptocurrency);
-        // const newArray = prevState.map((x) => {
-        //   if (x.id === payload.id) {
-        //     x.selected = x.selected ? false : true;
-        //   }
-        // });
+        user.dashboard.NFT.push(payload.NFT);
         prevState[index] = user;
+        return [...prevState];
+      }
+
+    case "REMOVE_CRYPTO_FROM_DASHBOARD":
+      debugger;
+      prevState = [...state];
+      index = prevState.findIndex((x) => x.user === payload.user);
+      if (index === -1) {
+        return [...prevState];
+      } else {
+        const user = prevState[index];
+        let cryptoIndex = user.dashboard.Cryptocurrency.findIndex(
+          (e) => e === payload.cryptocurrency
+        );
+
+        prevState[index].dashboard.Cryptocurrency.splice(cryptoIndex, 1);
+        return [...prevState];
+      }
+
+    case "REMOVE_NFT_FROM_DASHBOARD":
+      debugger;
+      prevState = [...state];
+      index = prevState.findIndex((x) => x.user === payload.user);
+      if (index === -1) {
+        return [...prevState];
+      } else {
+        const user = prevState[index];
+        let nftIndex = user.dashboard.NFT.findIndex((e) => e === payload.NFT);
+
+        prevState[index].dashboard.NFT.splice(nftIndex, 1);
         return [...prevState];
       }
 

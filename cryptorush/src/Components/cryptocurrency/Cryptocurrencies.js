@@ -7,14 +7,14 @@ import {
   ListGroup,
   ListGroupItem,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Error from "../Error";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Search from "../Search";
 import ReactPaginate from "react-paginate";
 import { UserAuth } from "../../firebase/Auth";
-import AddToDashboard from "../AddToDashboard";
+import CryptocurrencyList from "./CryptocurrencyList";
 
 const Cryptocurrencies = () => {
   const [loading, setLoading] = useState(true);
@@ -62,13 +62,13 @@ const Cryptocurrencies = () => {
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % cryptoData.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
+    // console.log(
+    //   `User requested page number ${event.selected}, which is offset ${newOffset}`
+    // );
     setItemOffset(newOffset);
   };
 
-  let card = null;
+  // let card = null;
 
   const cryptoDataURL = "/cryptocurrency/listings";
 
@@ -255,7 +255,12 @@ const Cryptocurrencies = () => {
           </Col>
           <Col></Col>
         </Row>
-        <Row>
+        {searchTerm && searchData.length > 0 ? (
+          <CryptocurrencyList cryptoData={searchData} />
+        ) : (
+          <CryptocurrencyList cryptoData={currentItems} />
+        )}
+        {/* <Row>
           <Col>
             <ListGroup>
               <ListGroupItem variant="primary">
@@ -421,7 +426,7 @@ const Cryptocurrencies = () => {
                   })}
             </ListGroup>
           </Col>
-        </Row>
+        </Row> */}
         <Row>
           <Col></Col>
           <Col md={8} className="paginateComponent">
