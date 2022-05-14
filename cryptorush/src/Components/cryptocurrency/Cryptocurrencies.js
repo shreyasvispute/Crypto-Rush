@@ -109,7 +109,6 @@ const Cryptocurrencies = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        debugger;
         const data = await getCryptoSearchData(searchTerm);
         if (data) {
           setSearchData(data);
@@ -121,7 +120,6 @@ const Cryptocurrencies = () => {
       }
     }
     if (searchTerm) {
-      debugger;
       // setPagination(false);
       fetchData();
     } else {
@@ -194,6 +192,10 @@ const Cryptocurrencies = () => {
   //     });
   // }
 
+  // if (socketData) {
+  //   return <>{socketData["bitcoin"]}</>;
+  // }
+
   if (loading) {
     return (
       <Container>
@@ -249,8 +251,8 @@ const Cryptocurrencies = () => {
                 <Row>
                   <Col></Col>
                   <Col></Col>
-                  <Col>Symbol</Col>
                   <Col>Name</Col>
+                  <Col>Symbol</Col>
                   <Col>Price</Col>
                   <Col>Market Cap</Col>
                   <Col>24H Volume</Col>
@@ -259,12 +261,20 @@ const Cryptocurrencies = () => {
               </ListGroupItem>
               {searchTerm && searchData.length > 0
                 ? searchData.map((element) => {
+                    let priceChangeColor;
+                    if (
+                      socketData &&
+                      socketData[
+                        element.name.split(" ").join("-").toLowerCase()
+                      ] > element.quote.USD.price
+                    ) {
+                      priceChangeColor = "greenColumn";
+                    } else {
+                      priceChangeColor = "redColumn";
+                    }
+
                     return (
-                      <ListGroupItem
-                        key={element.id}
-                        variant="secondary"
-                        className="cryptoList"
-                      >
+                      <ListGroupItem key={element.id} className="cryptoList">
                         <Link
                           to={`/Cryptocurreny/${element.symbol.toLowerCase()}`}
                         >
@@ -281,10 +291,28 @@ const Cryptocurrencies = () => {
                                 alt={element.name}
                                 className="cryptoLogo"
                               />
+                              <Row>
+                                <Col>{element.symbol}</Col>
+                                <Col>{element.name}</Col>
+                              </Row>
                             </Col>
-                            <Col>{element.symbol}</Col>
-                            <Col>{element.name}</Col>
-                            <Col>{formatPrice(element.quote.USD.price)}</Col>
+                            {socketData &&
+                            socketData[
+                              element.name.split(" ").join("-").toLowerCase()
+                            ] ? (
+                              <Col className={priceChangeColor}>
+                                {formatPrice(
+                                  socketData[
+                                    element.name
+                                      .split(" ")
+                                      .join("-")
+                                      .toLowerCase()
+                                  ]
+                                )}
+                              </Col>
+                            ) : (
+                              <Col>{formatPrice(element.quote.USD.price)}</Col>
+                            )}{" "}
                             <Col>
                               {convertToInternationalCurrencySystem(
                                 element.quote.USD.market_cap
@@ -311,12 +339,20 @@ const Cryptocurrencies = () => {
                   })
                 : currentItems &&
                   currentItems.map((element) => {
+                    let priceChangeColor;
+                    if (
+                      socketData &&
+                      socketData[
+                        element.name.split(" ").join("-").toLowerCase()
+                      ] > element.quote.USD.price
+                    ) {
+                      priceChangeColor = "greenColumn";
+                    } else {
+                      priceChangeColor = "redColumn";
+                    }
+
                     return (
-                      <ListGroupItem
-                        key={element.id}
-                        variant="secondary"
-                        className="cryptoList"
-                      >
+                      <ListGroupItem key={element.id} className={`cryptoList`}>
                         <Link to={`/cryptocurreny/${element.symbol}`}>
                           <Row>
                             <Col>
@@ -326,12 +362,28 @@ const Cryptocurrencies = () => {
                               <img
                                 src={element.logo}
                                 alt={element.name}
-                                style={{ height: 42 }}
+                                className="cryptoLogo"
                               />
                             </Col>
-                            <Col>{element.symbol}</Col>
                             <Col>{element.name}</Col>
-                            <Col>{formatPrice(element.quote.USD.price)}</Col>
+                            <Col>{element.symbol}</Col>
+                            {socketData &&
+                            socketData[
+                              element.name.split(" ").join("-").toLowerCase()
+                            ] ? (
+                              <Col className={priceChangeColor}>
+                                {formatPrice(
+                                  socketData[
+                                    element.name
+                                      .split(" ")
+                                      .join("-")
+                                      .toLowerCase()
+                                  ]
+                                )}
+                              </Col>
+                            ) : (
+                              <Col>{formatPrice(element.quote.USD.price)}</Col>
+                            )}{" "}
                             <Col>
                               {convertToInternationalCurrencySystem(
                                 element.quote.USD.market_cap

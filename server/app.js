@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const configRoutes = require("./routes");
 const WebSocket = require("ws");
-var cors = require('cors');
+var cors = require("cors");
 //to access .env file variables
 require("dotenv").config();
 app.use(cors());
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 configRoutes(app);
 
 //Commented out to stop publishing prices during dev
-// // https://docs.coincap.io/#37dcec0b-1f7b-4d98-b152-0217a6798058
+// https://docs.coincap.io/#37dcec0b-1f7b-4d98-b152-0217a6798058
 // const pricesWs = new WebSocket(
 //   // "wss://ws.coincap.io/prices?assets=bitcoin,ethereum,monero,litecoin"
 //   "wss://ws.coincap.io/prices?assets=ALL"

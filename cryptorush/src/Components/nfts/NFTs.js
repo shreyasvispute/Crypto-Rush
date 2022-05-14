@@ -7,51 +7,68 @@ import { Card, Container, Col, CardGroup, Spinner, Row } from "react-bootstrap";
 import Search from "../Search";
 import nftNotFound from "../../img/nft_imageNotFound.png";
 import { UserAuth } from "../../firebase/Auth";
+import ReactPaginate from "react-paginate";
 
 const NFTs = () => {
   let card = null;
   const [searchData, setSearchData] = useState(undefined);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
-  // const [totalRecords, setTotalRecords] = useState("");
+  const [totalRecords, setTotalRecords] = useState("");
   const [pageError, setPageError] = useState(false);
   const [apiData, setApiData] = useState([]);
 
+  const [isPrev, setPrevState] = useState(true);
+  const [isNext, setNextState] = useState(true);
+  const [pages, setPages] = useState("");
+
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+
   const { currentUser, getUserToken } = UserAuth();
+
+  let itemsPerPage = 12;
+
+  useEffect(() => {
+    // Fetch items from another resources.
+    if (apiData) {
+      const endOffset = itemOffset + itemsPerPage;
+      //console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+      setCurrentItems(apiData.slice(itemOffset, endOffset));
+      setPageCount(Math.ceil(apiData.length / itemsPerPage));
+    }
+  }, [itemOffset, itemsPerPage, apiData]);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % apiData.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
 
   useEffect(() => {
     const getData = async () => {
       try {
-        let limit = 20;
-        // let page = Number(params.page);
-        // if (isNaN(page)) {
-        //   setPageError(true);
-        //   return;
-        // }
-        // if (page === 0) {
-        //   setPrevState(false);
-        //   page = 0;
-        // } else {
-        //   setPrevState(true);
-        // }
-
-        // page += 1;
-        // let offset = limit * page - limit;
-        const url = `/nft/search/cool%20cats/eth`;
+        const url = `/nft/search/cool%20cat/eth`;
         const token = await getUserToken(currentUser);
+
         const data = await axios.get(url, {
           headers: { authorization: `Bearer ${token}` },
         });
 
         // let totalPages = Math.ceil(totalRecords / limit) - 1;
-        // setPages(totalPages);
+        setPages(data.data.pageSize);
 
         // if (page - 1 === totalPages) {
         //   setNextState(false);
         // } else {
         //   setNextState(true);
         // }
-        setApiData(data.data);
+        setApiData(data.data.results);
+        setTotalRecords(data.data.total);
+
         setLoading(false);
 
         if (data.data.length === 0) {
@@ -72,10 +89,15 @@ const NFTs = () => {
         setPageError(false);
 
         const url = `/nft/search/${searchTerm}/eth`;
-        const data = await axios.get(url);
-        // setTotalRecords(data.length);
+        const token = await getUserToken(currentUser);
+
+        const data = await axios.get(url, {
+          headers: { authorization: `Bearer ${token}` },
+        });
+        setTotalRecords(data.data.total);
+        setPages(data.data.pageSize);
         setLoading(false);
-        setSearchData(data.data);
+        setSearchData(data.data.results);
       } catch (error) {
         setPageError(true);
         console.log(error);
@@ -91,16 +113,15 @@ const NFTs = () => {
     setSearchTerm(value);
   };
 
-  const buildCard = (data) => {
+  const buildCard = (data, i) => {
     return (
-      <div key={data.tokenId} className="col sm-4">
+      <div key={i} className="col sm-4">
         <Card style={{ width: "16rem" }}>
           {data.image ? (
             <Card.Img alt={data.nftName} variant="top" src={data.image} />
           ) : (
             <Card.Img alt={data.nftName} variant="top" src={nftNotFound} />
           )}
-
           <Card.Body>
             {
               <Link to={`/NFT/${data.tokenAddress}/${data.tokenId}/eth`}>
@@ -122,9 +143,9 @@ const NFTs = () => {
       });
   } else {
     card =
-      apiData &&
-      apiData.map((characterData) => {
-        return buildCard(characterData);
+      currentItems &&
+      currentItems.map((characterData, index) => {
+        return buildCard(characterData, index);
       });
   }
 
@@ -163,28 +184,35 @@ const NFTs = () => {
         <Container>
           <Container className="headRow">
             <Row>
-              <Col></Col>
-              <Col xs={4}>
-                <Search page="NFTs" searchValue={searchValue}></Search>
+              <Col>
+                <Search page="NFT" searchValue={searchValue}></Search>
               </Col>
-              <Col></Col>
-              {/* <Col sm className="makeCenter filterMargin">
-                {paginate && (
-                  <Paginate
-                    pageNum={params.page}
-                    prevState={isPrev}
-                    nextState={isNext}
-                    page="characters"
-                    currentPage={
-                      Number(params.page) < 0 ? 0 : Number(params.page)
-                    }
-                    totalPages={pages}
-                  ></Paginate>
-                )}
-              </Col> */}
-              {/* <Col sm className="makeCenter filterMargin">
+
+              <Col sm className="makeCenter">
+                <ReactPaginate
+                  nextLabel="Next >"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={3}
+                  marginPagesDisplayed={2}
+                  pageCount={pageCount}
+                  previousLabel="< Previous"
+                  pageClassName="page-item"
+                  pageLinkClassName="page-link"
+                  previousClassName="page-item"
+                  previousLinkClassName="page-link"
+                  nextClassName="page-item"
+                  nextLinkClassName="page-link"
+                  breakLabel="..."
+                  breakClassName="page-item"
+                  breakLinkClassName="page-link"
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  renderOnZeroPageCount={null}
+                />{" "}
+              </Col>
+              <Col sm className="makeCenter filterMargin">
                 Total Records Count: {totalRecords}
-              </Col> */}
+              </Col>
             </Row>
           </Container>
           <CardGroup>{card}</CardGroup>

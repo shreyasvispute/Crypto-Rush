@@ -34,7 +34,7 @@ html {
 }
 
 .cryptoLogo {
-  height: 42px !important;
+  height: 30px !important;
 }
 
 .nftimg {
@@ -62,7 +62,50 @@ h1 {
 .row {
   margin: 10px !important;
 }
+.cryptosymbol {
+  font-size: 12px;
+}
+.cryptoLinks {
+  white-space: nowrap;
+}
+.cryptoLinks:hover {
+  cursor: hand;
+  text-decoration: underline;
+}
+.loginbox {
+  margin-top: 20px;
+  width: 500px !important;
+  border: 1px #ddd solid;
+}
+.loginButton {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: column;
+  filter: drop-shadow(2px 4px 6px grey);
+}
 
-.cryptoList {
-  display: contents;
+.signup {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+.signupBtn {
+  width: 200px !important;
+  filter: drop-shadow(2px 4px 6px grey);
+}
+.loginIcon {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  filter: drop-shadow(2px 4px 6px grey);
+}
+.appname {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+}
+.rush-red {
+  color: crimson;
 }
