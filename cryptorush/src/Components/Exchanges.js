@@ -127,12 +127,6 @@ const Exchanges = () => {
     }
   };
 
-  // const buildTable = async (e) => {
-  //   debugger;
-  //   return (
-  //   );
-  // };
-
   if (loading) {
     return (
       <Container>
@@ -201,7 +195,10 @@ const Exchanges = () => {
                               />
                             </Link>
                           </td>
-                          <td>{e.name}</td>
+                          <td>
+                            {" "}
+                            <Link to={`/Exchange/${e.id}`}>{e.name}</Link>
+                          </td>
                           <td>{e.trust_score}</td>
                           <td>{e.trade_volume_24h_btc_normalized}</td>
                           <td>{e.trade_volume_24h_btc}</td>
