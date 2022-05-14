@@ -3,9 +3,13 @@ import axios from "axios";
 
 import { auth } from "./FirebaseConfig";
 import {
+  setPersistence,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  browserSessionPersistence,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
 
 const AuthContext = createContext();
@@ -25,8 +29,16 @@ export const AuthProvider = ({ children }) => {
     return res;
   };
 
-  const signIn = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+  const GoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    return await signInWithPopup(auth, provider).catch((e) => {
+      console.log(e);
+    });
+  };
+
+  const signIn = async (email, password) => {
+    await setPersistence(auth, browserSessionPersistence);
+    return await signInWithEmailAndPassword(auth, email, password);
   };
 
   const logout = async () => {
@@ -59,7 +71,14 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ currentUser, logout, signIn, createUserAccount, getUserToken }}
+      value={{
+        currentUser,
+        logout,
+        signIn,
+        createUserAccount,
+        getUserToken,
+        GoogleSignIn,
+      }}
     >
       {children}
     </AuthContext.Provider>

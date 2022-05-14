@@ -68,12 +68,6 @@ const NavigationNonAuth = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand as={Link} to="/">
-          <div className="d-flex">
-            <img src={Blockchain} alt="Crypto-Rush" style={{ height: 50 }} />
-            <div className="icon">Crypto-Rush</div>
-          </div>
-        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

@@ -44,6 +44,7 @@
 html {
   min-height: 100%;
   position: relative;
+  font-size: 14px;
 }
 
 .appContainer {
@@ -63,4 +64,22 @@ html {
 
 a:link {
   text-decoration: none;
+}
+.paginateDesign {
+  display: flex;
+  align-content: stretch;
+  justify-content: center;
+}
+.filterMargin {
+  margin-top: 8px !important;
+}
+.greenColumn {
+  transition: background 0.35s ease 0s;
+  /* color: rgba(24, 198, 131, 0.19) !important; */
+  color: crimson;
+}
+.redColumn {
+  transition: background 0.35s ease 0s;
+  /* color: #fddcd9 !important; */
+  color: lime;
 }

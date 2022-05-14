@@ -1,28 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { Form, FormControl, Button } from "react-bootstrap";
+import { Container, Row, Form, Col, InputGroup, Button } from "react-bootstrap";
 
 const Search = (props) => {
-  const handleChange = (e) => {
-    props.searchValue(e.target.value);
+  const [formData, setFormData] = useState("");
+
+  const handleClick = (e) => {
+    const key = document.getElementById("searchTerm").value;
+    if (key === "") {
+      alert("Please enter Pokemon name or id");
+    } else if (key && key.trim().length === 0) {
+      alert("Name cannot be blank spaces");
+    } else {
+      props.searchValue(key);
+    }
+    setFormData("");
   };
 
   return (
-    <Form
-      className="d-flex searchBox"
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-      name="formname"
-    >
-      <FormControl
-        type="search"
-        placeholder="Search"
+    <InputGroup className="mb-3">
+      <Form.Control
+        id="searchTerm"
+        type="text"
         className="me-2"
         aria-label="Search"
         name="searchTerm"
-        onChange={handleChange}
+        onChange={(e) => {
+          setFormData(e.target.value);
+        }}
+        aria-describedby="SearchNFT"
+        placeholder="Enter keyword to search"
       />
-    </Form>
+      <Button variant="primary" type="submit" onClick={(e) => handleClick(e)}>
+        Search
+      </Button>
+    </InputGroup>
   );
 };
 
