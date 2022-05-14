@@ -1,14 +1,31 @@
 import { Button } from "react-bootstrap";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { UserAuth } from "../../firebase/Auth";
 
 import dashboardContext from "../../context/dashboardContext";
+import axios from "axios";
 
 const AddToDashboard = (props) => {
   const context = useContext(dashboardContext);
-  const { currentUser } = UserAuth();
+  const { currentUser, getUserToken } = UserAuth();
   let userCryptoInfo = [];
   let userNFTInfo = [];
+
+  // const setStateURL = `/store/setState`;
+  const updateStateURL = `/store/updateState`;
+
+  async function updateStateInDB() {
+    try {
+      debugger;
+      let dashboard = context;
+      const token = await getUserToken(currentUser);
+      const { data } = await axios.post(updateStateURL, dashboard, {
+        headers: { authorization: `Bearer ${token}` },
+      });
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
 
   if (context) {
     userCryptoInfo = context.dashboard[0].dashboard.Cryptocurrency;
@@ -16,48 +33,55 @@ const AddToDashboard = (props) => {
   }
 
   async function addToDashboard(element, asset) {
-    if ((asset = "Cryptocurrency")) {
-      context.dashboardDispatch({
+    debugger;
+    if (asset === "Cryptocurrency") {
+      await context.dashboardDispatch({
         type: "ADD_CRYPTO_TO_DASHBOARD",
         payload: {
-          user: currentUser.displayName,
+          user: currentUser.uid,
           cryptocurrency: element.symbol,
         },
       });
+      // await updateStateInDB();
     } else {
-      context.dashboardDispatch({
+      await context.dashboardDispatch({
         type: "ADD_NFT_TO_DASHBOARD",
         payload: {
-          user: currentUser.displayName,
+          user: currentUser.uid,
           NFT: element.symbol,
         },
       });
+      // await updateStateInDB();
     }
+    await updateStateInDB();
     console.log("Conext" + context);
   }
 
   async function removeFromDashboard(element, asset) {
-    if ((asset = "Cryptocurrency")) {
-      context.dashboardDispatch({
+    if (asset === "Cryptocurrency") {
+      await context.dashboardDispatch({
         type: "REMOVE_CRYPTO_FROM_DASHBOARD",
         payload: {
-          user: currentUser.displayName,
+          user: currentUser.uid,
           cryptocurrency: element.symbol,
         },
       });
+      // await updateStateInDB();
     } else {
-      context.dashboardDispatch({
+      await context.dashboardDispatch({
         type: "REMOVE_NFT_FROM_DASHBOARD",
         payload: {
-          user: currentUser.displayName,
+          user: currentUser.uid,
           NFT: element.symbol,
         },
       });
+      // await updateStateInDB();
     }
+    await updateStateInDB();
     console.log("Conext" + context);
   }
 
-  if (props.asset == "Cryptocurrency") {
+  if (props.asset === "Cryptocurrency") {
     return (
       // {userCryptoInfo.  (props.element.symbol) ?
       <div>
@@ -67,19 +91,19 @@ const AddToDashboard = (props) => {
             variant="outline-primary"
             onClick={() => removeFromDashboard(props.element, props.asset)}
           >
-            Remove From Watchlist
+            - Remove
           </Button>
         ) : (
           <Button
             variant="primary"
             onClick={() => addToDashboard(props.element, props.asset)}
           >
-            Add To Watchlist
+            + Add
           </Button>
         )}
       </div>
     );
-  } else if (props.asset == "NFT") {
+  } else if (props.asset === "NFT") {
     return (
       // {userCryptoInfo.  (props.element.symbol) ?
       <div>
@@ -87,17 +111,17 @@ const AddToDashboard = (props) => {
         userNFTInfo.includes(props.element.symbol.toLowerCase()) ? (
           <Button
             variant="outline-primary"
-            onClick={() => addToDashboard(props.element, props.asset)}
+            onClick={() => removeFromDashboard(props.element, props.asset)}
             disabled
           >
-            +
+            - Remove
           </Button>
         ) : (
           <Button
             variant="primary"
             onClick={() => addToDashboard(props.element, props.asset)}
           >
-            +
+            + Add
           </Button>
         )}
       </div>
