@@ -8,13 +8,12 @@ import axios from "axios";
 
 const Dashboard = () => {
   const context = useContext(dashboardContext);
-  console.log(context);
   const [cryptoData, setCryptoData] = useState(undefined);
   const [cryptoList, setCryptoList] = useState(undefined);
   const { currentUser, getUserToken } = UserAuth();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [fetchContext, setFetchContext] = useState(true);
+  // const [fetchContext, setFetchContext] = useState(true);
 
   const cryptoDataURL = `/cryptocurrency/listings/${cryptoList}`;
 
@@ -85,34 +84,35 @@ const Dashboard = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        if (fetchContext) {
-          let dashboard = await fetchStateFromDB();
-          debugger;
-          context.dashboardDispatch({
-            type: "SET_INITIAL_STATE",
-            payload: {
-              dashboard,
-            },
-          });
-          // if (dashboard) {
-          //   context.dashboardDispatch({
-          //     type: "SET_INITIAL_STATE",
-          //     payload: {
-          //       dashboard,
-          //     },
-          //   });
-          // } else {
-          //   context.dashboardDispatch({
-          //     type: "ADD_USER",
-          //     payload: {
-          //       user: currentUser.uid,
-          //     },
-          //   });
-          //   await setStateInDB();
-          // }
-          setFetchContext(false);
-        }
+        // if (fetchContext) {
+        //   // if (dashboard) {
+        //   //   context.dashboardDispatch({
+        //   //     type: "SET_INITIAL_STATE",
+        //   //     payload: {
+        //   //       dashboard,
+        //   //     },
+        //   //   });
+        //   // } else {
+        //   //   context.dashboardDispatch({
+        //   //     type: "ADD_USER",
+        //   //     payload: {
+        //   //       user: currentUser.uid,
+        //   //     },
+        //   //   });
+        //   //   await setStateInDB();
+        //   // }
+        //   setFetchContext(false);
+        // }
         // setCurrentPage(Number(page));
+
+        let dashboard = await fetchStateFromDB();
+        debugger;
+        context.dashboardDispatch({
+          type: "SET_INITIAL_STATE",
+          payload: {
+            dashboard,
+          },
+        });
 
         if (context.dashboard[0].dashboard.Cryptocurrency.length > 0) {
           setCryptoList(
@@ -137,7 +137,7 @@ const Dashboard = () => {
       }
     }
     fetchData();
-  }, [cryptoList, context]);
+  }, [context]);
 
   if (loading) {
     return (
