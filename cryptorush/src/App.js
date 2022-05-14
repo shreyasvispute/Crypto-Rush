@@ -18,6 +18,7 @@ import SignUp from "./Components/login/SignUp";
 import DashboardContext from "./context/dashboardContext";
 import reducer from "./reducers/dashboardReducer";
 import Exchange from "./Components/Exchange";
+import FetchState from "./Components/FetchState";
 
 function App() {
   const [dashboard, dashboardDispatch] = useReducer(
@@ -27,6 +28,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        {/* <FetchState> */}
         <DashboardContext.Provider value={{ dashboard, dashboardDispatch }}>
           <div className="appContainer">
             <header>
@@ -54,7 +56,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/Cryptocurreny/:symbol"
+                  path="/Cryptocurrency/:symbol"
                   element={
                     <PrivateRoute>
                       <Cryptocurrency />
@@ -81,7 +83,6 @@ function App() {
                   }
                 />
                 <Route
-                
                   path="/NFTs"
                   element={
                     <PrivateRoute>
@@ -125,6 +126,7 @@ function App() {
             </footer>
           </div>
         </DashboardContext.Provider>
+        {/* </FetchState> */}
       </AuthProvider>
     </BrowserRouter>
   );

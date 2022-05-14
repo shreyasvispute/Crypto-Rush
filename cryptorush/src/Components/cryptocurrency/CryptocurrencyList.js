@@ -80,10 +80,13 @@ const CryptocurrencyList = (props) => {
               return (
                 <tr key={element.id}>
                   <td>
-                    <AddToDashboard element={element} asset="Cryptocurrency" />
+                    <AddToDashboard
+                      element={element}
+                      asset="Cryptocurrency"
+                      className="addOnAsset"
+                    />
                   </td>
                   <td>
-                    {" "}
                     <img
                       src={element.logo}
                       alt={element.name}
@@ -105,22 +108,20 @@ const CryptocurrencyList = (props) => {
                     </td>
                   ) : (
                     <td>{formatPrice(element.quote.USD.price)}</td>
-                  )}{" "}
+                  )}
                   <td>
-                    {" "}
                     {convertToInternationalCurrencySystem(
                       element.quote.USD.market_cap
                     )}
                   </td>
                   <td>
-                    {" "}
                     {convertToInternationalCurrencySystem(
                       element.quote.USD.volume_24h
                     )}
                   </td>
                   {element.quote.USD.volume_change_24h > 0 ? (
                     <td className="positiveChange">
-                      {element.quote.USD.volume_change_24h + "%"}
+                      {"+" + element.quote.USD.volume_change_24h + "%"}
                     </td>
                   ) : (
                     <td className="negativeChange">

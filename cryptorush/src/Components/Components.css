@@ -109,3 +109,8 @@ h1 {
 .rush-red {
   color: crimson;
 }
+
+.chartComponent {
+  width: 800px;
+  float: right;
+}

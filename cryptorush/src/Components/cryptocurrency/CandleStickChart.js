@@ -305,6 +305,23 @@ const CandleStickChart = (props) => {
           enabled: true,
         },
       },
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: "#255aee",
+          shadeTo: "light",
+          shadeIntensity: 0.65,
+        },
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          shadeIntensity: 1,
+          opacityFrom: 0.7,
+          opacityTo: 0.9,
+          stops: [0, 90, 100],
+        },
+      },
     },
   };
 
@@ -321,7 +338,7 @@ const CandleStickChart = (props) => {
   //   }, []);
 
   return (
-    <Container className="mainContainer">
+    <Container className="mainContainer chartComponent">
       <Chart
         options={chartingData.options}
         series={chartingData.series}

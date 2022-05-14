@@ -129,6 +129,7 @@ const Dashboard = () => {
         } else {
           setCryptoData([]);
           setError(true);
+          setLoading(false);
         }
       } catch (e) {
         setLoading(false);
