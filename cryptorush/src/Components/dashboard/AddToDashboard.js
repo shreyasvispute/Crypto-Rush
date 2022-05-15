@@ -108,7 +108,7 @@ const AddToDashboard = (props) => {
       // {userCryptoInfo.  (props.element.symbol) ?
       <div>
         {userNFTInfo.length > 0 &&
-        userNFTInfo.includes(props.element.symbol.toLowerCase()) ? (
+        userNFTInfo.includes(props.element.symbol) ? (
           <Button
             variant="outline-primary"
             onClick={() => removeFromDashboard(props.element, props.asset)}

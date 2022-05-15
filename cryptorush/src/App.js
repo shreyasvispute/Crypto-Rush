@@ -45,7 +45,11 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-        state.push(await fetchStateFromDB());
+        debugger;
+        let DBState = await fetchStateFromDB();
+        if (DBState) {
+          state.push();
+        }
       } catch (e) {
         console.log(e);
       }
