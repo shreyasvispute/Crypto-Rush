@@ -18,7 +18,7 @@ import { Link, useParams } from "react-router-dom";
 import Tweets from "./Tweets";
 import "./Components.css";
 
-function ExchangeNew() {
+function Exchange() {
 
     const {id} = useParams()
     const[exchange,setExchange] = useState();
@@ -131,4 +131,4 @@ function ExchangeNew() {
 
 }
 
-export default ExchangeNew
+export default Exchange
