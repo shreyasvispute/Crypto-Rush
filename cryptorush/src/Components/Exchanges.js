@@ -1,4 +1,12 @@
-import { Container, Col, Row, Spinner, Table } from "react-bootstrap";
+import {
+  Container,
+  Col,
+  Row,
+  Spinner,
+  ListGroup,
+  ListGroupItem,
+  Table,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Error from "./Error";
 import axios from "axios";
@@ -132,6 +140,12 @@ const Exchanges = () => {
     }
   };
 
+  // const buildTable = async (e) => {
+  //   debugger;
+  //   return (
+  //   );
+  // };
+
   if (loading) {
     return (
       <Container>
@@ -180,7 +194,11 @@ const Exchanges = () => {
                               />
                             </Link>
                           </td>
-                          <td>{element.name}</td>
+                          <td>
+                            <Link to={`/Exchanges/${element.id}`}>
+                              {element.name}
+                            </Link>
+                          </td>
                           <td>{element.trust_score}</td>
                           <td>
                             {convertToInternationalCurrencySystem(
@@ -209,8 +227,7 @@ const Exchanges = () => {
                             </Link>
                           </td>
                           <td>
-                            {" "}
-                            <Link to={`/Exchange/${e.id}`}>{e.name}</Link>
+                            <Link to={`/Exchanges/${e.id}`}>{e.name}</Link>
                           </td>
                           <td>{e.trust_score}</td>
                           <td>
