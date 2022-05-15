@@ -32,6 +32,7 @@ router.get("/listings", async (req, res) => {
 //Returns the latest listings of all cryptocurrencies
 router.get("/listings/:list", checkIfAuthenticated, async (req, res) => {
   try {
+    validations.validateString(req.params.list, "Cryptocurrency List");
     let listingData = await cryptoData.getCryptoListingsByList(req.params.list);
     res.status(200).json(listingData);
   } catch (error) {
@@ -45,6 +46,7 @@ router.get("/listings/:list", checkIfAuthenticated, async (req, res) => {
 router.get("/search/:searchTerm", checkIfAuthenticated, async (req, res) => {
   try {
     let searchTerm = req.params.searchTerm;
+    validations.validateString(searchTerm, "Search Term");
     let searchData = await cryptoData.searchCrypto(searchTerm);
     res.status(200).json(searchData);
     return;

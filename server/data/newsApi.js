@@ -1,9 +1,11 @@
 const axios = require("axios");
 
 const NewsAPI = require("newsapi");
+const { validations } = require(".");
 const newsapi = new NewsAPI("a2ac0345b5e44eb58f870194dc41922b");
 
 async function getNewsByKeyword(keyword) {
+  validations.validateString(keyword, "Keyword");
   if (typeof keyword != "string") {
     throw `Invalid tupe of Keyword`;
   }
