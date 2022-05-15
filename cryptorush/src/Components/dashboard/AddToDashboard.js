@@ -16,7 +16,6 @@ const AddToDashboard = (props) => {
 
   async function updateStateInDB() {
     try {
-      debugger;
       let dashboard = context;
       const token = await getUserToken(currentUser);
       const { data } = await axios.post(updateStateURL, dashboard, {
@@ -33,7 +32,6 @@ const AddToDashboard = (props) => {
   }
 
   async function addToDashboard(element, asset) {
-    debugger;
     if (asset === "Cryptocurrency") {
       await context.dashboardDispatch({
         type: "ADD_CRYPTO_TO_DASHBOARD",
@@ -48,7 +46,7 @@ const AddToDashboard = (props) => {
         type: "ADD_NFT_TO_DASHBOARD",
         payload: {
           user: currentUser.uid,
-          NFT: element.symbol,
+          NFT: element,
         },
       });
       // await updateStateInDB();
@@ -58,6 +56,7 @@ const AddToDashboard = (props) => {
   }
 
   async function removeFromDashboard(element, asset) {
+    debugger;
     if (asset === "Cryptocurrency") {
       await context.dashboardDispatch({
         type: "REMOVE_CRYPTO_FROM_DASHBOARD",
@@ -72,7 +71,7 @@ const AddToDashboard = (props) => {
         type: "REMOVE_NFT_FROM_DASHBOARD",
         payload: {
           user: currentUser.uid,
-          NFT: element.symbol,
+          NFT: element,
         },
       });
       // await updateStateInDB();
@@ -91,37 +90,41 @@ const AddToDashboard = (props) => {
             variant="outline-primary"
             onClick={() => removeFromDashboard(props.element, props.asset)}
           >
-            - Remove
+            Remove
           </Button>
         ) : (
           <Button
             variant="primary"
             onClick={() => addToDashboard(props.element, props.asset)}
           >
-            + Add
+            Add
           </Button>
         )}
       </div>
     );
   } else if (props.asset === "NFT") {
+    let index = userNFTInfo.findIndex(
+      (x) =>
+        x.tokenAddress === props.element.tokenAddress &&
+        x.tokenId === props.element.tokenId
+    );
     return (
       // {userCryptoInfo.  (props.element.symbol) ?
       <div>
         {userNFTInfo.length > 0 &&
-        userNFTInfo.includes(props.element.symbol.toLowerCase()) ? (
+        userNFTInfo[index]?.tokenAddress === props.element.tokenAddress ? (
           <Button
             variant="outline-primary"
             onClick={() => removeFromDashboard(props.element, props.asset)}
-            disabled
           >
-            - Remove
+            Remove
           </Button>
         ) : (
           <Button
             variant="primary"
             onClick={() => addToDashboard(props.element, props.asset)}
           >
-            + Add
+            Add
           </Button>
         )}
       </div>

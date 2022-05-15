@@ -15,7 +15,7 @@ const reducer = (state, action) => {
 
   switch (type) {
     case "SET_INITIAL_STATE":
-      debugger;
+      //debugger;
       let initialState = [
         {
           user: payload.dashboard.user,
@@ -27,7 +27,7 @@ const reducer = (state, action) => {
       ];
       return [...initialState];
     case "ADD_USER":
-      debugger;
+      //debugger;
       let new_state = [
         {
           user: payload.user,
@@ -40,7 +40,7 @@ const reducer = (state, action) => {
       return [new_state];
 
     case "ADD_CRYPTO_TO_DASHBOARD":
-      debugger;
+      //debugger;
       prevState = [...state];
       index = prevState.findIndex((x) => x.user === payload.user);
       if (index === -1) {
@@ -55,7 +55,6 @@ const reducer = (state, action) => {
       }
 
     case "ADD_NFT_TO_DASHBOARD":
-      debugger;
       prevState = [...state];
       index = prevState.findIndex((x) => x.user === payload.user);
       if (index === -1) {
@@ -70,7 +69,6 @@ const reducer = (state, action) => {
       }
 
     case "REMOVE_CRYPTO_FROM_DASHBOARD":
-      debugger;
       prevState = [...state];
       index = prevState.findIndex((x) => x.user === payload.user);
       if (index === -1) {
@@ -81,21 +79,27 @@ const reducer = (state, action) => {
           (e) => e === payload.cryptocurrency
         );
 
-        prevState[index].dashboard.Cryptocurrency.splice(cryptoIndex, 1);
+        if (cryptoIndex !== -1) {
+          prevState[index].dashboard.Cryptocurrency.splice(cryptoIndex, 1);
+          return [...prevState];
+        }
         return [...prevState];
       }
 
     case "REMOVE_NFT_FROM_DASHBOARD":
-      debugger;
       prevState = [...state];
       index = prevState.findIndex((x) => x.user === payload.user);
       if (index === -1) {
         return [...prevState];
       } else {
         const user = prevState[index];
-        let nftIndex = user.dashboard.NFT.findIndex((e) => e === payload.NFT);
-
-        prevState[index].dashboard.NFT.splice(nftIndex, 1);
+        let nftIndex = user.dashboard.NFT.findIndex(
+          (e) => e.tokenId === payload.NFT.tokenId
+        );
+        if (nftIndex !== -1) {
+          prevState[index].dashboard.NFT.splice(nftIndex, 1);
+          return [...prevState];
+        }
         return [...prevState];
       }
 

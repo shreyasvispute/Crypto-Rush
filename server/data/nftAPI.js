@@ -94,14 +94,6 @@ async function getNFT(address, id, chain) {
   tokenIdMetadata["tokenPrice"] = price;
   tokenIdMetadata["trades"] = trades.result;
 
-  // const NFTResults = {
-  //   tokenAddress: tokenIdMetadata.token_address,
-  //   tokenId: tokenIdMetadata.token_id,
-  //   // description: data.description,
-  //   // gif_url: data.gif_url?.replace("ipfs://", ipfsURL),
-  //   // image: imageURL,
-  //   // nftName: data.name,
-  // };
   return tokenIdMetadata;
 }
 
@@ -118,7 +110,6 @@ const fetchTokenPrice = async (chain, address) => {
     });
   if (NFTLowestPrice?.price) {
     return NFTLowestPrice.price;
-    // (NFTLowestPrice.nativePrice.value / price.usdPrice) * Math.pow(10, 10)
   } else {
     return null;
   }
@@ -133,7 +124,6 @@ const nftTrades = async (chain, address) => {
   const NFTTrades = await Moralis.Web3API.token.getNFTTrades(options);
   return NFTTrades;
 };
-
 module.exports = {
   getAllNFT,
   getNFT,

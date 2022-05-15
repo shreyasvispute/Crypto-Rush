@@ -5,6 +5,7 @@ import {
   Spinner,
   ListGroup,
   ListGroupItem,
+  Table,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Error from "./Error";
@@ -52,16 +53,16 @@ const Exchanges = () => {
 
   let card = null;
 
-  const exchangeDataURL = "/exchanges"; 
+  const exchangeDataURL = "/exchanges";
   //const exchangeDataURL = "https://api.coingecko.com/api/v3/exchanges";
-  const exchangeSearchDataURL = `/exchanges/search/${searchTerm}`
+  const exchangeSearchDataURL = `/exchanges/search/${searchTerm}`;
 
   //const exchangeSearchDataURL = `https://api.coingecko.com/api/v3/search?query=${searchTerm}`;
 
   //Function to make HTTP request to get data
   async function getExchangeData() {
     try {
-      const { data } = await axios.get(exchangeDataURL)
+      const { data } = await axios.get(exchangeDataURL);
       return data;
     } catch (e) {
       console.log("Unable to fetch data.");
@@ -71,7 +72,7 @@ const Exchanges = () => {
   //Function to make HTTP request to get data
   async function getExchangeSearchData() {
     try {
-      const { data } = await axios.get(exchangeSearchDataURL)
+      const { data } = await axios.get(exchangeSearchDataURL);
       return data;
     } catch (e) {
       console.log("Unable to fetch data.");
@@ -101,7 +102,6 @@ const Exchanges = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        debugger;
         const data = await getExchangeSearchData(searchTerm);
         if (data) {
           setSearchData(data);
@@ -121,12 +121,30 @@ const Exchanges = () => {
     }
   }, [searchTerm]);
 
+  function convertToInternationalCurrencySystem(labelValue) {
+    // Nine Zeroes for Billions
+    return Math.abs(Number(labelValue)) >= 1.0e9
+      ? (Math.abs(Number(labelValue)) / 1.0e9).toFixed(2) + "B"
+      : // Six Zeroes for Millions
+      Math.abs(Number(labelValue)) >= 1.0e6
+      ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(2) + "M"
+      : // Three Zeroes for Thousands
+      Math.abs(Number(labelValue)) >= 1.0e3
+      ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(2) + "K"
+      : Math.abs(Number(labelValue));
+  }
 
   const searchValue = async (value) => {
     if (value) {
       setSearchTerm(value.trim());
     }
   };
+
+  // const buildTable = async (e) => {
+  //   debugger;
+  //   return (
+  //   );
+  // };
 
   if (loading) {
     return (
@@ -152,70 +170,81 @@ const Exchanges = () => {
         </Row>
         <Row>
           <Col>
-            <ListGroup>
-              <ListGroupItem variant="primary">
-                <Row>
-                  <Col>Exchange</Col>
-                  <Col>Trust Score</Col>
-                  <Col>24H Volume(Normalized)</Col>
-                  <Col>24H Volume</Col>
-                </Row>
-              </ListGroupItem>
-              {searchTerm && searchData.length > 0
-                ? searchData.map((element) => {
-                    return (
-                      <ListGroupItem
-                        key={element.id}
-                        variant="secondary"
-                        className="cryptoList"
-                      >
-                        <Link
-                          to={`/Exchange/${element.id}`}
-                        >
-                          <Row>
-                            <Col>
+            <Table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Exchange</th>
+                  <th>Trust Score</th>
+                  <th>24H Volume(Normalized)</th>
+                  <th>24H Volume</th>
+                </tr>
+              </thead>
+              <tbody>
+                {searchTerm && searchData.length > 0
+                  ? searchData.map((element) => {
+                      return (
+                        <tr>
+                          <td>
+                            <Link to={`/Exchanges/${element.id}`}>
                               <img
                                 src={element.image}
                                 alt={element.name}
                                 style={{ height: 42 }}
                               />
+                            </Link>
+                          </td>
+                          <td>
+                            <Link to={`/Exchanges/${element.id}`}>
                               {element.name}
-                            </Col>
-                            <Col>{element.trust_score}</Col>
-                            <Col>{element.trade_volume_24h_btc_normalized}</Col>
-                            <Col>{element.trade_volume_24h_btc}</Col>
-                          </Row>
-                        </Link>
-                      </ListGroupItem>
-                    );
-                  })
-                : currentItems &&
-                  currentItems.map((element) => {
-                    return (
-                      <ListGroupItem
-                        key={element.id}
-                        variant="secondary"
-                        className="cryptoList"
-                      >
-                        <Link to={`/Exchange/${element.id}`}>
-                          <Row>
-                            <Col>
+                            </Link>
+                          </td>
+                          <td>{element.trust_score}</td>
+                          <td>
+                            {convertToInternationalCurrencySystem(
+                              element.trade_volume_24h_btc_normalized
+                            )}
+                          </td>
+                          <td>
+                            {convertToInternationalCurrencySystem(
+                              element.trade_volume_24h_btc
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : currentItems &&
+                    currentItems.map((e) => {
+                      return (
+                        <tr>
+                          <td>
+                            <Link to={`/Exchanges/${e.id}`}>
                               <img
-                                src={element.image}
-                                alt={element.name}
+                                src={e.image}
+                                alt={e.name}
                                 style={{ height: 42 }}
                               />
-                              {element.name}
-                            </Col>
-                            <Col>{element.trust_score}</Col>
-                            <Col>{element.trade_volume_24h_btc_normalized}</Col>
-                            <Col>{element.trade_volume_24h_btc}</Col>
-                          </Row>
-                        </Link>
-                      </ListGroupItem>
-                    );
-                  })}
-            </ListGroup>
+                            </Link>
+                          </td>
+                          <td>
+                            <Link to={`/Exchanges/${e.id}`}>{e.name}</Link>
+                          </td>
+                          <td>{e.trust_score}</td>
+                          <td>
+                            {convertToInternationalCurrencySystem(
+                              e.trade_volume_24h_btc_normalized
+                            )}
+                          </td>
+                          <td>
+                            {convertToInternationalCurrencySystem(
+                              e.trade_volume_24h_btc
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+              </tbody>
+            </Table>
           </Col>
         </Row>
         <Row>

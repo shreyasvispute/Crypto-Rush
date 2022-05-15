@@ -55,7 +55,7 @@ const CryptocurrencyList = (props) => {
           <thead>
             <tr>
               <th></th>
-              <th></th>
+              <th>Rank(#)</th>
               <th>Symbol</th>
               <th>Name</th>
               <th>Price</th>
@@ -65,7 +65,7 @@ const CryptocurrencyList = (props) => {
             </tr>
           </thead>
           <tbody>
-            {props.cryptoData.map((element) => {
+            {props.cryptoData.map((element, i) => {
               let priceChangeColor;
               if (
                 socketData &&
@@ -80,18 +80,36 @@ const CryptocurrencyList = (props) => {
               return (
                 <tr key={element.id}>
                   <td>
-                    <AddToDashboard element={element} asset="Cryptocurrency" />
+                    <AddToDashboard
+                      element={element}
+                      asset="Cryptocurrency"
+                      className="addOnAsset"
+                    />
+                  </td>
+                  <td>
+                    <span>{i}</span>
+                  </td>
+                  <td>
+                    <Link
+                      to={`/Cryptocurrency/${element.symbol.toLowerCase()}`}
+                    >
+                      <img
+                        src={element.logo}
+                        alt={element.name}
+                        className="cryptoLogo"
+                      />
+                      {"   "}
+                      {element.symbol}
+                    </Link>
                   </td>
                   <td>
                     {" "}
-                    <img
-                      src={element.logo}
-                      alt={element.name}
-                      className="cryptoLogo"
-                    />
+                    <Link
+                      to={`/Cryptocurrency/${element.symbol.toLowerCase()}`}
+                    >
+                      {element.name}
+                    </Link>
                   </td>
-                  <td>{element.symbol}</td>
-                  <td>{element.name}</td>
                   {socketData &&
                   socketData[
                     element.name.split(" ").join("-").toLowerCase()
@@ -105,22 +123,20 @@ const CryptocurrencyList = (props) => {
                     </td>
                   ) : (
                     <td>{formatPrice(element.quote.USD.price)}</td>
-                  )}{" "}
+                  )}
                   <td>
-                    {" "}
                     {convertToInternationalCurrencySystem(
                       element.quote.USD.market_cap
                     )}
                   </td>
                   <td>
-                    {" "}
                     {convertToInternationalCurrencySystem(
                       element.quote.USD.volume_24h
                     )}
                   </td>
                   {element.quote.USD.volume_change_24h > 0 ? (
                     <td className="positiveChange">
-                      {element.quote.USD.volume_change_24h + "%"}
+                      {"+" + element.quote.USD.volume_change_24h + "%"}
                     </td>
                   ) : (
                     <td className="negativeChange">
