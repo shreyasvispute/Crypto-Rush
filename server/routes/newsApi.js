@@ -33,9 +33,7 @@ router.get("/:keyWord", async (req, res) => {
       searchTerm = "crypto";
     }
 
-    console.log("here");
     const result = await newsData.getNewsByKeyword(searchTerm);
-    console.log(result);
     res.json(result);
     return;
   } catch (error) {

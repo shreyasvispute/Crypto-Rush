@@ -142,6 +142,7 @@ function App() {
                   </PrivateRoute>
                 }
               />
+
               <Route
                 path="*"
                 element={

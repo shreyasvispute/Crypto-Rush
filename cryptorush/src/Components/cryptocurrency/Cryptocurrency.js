@@ -14,6 +14,8 @@ import {
 import CandleStickChart from "./CandleStickChart";
 import { UserAuth } from "../../firebase/Auth";
 import AddToDashboard from "../dashboard/AddToDashboard";
+import Tweets from "../Tweets";
+import NewsScroll from "../NewsScroll";
 
 const Cryptocurrency = () => {
   const [loading, setLoading] = useState(true);
@@ -44,7 +46,6 @@ const Cryptocurrency = () => {
   }
 
   const { symbol } = useParams();
-  debugger;
   let dropdownItems = [
     "24 hours",
     "7 days",
@@ -72,8 +73,6 @@ const Cryptocurrency = () => {
   //Function to make HTTP request to get data
   async function getCryptoData() {
     try {
-      debugger;
-      // const { data } = await axios.get(cryptoDataURL);
       const token = await getUserToken(currentUser);
       const { data } = await axios.get(cryptoDataURL, {
         headers: { authorization: `Bearer ${token}` },
@@ -100,7 +99,6 @@ const Cryptocurrency = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        debugger;
         // setCurrentPage(Number(page));
         const data = await getCryptoData();
         const chartingData = await getChartData();
@@ -147,7 +145,6 @@ const Cryptocurrency = () => {
   }, [chartDuration]);
 
   async function changeInterval(interval) {
-    debugger;
     let duration = interval.replace(/[^A-Za-z]/g, "");
     let value = interval.match(/\d+/)[0];
     if (duration.includes("day")) {
@@ -199,9 +196,7 @@ const Cryptocurrency = () => {
                   {cryptoData.name} {"(" + cryptoData.symbol + ")"}
                 </h1>
               </Col>
-            </Row>
-            <Row>
-              <Col>
+              <Col className="cryptoRow" sm={5}>
                 <h2>{formatPrice(cryptoData.quote.USD.price)}</h2>
 
                 {cryptoData.quote.USD.volume_change_24h > 0 ? (
@@ -214,16 +209,12 @@ const Cryptocurrency = () => {
                   </div>
                 )}
               </Col>
-              <Col md={1}>
+              <Col className="cryptoRow">
                 <AddToDashboard element={cryptoData} asset="Cryptocurrency" />
               </Col>
             </Row>
-
             <Row>
-              <Col>
-                <div>Description</div>
-              </Col>
-              <Col className="chartDropdown" md={2}>
+              <Col className="chartDropdown" sm={11}>
                 <Dropdown>
                   <Dropdown.Toggle
                     variant="outline-secondary"
@@ -247,104 +238,70 @@ const Cryptocurrency = () => {
               </Col>
             </Row>
             <Row>
-              <Col>{cryptoData.description}</Col>
-              <Col>
+              <Col sm={8}>
                 <CandleStickChart chartData={chartData} />
+                <Col>
+                  <Card>
+                    <Card.Body>
+                      <Card.Subtitle className="mb-2">
+                        Description
+                      </Card.Subtitle>
+                      <Card.Text> {cryptoData.description}</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                <Col>
+                  <Card>
+                    <Card.Body>
+                      <Card.Subtitle className="mb-2">
+                        Coin Details
+                      </Card.Subtitle>
+                      <Card.Text>
+                        {" "}
+                        <ListGroup horizontal>
+                          <ListGroup.Item>
+                            <Row>Rank</Row>
+                            <Row>{cryptoData.cmc_rank}</Row>
+                          </ListGroup.Item>
+                          <ListGroup.Item>
+                            <Row>Market Cap</Row>
+                            <Row>
+                              {convertToInternationalCurrencySystem(
+                                cryptoData.quote.USD.volume_change_24h
+                              )}
+                            </Row>
+                          </ListGroup.Item>
+                          <ListGroup.Item>
+                            <Row>Volume 24h</Row>
+                            <Row>
+                              {convertToInternationalCurrencySystem(
+                                cryptoData.quote.USD.volume_24h
+                              )}
+                            </Row>
+                          </ListGroup.Item>
+                          <ListGroup.Item>
+                            <Row>Circulating supply</Row>
+                            <Row>
+                              {convertToInternationalCurrencySystem(
+                                cryptoData.quote.USD.volume_change_24h
+                              )}
+                            </Row>
+                          </ListGroup.Item>
+                        </ListGroup>
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
               </Col>
-            </Row>
-            <Row>
               <Col>
-                <ListGroup horizontal>
-                  <ListGroup.Item>
-                    <Row>Rank</Row>
-                    <Row>{cryptoData.cmc_rank}</Row>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Row>Market Cap</Row>
-                    <Row>
-                      {convertToInternationalCurrencySystem(
-                        cryptoData.quote.USD.volume_change_24h
-                      )}
-                    </Row>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Row>Volume 24h</Row>
-                    <Row>
-                      {convertToInternationalCurrencySystem(
-                        cryptoData.quote.USD.volume_24h
-                      )}
-                    </Row>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Row>Circulating supply</Row>
-                    <Row>
-                      {convertToInternationalCurrencySystem(
-                        cryptoData.quote.USD.volume_change_24h
-                      )}
-                    </Row>
-                  </ListGroup.Item>
-                </ListGroup>
+                <Tweets exchange={cryptoData.name}></Tweets>
               </Col>
             </Row>
+
+            <Row></Row>
+            <NewsScroll exchange={cryptoData.name}></NewsScroll>
           </Container>
         )}
-
-        {/* {!error && (
-          <Container className="mainContainer">
-            <Row>
-              <Col>
-                <Card>
-                  <Card.Header>
-                    <img
-                      src={cryptoData.logo}
-                      alt={cryptoData.name}
-                      className="navbar-brand cryptoLogo"
-                    />{" "}
-                    {cryptoData.symbol}
-                  </Card.Header>
-                  <Container>
-                    <Row>
-                      <Col></Col>
-                      <Col xs={2} className="chartDropdown">
-                        <Dropdown>
-                          <Dropdown.Toggle
-                            variant="secondary"
-                            id="dropdown-basic"
-                          >
-                            {chartDuration.duration}
-                          </Dropdown.Toggle>
-                          <Dropdown.Menu>
-                            {dropdownItems.map((element) => {
-                              return (
-                                <Dropdown.Item
-                                  key={element}
-                                  onClick={() => changeInterval(element)}
-                                >
-                                  {element}
-                                </Dropdown.Item>
-                              );
-                            })}
-                          </Dropdown.Menu>
-                        </Dropdown>
-                      </Col>
-                    </Row>
-                  </Container>
-
-                  <CandleStickChart chartData={chartData} />
-                  <Card.Body>
-                    <Card.Title>{cryptoData.name}</Card.Title>
-                    <Card.Text className="charDesc">
-                      {cryptoData.description}
-                    </Card.Text>
-                    <Card.Text className="charDesc">
-                      Price: {cryptoData.quote.USD.price}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-          </Container>
-        )} */}
       </div>
     );
   }
