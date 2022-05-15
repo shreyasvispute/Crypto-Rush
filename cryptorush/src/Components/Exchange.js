@@ -18,6 +18,7 @@ import {
 import { Link, useParams } from "react-router-dom";
 import Tweets from "./Tweets";
 import "./Components.css";
+import NewsScroll from "./NewsScroll";
 
 function Exchange() {
   const { id } = useParams();
@@ -68,159 +69,60 @@ function Exchange() {
               </Col>
             </Row>
             <Row>
-              <Col>
-                <ListGroup>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Rank</Col>
-                    </Row>
-                    <Row>
-                      <Col>{exchange?.trust_score_rank}</Col>
-                    </Row>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Country</Col>
-                    </Row>
-                    <Row>
-                      <Col>{exchange?.country}</Col>
-                    </Row>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Year Established</Col>
-                    </Row>
-                    <Row>
-                      <Col>{exchange?.year_established}</Col>
-                    </Row>
-                  </ListGroup.Item>
-                </ListGroup>
-              </Col>
-              <Col>
+              <Col sm={8}>
                 <ExchangeInfo exchange={exchange.name}></ExchangeInfo>
+                <Row>
+                  <Col>
+                    <Card>
+                      <Card.Body>
+                        <Card.Subtitle className="mb-2">
+                          Exchange Details
+                        </Card.Subtitle>
+                        <Card.Text>
+                          {" "}
+                          <ListGroup horizontal>
+                            <ListGroup.Item>
+                              <Row>
+                                <Col>Rank</Col>
+                              </Row>
+                              <Row>
+                                <Col>{exchange?.trust_score_rank}</Col>
+                              </Row>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                              <Row>
+                                <Col>Country</Col>
+                              </Row>
+                              <Row>
+                                <Col>{exchange?.country}</Col>
+                              </Row>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                              <Row>
+                                <Col>Year Established</Col>
+                              </Row>
+                              <Row>
+                                <Col>{exchange?.year_established}</Col>
+                              </Row>
+                            </ListGroup.Item>
+                          </ListGroup>
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                </Row>
+              </Col>
+              <Col>
+                <Tweets exchange={exchange.name}></Tweets>
               </Col>
             </Row>
             <Row>
-              <News exchange={exchange.name}></News>
-            </Row>
-            <Row>
-              <Tweets exchange={exchange.name}></Tweets>
+              <Col>
+                <NewsScroll exchange={exchange.name}></NewsScroll>
+              </Col>
             </Row>
           </Container>
         )}
-        {/* {!error && (
-          <Container className="mainContainer">
-            <Row>
-              <Col>
-                <Card>
-                  <Card.Header>
-                    <img
-                      src={exchange?.image}
-                      alt={exchange?.name}
-                      className="navbar-brand cryptoLogo"
-                    />{" "}
-                    {exchange.name}
-                  </Card.Header>
-                  <Container>
-                    <ExchangeInfo exchange={exchange.name}></ExchangeInfo>
-                  </Container>
-                  <Card.Body>
-                    <Card.Title>
-                      {exchange && exchange.name ? (
-                        exchange.name
-                      ) : (
-                        <p>Not available</p>
-                      )}
-                    </Card.Title>
-                    <Card.Text className="charDesc">
-                      {exchange && exchange.description ? (
-                        exchange.description.split(". ")[0]
-                      ) : (
-                        <p> Description Not available</p>
-                      )}
-                      {exchange && exchange.url ? (
-                        exchange.url
-                      ) : (
-                        <p>Not available</p>
-                      )}
-                    </Card.Text>
-                    <Card.Text className="charDesc">
-                      Facebook:
-                      {exchange && exchange.facebook_url ? (
-                        exchange.facebook_url
-                      ) : (
-                        <p>Facebook url Not available</p>
-                      )}
-                    </Card.Text>
-                    <Card.Text className="charDesc">
-                      Twitter handle:{" "}
-                      {exchange && exchange.twitter_handle ? (
-                        exchange.twitter_handle
-                      ) : (
-                        <p>Twitter handle Not available</p>
-                      )}
-                    </Card.Text>
-                    <Card.Text className="charDesc">
-                      Year Established:{" "}
-                      {exchange && exchange.year_established ? (
-                        exchange.year_established
-                      ) : (
-                        <p>Not available</p>
-                      )}
-                    </Card.Text>
-                    <Card.Text className="charDesc">
-                      centralized:
-                      {exchange && exchange.centralized === true ? (
-                        "True"
-                      ) : (
-                        <p>False</p>
-                      )}
-                    </Card.Text>
-                    <Card.Text className="charDesc">
-                      Trust score rank :
-                      {exchange && exchange.trust_score_rank ? (
-                        exchange.trust_score_rank
-                      ) : (
-                        <p> Trust score rank Not available</p>
-                      )}
-                    </Card.Text>
-                    <Card.Text className="charDesc">
-                      Trade Volumne 24 hour:
-                      {exchange && exchange.trade_volume_24h_btc ? (
-                        exchange.trade_volume_24h_btc.toFixed(2)
-                      ) : (
-                        <p> Trust score rank Not available</p>
-                      )}
-                    </Card.Text>
-                    <Card.Text className="charDesc">
-                      Trust score:
-                      {exchange && exchange.trust_score ? (
-                        exchange.trust_score
-                      ) : (
-                        <p> Trust score Not available</p>
-                      )}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col>
-                <News exchange={exchange.name}></News>
-              </Col>
-            </Row>
-            <Card.Body>
-              <Container>
-                <Row>
-                  <News exchange={exchange.name}></News>
-                </Row>
-              </Container>
-            </Card.Body>
-            <Container>
-              <Row>
-                <Tweets exchange={exchange.name}></Tweets>
-              </Row>
-            </Container>
-          </Container>
-        )} */}
       </div>
     );
   }
