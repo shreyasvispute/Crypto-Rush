@@ -33,7 +33,6 @@ const AddToDashboard = (props) => {
   }
 
   async function addToDashboard(element, asset) {
-    debugger;
     if (asset === "Cryptocurrency") {
       await context.dashboardDispatch({
         type: "ADD_CRYPTO_TO_DASHBOARD",
