@@ -5,6 +5,7 @@ import dashboardContext from "../../context/dashboardContext";
 import CryptocurrencyList from "../cryptocurrency/CryptocurrencyList";
 import Error from "../Error";
 import axios from "axios";
+import NFTList from "../nfts/NFTList";
 
 const Dashboard = () => {
   const context = useContext(dashboardContext);
@@ -120,10 +121,25 @@ const Dashboard = () => {
             <Col>Dashboard Component</Col>
           </Row>
           {!error ? (
-            <Row>
-              <Col>Watchlist</Col>
-              <CryptocurrencyList cryptoData={cryptoData} />
-            </Row>
+            <>
+              <Row>
+                <Col>Watchlist</Col>
+                <CryptocurrencyList cryptoData={cryptoData} />
+              </Row>
+              {context && context.dashboard[0].dashboard.NFT ? (
+                <Row>
+                  <NFTList
+                    nftData={context.dashboard[0].dashboard.NFT}
+                  ></NFTList>
+                </Row>
+              ) : (
+                <Row>
+                  <NFTList
+                    nftData={context.dashboard[0].dashboard.NFT}
+                  ></NFTList>
+                </Row>
+              )}
+            </>
           ) : (
             <Row>
               <Col>{error}</Col>

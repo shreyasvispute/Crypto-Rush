@@ -29,9 +29,7 @@ function App() {
 
   async function fetchStateFromDB() {
     try {
-      // const context = useContext(dashboardContext);
       let url = getStateURL.replace("USER", currentUser.uid);
-      // const { data } = await axios.get(cryptoDataURL);
       const token = await getUserToken(currentUser);
       const { data } = await axios.get(url, {
         headers: { authorization: `Bearer ${token}` },
