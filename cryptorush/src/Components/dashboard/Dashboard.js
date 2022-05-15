@@ -9,54 +9,17 @@ import axios from "axios";
 const Dashboard = () => {
   const context = useContext(dashboardContext);
   const [cryptoData, setCryptoData] = useState(undefined);
-  const [cryptoList, setCryptoList] = useState(undefined);
+  // const [cryptoList, setCryptoList] = useState(undefined);
   const { currentUser, getUserToken } = UserAuth();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-  // const [fetchContext, setFetchContext] = useState(true);
-
-  const cryptoDataURL = `/cryptocurrency/listings/${cryptoList}`;
-
-  // const cryptoSearchDataURL = `/cryptocurrency/search/${searchTerm}`;
-
-  const getStateURL = `/store/getState/USER`;
-
-  // const setStateURL = `/store/setState`;
-
-  async function fetchStateFromDB() {
-    try {
-      debugger;
-      // const context = useContext(dashboardContext);
-      let url = getStateURL.replace("USER", currentUser.uid);
-      // const { data } = await axios.get(cryptoDataURL);
-      const token = await getUserToken(currentUser);
-      const { data } = await axios.get(url, {
-        headers: { authorization: `Bearer ${token}` },
-      });
-      return data;
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
-
-  // async function setStateInDB() {
-  //   try {
-  //     debugger;
-  //     let url = setStateURL.replace("USER", currentUser.uid);
-  //     let dashboard = context;
-  //     const token = await getUserToken(currentUser);
-  //     const { data } = await axios.post(url, {
-  //       headers: { authorization: `Bearer ${token}` },
-  //       dashboard,
-  //     });
-  //   } catch (ex) {
-  //     console.log(ex);
-  //   }
-  // }
+  let cryptoList;
 
   //Function to make HTTP request to get data
   async function getCryptoData() {
     try {
+      const cryptoDataURL = `/cryptocurrency/listings/${cryptoList}`;
+
       // const { data } = await axios.get(cryptoDataURL);
       const token = await getUserToken(currentUser);
       const { data } = await axios.get(cryptoDataURL, {
@@ -67,57 +30,14 @@ const Dashboard = () => {
       console.log("Unable to fetch data.");
     }
   }
-  // //Function to make HTTP request to get data
-  // async function getCryptoSearchData() {
-  //   try {
-  //     // const { data } = await axios.get(cryptoSearchDataURL);
-  //     const token = await getUserToken(currentUser);
-  //     const { data } = await axios.get(cryptoSearchDataURL, {
-  //       headers: { authorization: `Bearer ${token}` },
-  //     });
-  //     return data;
-  //   } catch (e) {
-  //     console.log("Unable to fetch data.");
-  //   }
-  // }
 
   useEffect(() => {
     async function fetchData() {
       try {
-        // if (fetchContext) {
-        //   // if (dashboard) {
-        //   //   context.dashboardDispatch({
-        //   //     type: "SET_INITIAL_STATE",
-        //   //     payload: {
-        //   //       dashboard,
-        //   //     },
-        //   //   });
-        //   // } else {
-        //   //   context.dashboardDispatch({
-        //   //     type: "ADD_USER",
-        //   //     payload: {
-        //   //       user: currentUser.uid,
-        //   //     },
-        //   //   });
-        //   //   await setStateInDB();
-        //   // }
-        //   setFetchContext(false);
-        // }
-        // setCurrentPage(Number(page));
-
-        let dashboard = await fetchStateFromDB();
         debugger;
-        context.dashboardDispatch({
-          type: "SET_INITIAL_STATE",
-          payload: {
-            dashboard,
-          },
-        });
-
+        console.log(context);
         if (context.dashboard[0].dashboard.Cryptocurrency.length > 0) {
-          setCryptoList(
-            context.dashboard[0].dashboard.Cryptocurrency.join(",")
-          );
+          cryptoList = context.dashboard[0].dashboard.Cryptocurrency.join(",");
           const data = await getCryptoData();
           if (data) {
             setError(false);
@@ -137,7 +57,7 @@ const Dashboard = () => {
       }
     }
     fetchData();
-  }, [context]);
+  }, [...Object.values(context.dashboard)]);
 
   if (loading) {
     return (

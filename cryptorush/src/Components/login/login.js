@@ -40,7 +40,9 @@ const Login = () => {
     try {
       await GoogleSignIn();
     } catch (error) {
-      alert(error);
+      setFirebaseError(true);
+      setfirebaseErrorMessage(error.message);
+      console.log(firebaseErrorMessage);
     }
   };
 
@@ -57,9 +59,14 @@ const Login = () => {
         passwordField.value = "";
       }
     } catch (e) {
-      setFirebaseError(true);
-      setfirebaseErrorMessage(e.message);
-      console.log(firebaseErrorMessage);
+      debugger;
+      if (e.code && e.code === "auth/wrong-password") {
+        setFirebaseError(true);
+        setfirebaseErrorMessage("Invalid Username or Password!");
+      } else {
+        setFirebaseError(true);
+        setfirebaseErrorMessage(e.message);
+      }
     }
   };
 
