@@ -74,7 +74,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/Exchange/:id"
+                  path="/Exchanges/:id"
                   element={
                     <PrivateRoute>
                       {" "}
