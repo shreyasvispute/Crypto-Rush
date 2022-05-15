@@ -41,15 +41,19 @@ const NewsScroll = () => {
   const buildCard = (data) => {
     return (
       <div key={data.url} className="col sm-4">
-        <CardGroup>
-          <Card style={{ width: "3rem", height: "3rem" }}>
-            <Card.Img variant="top" src={data.urlToImage} />
-            <Card.Body>
-              <Card.Title>{data.title}</Card.Title>
-              <Card.Link href={data.url}>Read News</Card.Link>
-            </Card.Body>
-          </Card>
-        </CardGroup>
+        <Row>
+          <Col>
+            <CardGroup>
+              <Card style={{ width: "3rem", height: "3rem" }}>
+                <Card.Img variant="top" src={data.urlToImage} />
+                <Card.Body>
+                  <Card.Title>{data.title}</Card.Title>
+                  <Card.Link href={data.url}>Read News</Card.Link>
+                </Card.Body>
+              </Card>
+            </CardGroup>
+          </Col>
+        </Row>
       </div>
     );
   };
@@ -57,13 +61,17 @@ const NewsScroll = () => {
   const buildCard1 = (data) => {
     return (
       <div key={data.url} className="col sm-4">
-        <Card style={{ width: "16rem" }}>
-          <Card.Img variant="top" src={data.urlToImage} />
-          <Card.Body>
-            <Card.Title>{data.title}</Card.Title>
-            <Card.Link href={data.url}>Read News</Card.Link>
-          </Card.Body>
-        </Card>
+        <Row>
+          <Col>
+            <Card style={{ width: "16rem" }}>
+              <Card.Img variant="top" src={data.urlToImage} />
+              <Card.Body>
+                <Card.Title>{data.title}</Card.Title>
+                <Card.Link href={data.url}>Read News</Card.Link>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
       </div>
     );
   };

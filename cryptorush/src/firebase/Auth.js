@@ -30,10 +30,24 @@ export const AuthProvider = ({ children }) => {
   };
 
   const GoogleSignIn = async () => {
+    // debugger;
     const provider = new GoogleAuthProvider();
     return await signInWithPopup(auth, provider).catch((e) => {
       console.log(e);
     });
+    // if (signInGoogle) {
+    //   let user = signInGoogle;
+
+    //   let new_state = {
+    //     user: user.uid,
+    //     dashboard: {
+    //       Cryptocurrency: [],
+    //       NFT: [],
+    //     },
+    //   };
+    //   await storeStateToDB(new_state);
+    //   return user;
+    // }
   };
 
   const signIn = async (email, password) => {

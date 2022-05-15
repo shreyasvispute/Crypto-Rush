@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { ListGroup } from "react-bootstrap";
 import axios from "axios";
 import ExchangeInfo from "./ExchangeInfo";
 import Error from "./Error";
@@ -48,10 +49,66 @@ function Exchange() {
       </div>
     );
   } else {
+    console.log({ exchange });
     return (
       <div className="indContainer">
         {error && <Error />}
         {!error && (
+          <Container>
+            <Row>
+              <Col>
+                <h1>
+                  <img
+                    src={exchange?.image}
+                    alt={exchange?.name}
+                    className="navbar-brand"
+                  />
+                  {exchange?.name}
+                </h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <ListGroup>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Rank</Col>
+                    </Row>
+                    <Row>
+                      <Col>{exchange?.trust_score_rank}</Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Country</Col>
+                    </Row>
+                    <Row>
+                      <Col>{exchange?.country}</Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Year Established</Col>
+                    </Row>
+                    <Row>
+                      <Col>{exchange?.year_established}</Col>
+                    </Row>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Col>
+              <Col>
+                <ExchangeInfo exchange={exchange.name}></ExchangeInfo>
+              </Col>
+            </Row>
+            <Row>
+              <News exchange={exchange.name}></News>
+            </Row>
+            <Row>
+              <Tweets exchange={exchange.name}></Tweets>
+            </Row>
+          </Container>
+        )}
+        {/* {!error && (
           <Container className="mainContainer">
             <Row>
               <Col>
@@ -146,6 +203,9 @@ function Exchange() {
                   </Card.Body>
                 </Card>
               </Col>
+              <Col>
+                <News exchange={exchange.name}></News>
+              </Col>
             </Row>
             <Card.Body>
               <Container>
@@ -154,14 +214,13 @@ function Exchange() {
                 </Row>
               </Container>
             </Card.Body>
-
             <Container>
               <Row>
                 <Tweets exchange={exchange.name}></Tweets>
               </Row>
             </Container>
           </Container>
-        )}
+        )} */}
       </div>
     );
   }
