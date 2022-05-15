@@ -10,14 +10,15 @@ const NewsScroll = () => {
   const [showsData, setShowsData] = useState(undefined);
   const [pageError, setPageError] = useState(false);
   const [apiData, setApiData] = useState([]);
-  const { id } = useParams();
-  console.log(id);
+
+  let { id } = useParams();
+  if (id === undefined) {
+    id = "cryptocurrencies";
+  }
   useEffect(() => {
     const getData = async () => {
       try {
-        const url = `http://localhost:4000/news/${id}`;
-        //const token = await getUserToken(currentUser);
-        const data = await axios.get(url);
+        const data = await axios.get(`/news/${id}`);
 
         if (data.data.length === 0) {
           setPageError(true);
@@ -36,22 +37,26 @@ const NewsScroll = () => {
   }, [id]);
 
   const buildCard = (data) => {
+    console.log(data);
+
     return (
-      <div key={data.url} className="col sm-4">
-        <Row>
-          <Col>
-            <CardGroup>
-              <Card style={{ width: "3rem", height: "3rem" }}>
-                <Card.Img variant="top" src={data.urlToImage} />
-                <Card.Body>
-                  <Card.Title>{data.title}</Card.Title>
-                  <Card.Link href={data.url}>Read News</Card.Link>
-                </Card.Body>
-              </Card>
-            </CardGroup>
-          </Col>
-        </Row>
-      </div>
+      <Card className="newsCards" style={{ width: "16rem" }}>
+        <Card.Img
+          variant="top"
+          className="newsImg"
+          alt="news-topic"
+          src={data.media}
+        />
+
+        <Card.Body>
+          <Card.Subtitle>
+            <a target="blank" href={`${data.link}`}>
+              {data.title}
+            </a>
+          </Card.Subtitle>
+        </Card.Body>
+        <Card.Body className="twitterText">{data.excerpt}</Card.Body>
+      </Card>
     );
   };
 
@@ -59,16 +64,27 @@ const NewsScroll = () => {
 
   card =
     apiData &&
-    apiData.slice(0, 5).map((characterData) => {
-      return buildCard(characterData);
+    apiData.slice(0, 5).map((newsData) => {
+      return buildCard(newsData);
     });
 
-  return (
-    <Container>
-      <Container className="headRow">
+  if (apiData.length > 0) {
+    return (
+      <Container>
+        <h3>Related News</h3>
         <CardGroup>{card}</CardGroup>
       </Container>
-    </Container>
-  );
+    );
+  } else {
+    return (
+      <Container>
+        <Row>
+          <Col>
+            <h3>No News found</h3>
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
 };
 export default NewsScroll;

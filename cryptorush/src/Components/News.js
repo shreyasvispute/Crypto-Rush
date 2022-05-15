@@ -5,7 +5,7 @@ import axios from "axios";
 import { Card, CardGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const NewsScroll = () => {
+const News = () => {
   const [loading, setLoading] = useState(true);
   const [showsData, setShowsData] = useState(undefined);
   const [pageError, setPageError] = useState(false);
@@ -18,9 +18,7 @@ const NewsScroll = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const url = `http://localhost:4000/news/${id}`;
-        //const token = await getUserToken(currentUser);
-        const data = await axios.get(url);
+        const data = await axios.get(`/news/${id}`);
 
         if (data.data.length === 0) {
           setPageError(true);
@@ -98,4 +96,4 @@ const NewsScroll = () => {
     </Container>
   );
 };
-export default NewsScroll;
+export default News;
