@@ -11,11 +11,12 @@ const initialState = [
 let prevState = null;
 let index = 0;
 const reducer = (state, action) => {
+  debugger;
   const { type, payload } = action;
 
   switch (type) {
     case "SET_INITIAL_STATE":
-      debugger;
+      //debugger;
       let initialState = [
         {
           user: payload.dashboard.user,
@@ -27,7 +28,7 @@ const reducer = (state, action) => {
       ];
       return [...initialState];
     case "ADD_USER":
-      debugger;
+      //debugger;
       let new_state = [
         {
           user: payload.user,
@@ -40,7 +41,7 @@ const reducer = (state, action) => {
       return [new_state];
 
     case "ADD_CRYPTO_TO_DASHBOARD":
-      debugger;
+      //debugger;
       prevState = [...state];
       index = prevState.findIndex((x) => x.user === payload.user);
       if (index === -1) {
@@ -55,7 +56,7 @@ const reducer = (state, action) => {
       }
 
     case "ADD_NFT_TO_DASHBOARD":
-      debugger;
+      //debugger;
       prevState = [...state];
       index = prevState.findIndex((x) => x.user === payload.user);
       if (index === -1) {
@@ -70,7 +71,7 @@ const reducer = (state, action) => {
       }
 
     case "REMOVE_CRYPTO_FROM_DASHBOARD":
-      debugger;
+      //debugger;
       prevState = [...state];
       index = prevState.findIndex((x) => x.user === payload.user);
       if (index === -1) {
@@ -89,7 +90,7 @@ const reducer = (state, action) => {
       }
 
     case "REMOVE_NFT_FROM_DASHBOARD":
-      debugger;
+      //debugger;
       prevState = [...state];
       index = prevState.findIndex((x) => x.user === payload.user);
       if (index === -1) {
