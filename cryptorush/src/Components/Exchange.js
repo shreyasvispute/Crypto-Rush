@@ -214,7 +214,6 @@ function Exchange() {
                 </Row>
               </Container>
             </Card.Body>
-
             <Container>
               <Row>
                 <Tweets exchange={exchange.name}></Tweets>
