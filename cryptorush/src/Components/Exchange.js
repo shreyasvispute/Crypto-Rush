@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ExchangeInfo from './ExchangeInfo'
 import Error from "./Error";
-import NewsScroll from './NewsScroll'
+import News from './News'
 import {
   Container,
   Col,
@@ -113,7 +113,7 @@ function Exchange() {
                         </Row>
                         <Card.Body>
                           <Container>
-                            <Row><NewsScroll exchange={exchange.name}></NewsScroll></Row>
+                            <Row><News exchange={exchange.name}></News></Row>
                           </Container>  
                         </Card.Body>
                         
