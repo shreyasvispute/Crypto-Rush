@@ -72,20 +72,11 @@ const NewsScroll = () => {
       });
 
   return(
-
-
     <Container>
           <Container className="headRow">
              <CardGroup>{card}</CardGroup>
-          </Container>
-        
-         
-         
-        
-        </Container>
-        
+          </Container>        
+    </Container>     
   )
-
 };
-
 export default NewsScroll;
