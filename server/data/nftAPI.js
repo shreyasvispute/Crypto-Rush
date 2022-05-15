@@ -35,7 +35,7 @@ async function getAllNFT(keyword, chain) {
       if (nftFromCache === null) {
         const data = JSON.parse(x.metadata);
         let imageURL = "";
-        if (data.image?.includes("ipfs://ipfs")) {
+        if (data.image.includes("ipfs://ipfs")) {
           imageURL = data.image.replace("ipfs://ipfs", ipfsURL);
         } else if (data.image?.includes("ipfs://")) {
           imageURL = data.image.replace("ipfs://", ipfsURL);
