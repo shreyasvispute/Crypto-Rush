@@ -172,7 +172,7 @@ const Exchanges = () => {
                       return (
                         <tr>
                           <td>
-                            <Link to={`/Exchange/${element.id}`}>
+                            <Link to={`/Exchanges/${element.id}`}>
                               <img
                                 src={element.image}
                                 alt={element.name}
@@ -200,7 +200,7 @@ const Exchanges = () => {
                       return (
                         <tr>
                           <td>
-                            <Link to={`/Exchange/${e.id}`}>
+                            <Link to={`/Exchanges/${e.id}`}>
                               <img
                                 src={e.image}
                                 alt={e.name}

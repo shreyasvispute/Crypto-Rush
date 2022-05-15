@@ -16,6 +16,7 @@
     "dotenv": "^16.0.0",
     "firebase": "^9.7.0",
     "react": "^18.0.0",
+    "react-animated-heart": "^0.0.7-alpha.1",
     "react-apexcharts": "^1.4.0",
     "react-bootstrap": "^2.2.3",
     "react-bootstrap-icons": "^1.8.2",

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Card, CardGroup } from "react-bootstrap";
 import twitterLogo from "../img/twitter_logo.png"
-
+import Heart from "react-animated-heart"
 const Tweets = () => {
 
   const [loading, setLoading] = useState(true);
@@ -12,6 +12,7 @@ const Tweets = () => {
 
   const [pageError, setPageError] = useState(false);
   const [apiData, setApiData] = useState([]);
+  const [isClick, setClick] = useState(false);
   const {id} = useParams()
   useEffect(() => {
     const getData = async () => {
@@ -51,7 +52,7 @@ const Tweets = () => {
             <Card.Title>{data.user.name}</Card.Title>
             <Card.Text>{data.text}</Card.Text>
           </Card.Body>
-          <Card.Footer>Retweets:{data.retweet_count}</Card.Footer>
+          <Card.Footer>Retweets:{data.retweet_count} <Heart style={{width:'1rem',height:'3rem'}} isClick={isClick} onClick={() => setClick(!isClick)} />{data.favorite_count}</Card.Footer>
           </Card>
         </CardGroup>
       </div>
