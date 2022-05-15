@@ -17,7 +17,7 @@ const NFTList = (props) => {
     <CardGroup>
       {props.nftData.map((data, i) => {
         return (
-          <Col md={3}>
+          <Col md={3} key={i}>
             <div key={i} className="col sm-4">
               <Card style={{ width: "16rem" }}>
                 {data.image ? (

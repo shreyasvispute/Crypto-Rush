@@ -181,30 +181,32 @@ const NFT = () => {
                     <Card.Body>
                       <Card.Subtitle>Details</Card.Subtitle>
                       <Table borderless className="nft_details">
-                        <tr>
-                          <td>Token Address</td>
+                        <tbody>
+                          <tr>
+                            <td>Token Address</td>
 
-                          <td>
-                            <a
-                              target="blank"
-                              href={`https://etherscan.io/address/${nftData.token_address}`}
-                            >
-                              {getEllipsisTxt(nftData.token_address)}{" "}
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Token Id</td>
-                          <td>{getEllipsisTxt(nftData.token_id)}</td>
-                        </tr>
-                        <tr>
-                          <td>Contract</td>
-                          <td>{nftData.contract_type}</td>
-                        </tr>
-                        <tr>
-                          <td>Blockchain</td>
-                          <td>Ethereum</td>
-                        </tr>
+                            <td>
+                              <a
+                                target="blank"
+                                href={`https://etherscan.io/address/${nftData.token_address}`}
+                              >
+                                {getEllipsisTxt(nftData.token_address)}{" "}
+                              </a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Token Id</td>
+                            <td>{getEllipsisTxt(nftData.token_id)}</td>
+                          </tr>
+                          <tr>
+                            <td>Contract</td>
+                            <td>{nftData.contract_type}</td>
+                          </tr>
+                          <tr>
+                            <td>Blockchain</td>
+                            <td>Ethereum</td>
+                          </tr>
+                        </tbody>
                       </Table>
                     </Card.Body>
                   </Card>
