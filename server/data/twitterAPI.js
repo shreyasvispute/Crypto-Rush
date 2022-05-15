@@ -1,5 +1,6 @@
 const Twit = require("twit");
 require("dotenv").config();
+const validations = require("./validations");
 
 const Twitter_client = new Twit({
   consumer_key: process.env.consumer_key,

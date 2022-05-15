@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const dataModule = require("../data");
 const tweetdata = dataModule.tweetData;
+const validations = dataModule.validations;
 
 router.get("/", async (req, res) => {
   try {
