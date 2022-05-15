@@ -196,7 +196,7 @@ const Cryptocurrency = () => {
                     alt={cryptoData.name}
                     className="navbar-brand"
                   />
-                  {cryptoData.name} {cryptoData.symbol}
+                  {cryptoData.name} {"(" + cryptoData.symbol + ")"}
                 </h1>
               </Col>
             </Row>

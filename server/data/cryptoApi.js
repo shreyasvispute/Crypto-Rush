@@ -69,6 +69,7 @@ async function getCryptoListings() {
 
 //Returns the latest listings of all cryptocurrencies
 async function getCryptoListingsByList(cryptoCSVlist) {
+  validations.validateString(cryptoCSVlist, "Cryptocurrency List");
   let cryptoList = cryptoCSVlist.split(",");
   let result = [];
   let csvList = "";

@@ -2,28 +2,28 @@ const axios = require("axios");
 const validations = require("./validations");
 
 // Import coingecko-api
-const CoinGecko = require('coingecko-api');
+const CoinGecko = require("coingecko-api");
 // Initiate the CoinGecko API Client
 const CoinGeckoClient = new CoinGecko();
 
-
-async function getExchange() {  
+async function getExchange() {
   // Make calls
-  let baseUrl1 = 'https://api.coingecko.com/api/v3/exchanges?per_page=250&page=1'
-  const  data1  = await axios.get(baseUrl1)
-  let baseUrl2 = 'https://api.coingecko.com/api/v3/exchanges?per_page=250&page=2'
-  const  data2  = await axios.get(baseUrl2)
-  if(data1.status===200 && data2.status===200){
-    let temp = [...data1.data, ...data2.data]
+  let baseUrl1 =
+    "https://api.coingecko.com/api/v3/exchanges?per_page=250&page=1";
+  const data1 = await axios.get(baseUrl1);
+  let baseUrl2 =
+    "https://api.coingecko.com/api/v3/exchanges?per_page=250&page=2";
+  const data2 = await axios.get(baseUrl2);
+  if (data1.status === 200 && data2.status === 200) {
+    let temp = [...data1.data, ...data2.data];
     //console.log(temp.length)
     return temp;
-    
-  }else{
+  } else {
     throw {
       response: { status: 404, statusText: `No data found.` },
-    }
+    };
   }
-};
+}
 
 // async function getSearchData(searchTerm){
 //   let baseUrl = `https://api.coingecko.com/api/v3/search?query=${searchTerm}`
@@ -82,38 +82,37 @@ async function searchExchange(searchTerm) {
   }
 }
 
-
-async function getExchangeList(){
+async function getExchangeList() {
   // Make calls
   let pData = await CoinGeckoClient.ping();
   //console.log(pData)
   let lData = await CoinGeckoClient.exchanges.list();
   //console.log(lData)
-  if(lData.code===200){
+  if (lData.code === 200) {
     return lData;
-  }else{
+  } else {
     throw {
       response: { status: 404, statusText: `No data found.` },
-    }
+    };
   }
 }
 
-async function getExchangeById(id){
+async function getExchangeById(id) {
   validations.validateString(id, "id");
   // Make calls
   let pData = await CoinGeckoClient.ping();
   //console.log(pData)
   let idData = await CoinGeckoClient.exchanges.fetch(id);
   //console.log(idData)
-  if(idData.code===200){
+  if (idData.code === 200) {
     return idData;
-  }else{
+  } else {
     throw {
       response: { status: 404, statusText: `No data found.` },
-    }
+    };
   }
 }
-async function getExchangeVolById(id,days){
+async function getExchangeVolById(id, days) {
   validations.validateString(id, "id");
   // Make calls
   // let pData = await CoinGeckoClient.ping();
@@ -121,38 +120,40 @@ async function getExchangeVolById(id,days){
   // let idData = await CoinGeckoClient.exchanges.fetchVolumeChart(`${id}`, {
   //         days: days,
   //       });
-  let idData =  await axios.get(`https://api.coingecko.com/api/v3/exchanges/${id}/volume_chart?days=${days}`)
+  let idData = await axios.get(
+    `https://api.coingecko.com/api/v3/exchanges/${id}/volume_chart?days=${days}`
+  );
   // console.log(idData.data)
-  if(idData.status===200){
+  if (idData.status === 200) {
     return idData.data;
-  }else{
+  } else {
     throw {
       response: { status: 404, statusText: `No data found.` },
-    }
+    };
   }
 }
 
-async function getTickers(id){
+async function getTickers(id) {
   validations.validateString(id, "id");
   // Make calls
   let pData = await CoinGeckoClient.ping();
   //console.log(pData)
   let tickerData = await CoinGeckoClient.exchanges.fetchTickers(id);
   //console.log(idData)
-  if(tickerData.code===200){
+  if (tickerData.code === 200) {
     return tickerData;
-  }else{
+  } else {
     throw {
       response: { status: 404, statusText: `No data found.` },
-    }
+    };
   }
 }
 
 module.exports = {
-    getExchange,
-    getExchangeList,
-    getExchangeById,
-    getTickers,
-    searchExchange,
-  getExchangeVolById
-  };
+  getExchange,
+  getExchangeList,
+  getExchangeById,
+  getTickers,
+  searchExchange,
+  getExchangeVolById,
+};
