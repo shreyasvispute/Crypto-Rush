@@ -15,13 +15,13 @@ const reducer = (state, action) => {
 
   switch (type) {
     case "SET_INITIAL_STATE":
-      //debugger;
+      debugger;
       let initialState = [
         {
-          user: payload.dashboard.user,
+          user: payload.user,
           dashboard: {
-            Cryptocurrency: payload.dashboard.dashboard.Cryptocurrency,
-            NFT: payload.dashboard.dashboard.NFT,
+            Cryptocurrency: payload.dashboard.Cryptocurrency,
+            NFT: payload.dashboard.NFT,
           },
         },
       ];

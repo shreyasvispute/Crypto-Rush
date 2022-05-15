@@ -9,8 +9,10 @@ import {
   Card,
   Tooltip,
   Table,
+  Spinner,
 } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import AddToDashboard from "../dashboard/AddToDashboard";
 
 import "../Components.css";
 
@@ -62,7 +64,15 @@ const NFT = () => {
     return "";
   };
 
-  if (nftData) {
+  if (loading) {
+    return (
+      <div>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  } else if (nftData) {
     return (
       <div>
         <Container className="mainContainer">
@@ -74,6 +84,7 @@ const NFT = () => {
                   <Image
                     className="nftimg"
                     src={getImage(nftData.metadata.image)}
+                    alt={nftData.metadata.name}
                   ></Image>
                 </Col>
               </Row>
@@ -83,6 +94,9 @@ const NFT = () => {
                 <Col>
                   {" "}
                   <h1>{nftData.metadata.name}</h1>
+                </Col>
+                <Col md={1}>
+                  <AddToDashboard element={nftData} asset="Cryptocurrency" />
                 </Col>
               </Row>
               <Row>
