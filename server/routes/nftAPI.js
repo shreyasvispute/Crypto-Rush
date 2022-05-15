@@ -8,7 +8,7 @@ const validations = dataModule.validations;
 //Returns the all NFT collection chains
 router.get(
   "/search/:keyword/:chain",
-  checkIfAuthenticated,
+  //checkIfAuthenticated,
   async (req, res) => {
     const keyword = req.params.keyword;
     const chain = req.params.chain;

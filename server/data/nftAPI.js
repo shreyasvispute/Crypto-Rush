@@ -3,8 +3,6 @@ const Moralis = require("moralis/node");
 const validations = require("./validations");
 require("dotenv").config();
 
-const { redisClient } = require("../config/redisCLient");
-
 const serverUrl = process.env.NFT_SERVER_URL;
 const appId = process.env.NFT_APPLICATION_ID;
 const masterKey = process.env.NFT_MASTER_KEY;
@@ -31,35 +29,26 @@ async function getAllNFT(keyword, chain) {
   };
   if (NFTs.result.length > 0) {
     for (let x of NFTs.result) {
-      const nftFromCache = await checkNFTFromCache(x.token_id);
-      if (nftFromCache === null) {
-        const data = JSON.parse(x.metadata);
-        let imageURL = "";
-        if (data.image.includes("ipfs://ipfs")) {
-          imageURL = data.image.replace("ipfs://ipfs", ipfsURL);
-        } else if (data.image.includes("ipfs://")) {
-          imageURL = data.image.replace("ipfs://", ipfsURL);
-        } else {
-          imageURL = data.image;
-        }
-        const NFTResults = {
-          tokenAddress: x.token_address,
-          tokenId: x.token_id,
-          description: data.description,
-          gif_url: data.gif_url.replace("ipfs://", ipfsURL),
-          image: imageURL,
-          nftName: data.name,
-        };
-        const insertPokemon = await redisClient.hSet(
-          "nftCache",
-          x.token_id,
-          JSON.stringify(NFTResults)
-        );
-        nfts.push(NFTResults);
+      const data = JSON.parse(x.metadata);
+      let imageURL = "";
+      if (data.image?.includes("ipfs://ipfs")) {
+        imageURL = data.image.replace("ipfs://ipfs", ipfsURL);
+      } else if (data.image?.includes("ipfs://")) {
+        imageURL = data.image.replace("ipfs://", ipfsURL);
       } else {
-        nfts.push(nftFromCache);
+        imageURL = data.image;
       }
+      const NFTResults = {
+        tokenAddress: x.token_address,
+        tokenId: x.token_id,
+        description: data.description,
+        gif_url: data.gif_url?.replace("ipfs://", ipfsURL),
+        image: imageURL,
+        nftName: data.name,
+      };
+      nfts.push(NFTResults);
     }
+
     NFTObject["results"] = nfts;
     return NFTObject;
   } else {
@@ -67,12 +56,6 @@ async function getAllNFT(keyword, chain) {
       response: { status: 404, statusText: `No data found.` },
     };
   }
-}
-
-async function checkNFTFromCache(id) {
-  const cache = await redisClient.hGet("nftCache", id);
-  let pokemonData = JSON.parse(cache);
-  return pokemonData;
 }
 
 async function getNFT(address, id, chain) {
@@ -108,7 +91,7 @@ const fetchTokenPrice = async (chain, address) => {
     .catch((e) => {
       console.log(e.message);
     });
-  if (NFTLowestPrice.price) {
+  if (NFTLowestPrice?.price) {
     return NFTLowestPrice.price;
   } else {
     return null;
