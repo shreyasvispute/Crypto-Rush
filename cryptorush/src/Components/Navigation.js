@@ -53,7 +53,7 @@ const NavigationAuth = () => {
             </Nav.Link>
           </Nav>
           <Navbar.Collapse className="justify-content-end">
-            <label for="logoutBtn"></label>
+            <label htmlFor="logoutBtn"></label>
             <Navbar.Text>
               {currentUser.displayName === null
                 ? currentUser.email

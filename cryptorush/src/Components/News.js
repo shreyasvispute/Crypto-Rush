@@ -45,7 +45,11 @@ const NewsScroll = () => {
           <Col>
             <CardGroup>
               <Card style={{ width: "3rem", height: "3rem" }}>
-                <Card.Img variant="top" src={data.urlToImage} />
+                <Card.Img
+                  variant="top"
+                  src={data.urlToImage}
+                  alt={data.title}
+                />
                 <Card.Body>
                   <Card.Title>{data.title}</Card.Title>
                   <Card.Link href={data.url}>Read News</Card.Link>
@@ -64,7 +68,7 @@ const NewsScroll = () => {
         <Row>
           <Col>
             <Card style={{ width: "16rem" }}>
-              <Card.Img variant="top" src={data.urlToImage} />
+              <Card.Img variant="top" src={data.urlToImage} alt={data.title} />
               <Card.Body>
                 <Card.Title>{data.title}</Card.Title>
                 <Card.Link href={data.url}>Read News</Card.Link>

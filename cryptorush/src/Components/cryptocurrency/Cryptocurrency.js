@@ -205,13 +205,13 @@ const Cryptocurrency = () => {
                 <h2>{formatPrice(cryptoData.quote.USD.price)}</h2>
 
                 {cryptoData.quote.USD.volume_change_24h > 0 ? (
-                  <td className="positiveChange">
+                  <div className="positiveChange">
                     {"+" + cryptoData.quote.USD.volume_change_24h + "%"}
-                  </td>
+                  </div>
                 ) : (
-                  <td className="negativeChange">
+                  <div className="negativeChange">
                     {cryptoData.quote.USD.volume_change_24h + "%"}
-                  </td>
+                  </div>
                 )}
               </Col>
               <Col md={1}>
