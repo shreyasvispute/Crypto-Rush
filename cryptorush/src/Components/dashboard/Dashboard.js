@@ -15,6 +15,23 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   let cryptoList;
 
+  const getStateURL = `/store/getState/USER`;
+
+  async function fetchStateFromDB() {
+    try {
+      // const context = useContext(dashboardContext);
+      let url = getStateURL.replace("USER", currentUser.uid);
+      // const { data } = await axios.get(cryptoDataURL);
+      const token = await getUserToken(currentUser);
+      const { data } = await axios.get(url, {
+        headers: { authorization: `Bearer ${token}` },
+      });
+      return data;
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+
   //Function to make HTTP request to get data
   async function getCryptoData() {
     try {
@@ -34,10 +51,22 @@ const Dashboard = () => {
   useEffect(() => {
     async function fetchData() {
       try {
+        let state = await fetchStateFromDB();
+        console.log(state);
         debugger;
-        console.log(context);
+
         if (context.dashboard[0].dashboard.Cryptocurrency.length > 0) {
           cryptoList = context.dashboard[0].dashboard.Cryptocurrency.join(",");
+          const data = await getCryptoData();
+          if (data) {
+            setError(false);
+          } else {
+            setError(true);
+          }
+          setCryptoData(data);
+          setLoading(false);
+        } else if (state.dashboard.Cryptocurrency.length > 0) {
+          cryptoList = state.dashboard.Cryptocurrency.join(",");
           const data = await getCryptoData();
           if (data) {
             setError(false);
@@ -51,13 +80,29 @@ const Dashboard = () => {
           setError(true);
           setLoading(false);
         }
+
+        // if (context.dashboard[0].dashboard.Cryptocurrency.length > 0) {
+        //   cryptoList = context.dashboard[0].dashboard.Cryptocurrency.join(",");
+        //   const data = await getCryptoData();
+        //   if (data) {
+        //     setError(false);
+        //   } else {
+        //     setError(true);
+        //   }
+        //   setCryptoData(data);
+        //   setLoading(false);
+        // } else {
+        //   setCryptoData([]);
+        //   setError(true);
+        //   setLoading(false);
+        // }
       } catch (e) {
         setLoading(false);
         setError(true);
       }
     }
     fetchData();
-  }, [...Object.values(context.dashboard)]);
+  }, [context]);
 
   if (loading) {
     return (
