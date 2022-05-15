@@ -11,7 +11,6 @@ const initialState = [
 let prevState = null;
 let index = 0;
 const reducer = (state, action) => {
-  debugger;
   const { type, payload } = action;
 
   switch (type) {
@@ -56,7 +55,6 @@ const reducer = (state, action) => {
       }
 
     case "ADD_NFT_TO_DASHBOARD":
-      //debugger;
       prevState = [...state];
       index = prevState.findIndex((x) => x.user === payload.user);
       if (index === -1) {
@@ -71,7 +69,6 @@ const reducer = (state, action) => {
       }
 
     case "REMOVE_CRYPTO_FROM_DASHBOARD":
-      //debugger;
       prevState = [...state];
       index = prevState.findIndex((x) => x.user === payload.user);
       if (index === -1) {
@@ -90,16 +87,19 @@ const reducer = (state, action) => {
       }
 
     case "REMOVE_NFT_FROM_DASHBOARD":
-      //debugger;
       prevState = [...state];
       index = prevState.findIndex((x) => x.user === payload.user);
       if (index === -1) {
         return [...prevState];
       } else {
         const user = prevState[index];
-        let nftIndex = user.dashboard.NFT.findIndex((e) => e === payload.NFT);
-
-        prevState[index].dashboard.NFT.splice(nftIndex, 1);
+        let nftIndex = user.dashboard.NFT.findIndex(
+          (e) => e.tokenId === payload.NFT.tokenId
+        );
+        if (nftIndex !== -1) {
+          prevState[index].dashboard.NFT.splice(nftIndex, 1);
+          return [...prevState];
+        }
         return [...prevState];
       }
 

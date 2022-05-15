@@ -55,7 +55,7 @@ const CryptocurrencyList = (props) => {
           <thead>
             <tr>
               <th></th>
-              <th></th>
+              <th>Rank(#)</th>
               <th>Symbol</th>
               <th>Name</th>
               <th>Price</th>
@@ -65,7 +65,7 @@ const CryptocurrencyList = (props) => {
             </tr>
           </thead>
           <tbody>
-            {props.cryptoData.map((element) => {
+            {props.cryptoData.map((element, i) => {
               let priceChangeColor;
               if (
                 socketData &&
@@ -87,14 +87,29 @@ const CryptocurrencyList = (props) => {
                     />
                   </td>
                   <td>
-                    <img
-                      src={element.logo}
-                      alt={element.name}
-                      className="cryptoLogo"
-                    />
+                    <span>{i}</span>
                   </td>
-                  <td>{element.symbol}</td>
-                  <td>{element.name}</td>
+                  <td>
+                    <Link
+                      to={`/Cryptocurrency/${element.symbol.toLowerCase()}`}
+                    >
+                      <img
+                        src={element.logo}
+                        alt={element.name}
+                        className="cryptoLogo"
+                      />
+                      {"   "}
+                      {element.symbol}
+                    </Link>
+                  </td>
+                  <td>
+                    {" "}
+                    <Link
+                      to={`/Cryptocurrency/${element.symbol.toLowerCase()}`}
+                    >
+                      {element.name}
+                    </Link>
+                  </td>
                   {socketData &&
                   socketData[
                     element.name.split(" ").join("-").toLowerCase()

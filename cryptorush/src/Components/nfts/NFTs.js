@@ -5,6 +5,7 @@ import axios from "axios";
 import { Card, Container, Col, CardGroup, Spinner, Row } from "react-bootstrap";
 
 import Search from "../Search";
+import NFTList from "./NFTList";
 import nftNotFound from "../../img/nft_imageNotFound.png";
 import { UserAuth } from "../../firebase/Auth";
 import ReactPaginate from "react-paginate";
@@ -58,14 +59,7 @@ const NFTs = () => {
           headers: { authorization: `Bearer ${token}` },
         });
 
-        // let totalPages = Math.ceil(totalRecords / limit) - 1;
         setPages(data.data.pageSize);
-
-        // if (page - 1 === totalPages) {
-        //   setNextState(false);
-        // } else {
-        //   setNextState(true);
-        // }
         setApiData(data.data.results);
         setTotalRecords(data.data.total);
 
@@ -112,42 +106,6 @@ const NFTs = () => {
   const searchValue = async (value) => {
     setSearchTerm(value);
   };
-
-  const buildCard = (data, i) => {
-    return (
-      <div key={i} className="col sm-4">
-        <Card style={{ width: "16rem" }}>
-          {data.image ? (
-            <Card.Img alt={data.nftName} variant="top" src={data.image} />
-          ) : (
-            <Card.Img alt={data.nftName} variant="top" src={nftNotFound} />
-          )}
-          <Card.Body>
-            {
-              <Link to={`/NFT/${data.tokenAddress}/${data.tokenId}/eth`}>
-                <Card.Title>{data.nftName}</Card.Title>
-              </Link>
-            }
-            {/* <Card.Text>{data.description}</Card.Text> */}
-          </Card.Body>
-        </Card>
-      </div>
-    );
-  };
-
-  if (searchTerm) {
-    card =
-      searchData &&
-      searchData.map((characters) => {
-        return buildCard(characters);
-      });
-  } else {
-    card =
-      currentItems &&
-      currentItems.map((characterData, index) => {
-        return buildCard(characterData, index);
-      });
-  }
 
   if (pageError) {
     return (
@@ -215,7 +173,11 @@ const NFTs = () => {
               </Col>
             </Row>
           </Container>
-          <CardGroup>{card}</CardGroup>
+          {searchTerm && searchData.length > 0 ? (
+            <NFTList nftData={searchData}></NFTList>
+          ) : (
+            <NFTList nftData={currentItems}></NFTList>
+          )}
         </Container>
       );
     }
