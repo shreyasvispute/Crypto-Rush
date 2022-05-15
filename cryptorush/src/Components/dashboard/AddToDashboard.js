@@ -27,12 +27,13 @@ const AddToDashboard = (props) => {
   }
 
   if (context) {
-    debugger;
     userCryptoInfo = context.dashboard[0].dashboard.Cryptocurrency;
     userNFTInfo = context.dashboard[0].dashboard.NFT;
   }
 
   async function addToDashboard(element, asset) {
+    // userCryptoInfo = context.dashboard[0].dashboard.Cryptocurrency;
+    // userNFTInfo = context.dashboard[0].dashboard.NFT;
     if (asset === "Cryptocurrency") {
       await context.dashboardDispatch({
         type: "ADD_CRYPTO_TO_DASHBOARD",

@@ -148,23 +148,33 @@ const Dashboard = () => {
       <div>
         <Container className="mainContainer">
           <Row>
-            <Col>Dashboard Component</Col>
+            <Col>
+              <h1>Dashboard</h1>
+            </Col>
           </Row>
 
           {!error ? (
             <>
+              <Row>
+                <Col>
+                  <h2>Cryptocurrencies</h2>
+                </Col>
+              </Row>
               {cryptoData.length > 0 ? (
                 <Row>
-                  <Col>Watchlist</Col>
                   <CryptocurrencyList cryptoData={cryptoData} />
                 </Row>
               ) : (
                 <Row>
-                  <Col>Watchlist</Col>
-                  Watchlist Empty
+                  <Col>No Cryptocurrencies in the dashboard</Col>
                 </Row>
               )}
-              {context && context.dashboard[0].dashboard.NFT ? (
+              <Row>
+                <Col>
+                  <h2>NFTs</h2>
+                </Col>
+              </Row>
+              {context.dashboard[0].dashboard.NFT.length > 0 ? (
                 <Row>
                   <NFTList
                     nftData={context.dashboard[0].dashboard.NFT}
@@ -172,9 +182,7 @@ const Dashboard = () => {
                 </Row>
               ) : (
                 <Row>
-                  <NFTList
-                    nftData={context.dashboard[0].dashboard.NFT}
-                  ></NFTList>
+                  <Col>No NFTs in the dashboard</Col>
                 </Row>
               )}
             </>

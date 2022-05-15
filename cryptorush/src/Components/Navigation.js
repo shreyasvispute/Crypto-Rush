@@ -36,6 +36,9 @@ const NavigationAuth = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
+            <Nav.Link as={Link} to="/dashboard">
+              Dashboard
+            </Nav.Link>
             <Nav.Link as={Link} to="/Cryptocurrency">
               Cryptocurrency
             </Nav.Link>
@@ -50,11 +53,13 @@ const NavigationAuth = () => {
             </Nav.Link>
           </Nav>
           <Navbar.Collapse className="justify-content-end">
+            <label for="logoutBtn"></label>
             <Navbar.Text>
               {currentUser.displayName === null
                 ? currentUser.email
                 : currentUser.displayName}
-              <Button variant="light" onClick={handleLogout}>
+
+              <Button variant="light" onClick={handleLogout} id="logoutBtn">
                 <BoxArrowRight color="black" size={30} />
               </Button>
             </Navbar.Text>
