@@ -46,7 +46,15 @@ function App() {
         debugger;
         let DBState = await fetchStateFromDB();
         if (DBState) {
-          state.push();
+          state.push(DBState);
+        } else {
+          state.push({
+            user: currentUser.uid,
+            dashboard: {
+              Cryptocurrency: [],
+              NFT: [],
+            },
+          });
         }
       } catch (e) {
         console.log(e);
