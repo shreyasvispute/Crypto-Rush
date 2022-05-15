@@ -56,7 +56,10 @@ const Dashboard = () => {
         console.log(state);
         debugger;
 
-        if (context.dashboard[0].dashboard.Cryptocurrency.length > 0) {
+        if (
+          context &&
+          context.dashboard[0].dashboard.Cryptocurrency.length > 0
+        ) {
           cryptoList = context.dashboard[0].dashboard.Cryptocurrency.join(",");
           const data = await getCryptoData();
           if (data) {
