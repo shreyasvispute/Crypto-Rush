@@ -37,7 +37,7 @@ async function getAllNFT(keyword, chain) {
         let imageURL = "";
         if (data.image.includes("ipfs://ipfs")) {
           imageURL = data.image.replace("ipfs://ipfs", ipfsURL);
-        } else if (data.image?.includes("ipfs://")) {
+        } else if (data.image.includes("ipfs://")) {
           imageURL = data.image.replace("ipfs://", ipfsURL);
         } else {
           imageURL = data.image;
@@ -46,7 +46,7 @@ async function getAllNFT(keyword, chain) {
           tokenAddress: x.token_address,
           tokenId: x.token_id,
           description: data.description,
-          gif_url: data.gif_url?.replace("ipfs://", ipfsURL),
+          gif_url: data.gif_url.replace("ipfs://", ipfsURL),
           image: imageURL,
           nftName: data.name,
         };
@@ -108,7 +108,7 @@ const fetchTokenPrice = async (chain, address) => {
     .catch((e) => {
       console.log(e.message);
     });
-  if (NFTLowestPrice?.price) {
+  if (NFTLowestPrice.price) {
     return NFTLowestPrice.price;
   } else {
     return null;
