@@ -17,9 +17,9 @@ router.get("/", async(req, res) => {
       }
 
       
-      console.log("here");
+      //console.log("here");
       const result = await newsData.getNewsByKeyword(searchTerm);
-      console.log(result);
+      //console.log(result);
       res.json(result);
       return;
     } catch (error) {
@@ -42,9 +42,9 @@ router.get("/:keyWord", async(req, res) => {
     }
 
     
-    console.log("here");
+    //console.log("here");
     const result = await newsData.getNewsByKeyword(searchTerm);
-    console.log(result);
+    //console.log(result);
     res.json(result);
     return;
   } catch (error) {

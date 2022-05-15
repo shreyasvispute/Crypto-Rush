@@ -21,14 +21,14 @@ async function getNewsByKeyword(KeyWord) {
   let month = date.getMonth();
   let year = date.getFullYear();
 
-  console.log(`${year}-${month}-${day}`);
+  //console.log(`${year}-${month}-${day}`);
 
   let dd = `${year}-${month}-${day}`;
 
   let result = await axios.get(
     `https://newsapi.org/v2/everything?q=${KeyWord}&sortBy=popularity&apiKey=a2ac0345b5e44eb58f870194dc41922b`
   );
-  console.log("here", result.data.articles);
+  //console.log("here", result.data.articles);
 
   /*const response = await axios.get(
           `https://newsapi.org/v2/everything?q=crypto&sortBy=popularity&apiKey=a2ac0345b5e44eb58f870194dc41922b`
