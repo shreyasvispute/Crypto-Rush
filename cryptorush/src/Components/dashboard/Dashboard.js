@@ -161,7 +161,7 @@ const Dashboard = () => {
             </Row>
           ) : (
             <Row>
-              <Col>Dashboard Empty</Col>
+              <Col>{error}</Col>
             </Row>
           )}
         </Container>
