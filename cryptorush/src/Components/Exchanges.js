@@ -173,7 +173,7 @@ const Exchanges = () => {
             <Table>
               <thead>
                 <tr>
-                  <th></th>
+                  <th>Rank(#)</th>
                   <th>Exchange</th>
                   <th>Trust Score</th>
                   <th>24H Volume(Normalized)</th>
@@ -185,6 +185,7 @@ const Exchanges = () => {
                   ? searchData.map((element) => {
                       return (
                         <tr>
+                          <td>{element.trust_score_rank}</td>
                           <td>
                             <Link to={`/Exchanges/${element.id}`}>
                               <img
@@ -192,10 +193,7 @@ const Exchanges = () => {
                                 alt={element.name}
                                 style={{ height: 42 }}
                               />
-                            </Link>
-                          </td>
-                          <td>
-                            <Link to={`/Exchanges/${element.id}`}>
+
                               {element.name}
                             </Link>
                           </td>
@@ -217,17 +215,17 @@ const Exchanges = () => {
                     currentItems.map((e) => {
                       return (
                         <tr>
+                          <td>{e.trust_score_rank}</td>
                           <td>
                             <Link to={`/Exchanges/${e.id}`}>
                               <img
                                 src={e.image}
                                 alt={e.name}
-                                style={{ height: 42 }}
+                                style={{ height: 30 }}
                               />
+                              {"  "}
+                              {e.name}
                             </Link>
-                          </td>
-                          <td>
-                            <Link to={`/Exchanges/${e.id}`}>{e.name}</Link>
                           </td>
                           <td>{e.trust_score}</td>
                           <td>
