@@ -29,12 +29,17 @@ function App() {
 
   async function fetchStateFromDB() {
     try {
-      let url = getStateURL.replace("USER", currentUser.uid);
-      const token = await getUserToken(currentUser);
-      const { data } = await axios.get(url, {
-        headers: { authorization: `Bearer ${token}` },
-      });
-      return data;
+      debugger;
+      if (currentUser) {
+        let url = getStateURL.replace("USER", currentUser.uid);
+        const token = await getUserToken(currentUser);
+        const { data } = await axios.get(url, {
+          headers: { authorization: `Bearer ${token}` },
+        });
+        return data;
+      } else {
+        return undefined;
+      }
     } catch (ex) {
       console.log(ex);
     }
@@ -48,16 +53,10 @@ function App() {
         if (DBState) {
           state.push(DBState);
         } else {
-          state.push({
-            user: currentUser.uid,
-            dashboard: {
-              Cryptocurrency: [],
-              NFT: [],
-            },
-          });
+          state = reducer.initialState;
         }
       } catch (e) {
-        console.log(e);
+        alert(e);
       }
     }
     fetchData();

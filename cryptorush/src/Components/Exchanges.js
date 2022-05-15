@@ -1,12 +1,4 @@
-import {
-  Container,
-  Col,
-  Row,
-  Spinner,
-  ListGroup,
-  ListGroupItem,
-  Table,
-} from "react-bootstrap";
+import { Container, Col, Row, Spinner, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Error from "./Error";
 import axios from "axios";
@@ -184,7 +176,7 @@ const Exchanges = () => {
                 {searchTerm && searchData.length > 0
                   ? searchData.map((element) => {
                       return (
-                        <tr>
+                        <tr key={element.id}>
                           <td>
                             <Link to={`/Exchanges/${element.id}`}>
                               <img
@@ -216,7 +208,7 @@ const Exchanges = () => {
                   : currentItems &&
                     currentItems.map((e) => {
                       return (
-                        <tr>
+                        <tr key={e.id}>
                           <td>
                             <Link to={`/Exchanges/${e.id}`}>
                               <img

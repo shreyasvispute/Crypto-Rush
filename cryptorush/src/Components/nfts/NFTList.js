@@ -17,26 +17,32 @@ const NFTList = (props) => {
     <CardGroup>
       {props.nftData.map((data, i) => {
         return (
-          <div key={i} className="col sm-4">
-            <Card style={{ width: "16rem" }}>
-              {data.image ? (
-                <Card.Img alt={data.nftName} variant="top" src={data.image} />
-              ) : (
-                <Card.Img alt={data.nftName} variant="top" src={nftNotFound} />
-              )}
-              <Card.Body>
-                {
-                  <Link to={`/NFT/${data.tokenAddress}/${data.tokenId}/eth`}>
-                    <Card.Title>{data.nftName}</Card.Title>
-                  </Link>
-                }
-                {/* <Card.Text>{data.description}</Card.Text> */}
-              </Card.Body>
-              <Card.Body>
-                <AddToDashboard element={data} asset="NFT" />
-              </Card.Body>
-            </Card>
-          </div>
+          <Col md={3} key={i}>
+            <div key={i} className="col sm-4">
+              <Card style={{ width: "16rem" }}>
+                {data.image ? (
+                  <Card.Img alt={data.nftName} variant="top" src={data.image} />
+                ) : (
+                  <Card.Img
+                    alt={data.nftName}
+                    variant="top"
+                    src={nftNotFound}
+                  />
+                )}
+                <Card.Body>
+                  {
+                    <Link to={`/NFT/${data.tokenAddress}/${data.tokenId}/eth`}>
+                      <Card.Title>{data.nftName}</Card.Title>
+                    </Link>
+                  }
+                  {/* <Card.Text>{data.description}</Card.Text> */}
+                </Card.Body>
+                <Card.Body>
+                  <AddToDashboard element={data} asset="NFT" />
+                </Card.Body>
+              </Card>
+            </div>
+          </Col>
         );
       })}
     </CardGroup>
