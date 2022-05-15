@@ -27,6 +27,7 @@ const AddToDashboard = (props) => {
   }
 
   if (context) {
+    debugger;
     userCryptoInfo = context.dashboard[0].dashboard.Cryptocurrency;
     userNFTInfo = context.dashboard[0].dashboard.NFT;
   }

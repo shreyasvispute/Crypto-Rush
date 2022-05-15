@@ -1,11 +1,12 @@
 import { Container, Col, Row, Spinner } from "react-bootstrap";
 import { UserAuth } from "../../firebase/Auth";
-import { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import dashboardContext from "../../context/dashboardContext";
 import CryptocurrencyList from "../cryptocurrency/CryptocurrencyList";
 import Error from "../Error";
 import axios from "axios";
 import NFTList from "../nfts/NFTList";
+// import reducer from "../../reducers/dashboardReducer";
 
 const Dashboard = () => {
   const context = useContext(dashboardContext);
@@ -49,15 +50,46 @@ const Dashboard = () => {
     }
   }
 
+  // if (context.dashboard) {
+  //   let state = await fetchStateFromDB();
+  //   const data = await getCryptoData();
+  //   if (data) {
+  //     setError(false);
+  //    } else {
+  //           setError(true);
+  //         }
+  // }
+
   useEffect(() => {
     async function fetchData() {
       try {
+        debugger;
         let state = await fetchStateFromDB();
         console.log(state);
-        debugger;
+        if (!state) {
+          state = {
+            user: currentUser.uid,
+            dashboard: {
+              Cryptocurrency: [],
+              NFT: [],
+            },
+          };
+        }
+
+        // if (context.dashboard.length > 0) {
+        //   cryptoList = context.dashboard[0].dashboard.Cryptocurrency.join(",");
+        //   const data = await getCryptoData();
+        //   if (data) {
+        //     setError(false);
+        //   } else {
+        //     setError(true);
+        //   }
+        //   setCryptoData(data);
+        //   setLoading(false);
+        // }
 
         if (
-          context &&
+          context.dashboard.length > 0 &&
           context.dashboard[0].dashboard.Cryptocurrency.length > 0
         ) {
           cryptoList = context.dashboard[0].dashboard.Cryptocurrency.join(",");
@@ -70,6 +102,7 @@ const Dashboard = () => {
           setCryptoData(data);
           setLoading(false);
         } else if (state.dashboard.Cryptocurrency.length > 0) {
+          debugger;
           cryptoList = state.dashboard.Cryptocurrency.join(",");
           const data = await getCryptoData();
           if (data) {
@@ -79,34 +112,28 @@ const Dashboard = () => {
           }
           setCryptoData(data);
           setLoading(false);
+          await context.dashboardDispatch({
+            type: "SET_INITIAL_STATE",
+            payload: {
+              user: currentUser.uid,
+              dashboard: {
+                Cryptocurrency: state.dashboard.Cryptocurrency,
+                NFT: state.dashboard.NFT,
+              },
+            },
+          });
         } else {
-          setCryptoData([]);
           setError(true);
           setLoading(false);
         }
-
-        // if (context.dashboard[0].dashboard.Cryptocurrency.length > 0) {
-        //   cryptoList = context.dashboard[0].dashboard.Cryptocurrency.join(",");
-        //   const data = await getCryptoData();
-        //   if (data) {
-        //     setError(false);
-        //   } else {
-        //     setError(true);
-        //   }
-        //   setCryptoData(data);
-        //   setLoading(false);
-        // } else {
-        //   setCryptoData([]);
-        //   setError(true);
-        //   setLoading(false);
-        // }
       } catch (e) {
+        console.log(e);
         setLoading(false);
         setError(true);
       }
     }
     fetchData();
-  }, [context]);
+  }, [context.dashboard]);
 
   if (loading) {
     return (
@@ -123,12 +150,20 @@ const Dashboard = () => {
           <Row>
             <Col>Dashboard Component</Col>
           </Row>
+
           {!error ? (
             <>
-              <Row>
-                <Col>Watchlist</Col>
-                <CryptocurrencyList cryptoData={cryptoData} />
-              </Row>
+              {cryptoData.length > 0 ? (
+                <Row>
+                  <Col>Watchlist</Col>
+                  <CryptocurrencyList cryptoData={cryptoData} />
+                </Row>
+              ) : (
+                <Row>
+                  <Col>Watchlist</Col>
+                  Watchlist Empty
+                </Row>
+              )}
               {context && context.dashboard[0].dashboard.NFT ? (
                 <Row>
                   <NFTList
