@@ -196,9 +196,9 @@ const Dashboard = () => {
                 <Col>
                   {context.dashboard[0].dashboard.Cryptocurrency.length > 0 ? (
                     <Tweets
-                      exchange={context.dashboard[0].dashboard.Cryptocurrency.join(
-                        ","
-                      )}
+                      exchange={
+                        context.dashboard[0].dashboard.Cryptocurrency[0]
+                      }
                     ></Tweets>
                   ) : (
                     <Tweets exchange={"Crypto"}></Tweets>
@@ -207,9 +207,7 @@ const Dashboard = () => {
               </Row>
               {context.dashboard[0].dashboard.Cryptocurrency.length > 0 ? (
                 <NewsScroll
-                  exchange={context.dashboard[0].dashboard.Cryptocurrency.join(
-                    ","
-                  )}
+                  exchange={context.dashboard[0].dashboard.Cryptocurrency[0]}
                 ></NewsScroll>
               ) : (
                 <NewsScroll exchange={"crypto"}></NewsScroll>
