@@ -1,3 +1,4 @@
+
 const cryptoData = require("./cryptoApi");
 const nftData = require("./nftAPI");
 const validations = require("./validations");
