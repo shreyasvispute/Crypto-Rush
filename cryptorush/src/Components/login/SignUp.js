@@ -57,7 +57,7 @@ const SignUp = () => {
       }
     } catch (e) {
       setFirebaseError(true);
-      setfirebaseErrorMessage(e.message);
+      setfirebaseErrorMessage(e.response.data.error);
       console.log(firebaseErrorMessage);
     }
   };
