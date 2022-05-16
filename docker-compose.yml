@@ -1,0 +1,29 @@
+version: "3"
+services:
+  server:
+    image: crypto_rush_server1
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "4000:4000"
+    networks:
+      - internal_network
+  
+
+  client:
+    image: crypto_rush_client
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3000:3000"
+    networks:
+      - internal_network
+
+networks:
+  external_network:
+  internal_network:
+    internal: true
+
+
