@@ -19,7 +19,6 @@ const FetchState = ({ children }) => {
 
   async function fetchStateFromDB() {
     try {
-      debugger;
       // const context = useContext(dashboardContext);
       let url = getStateURL.replace("USER", currentUser.uid);
       // const { data } = await axios.get(cryptoDataURL);

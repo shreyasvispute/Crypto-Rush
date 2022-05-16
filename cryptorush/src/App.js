@@ -29,7 +29,6 @@ function App() {
 
   async function fetchStateFromDB() {
     try {
-      debugger;
       if (currentUser) {
         let url = getStateURL.replace("USER", currentUser.uid);
         const token = await getUserToken(currentUser);
@@ -48,7 +47,6 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-        debugger;
         let DBState = await fetchStateFromDB();
         if (DBState) {
           state.push(DBState);

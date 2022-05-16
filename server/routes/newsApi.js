@@ -6,19 +6,8 @@ const validations = require("../data/validations");
 
 router.get("/", async (req, res) => {
   try {
-    let searchTerm = "";
-
-    if (req.params) {
-      searchTerm = req.params.keyWord;
-    } else {
-      searchTerm = "crypto";
-    }
-
-    console.log("here");
-    const result = await newsData.getNewsByKeyword(searchTerm);
-    console.log(result);
+    const result = await newsData.getNews();
     res.json(result);
-    return;
   } catch (error) {
     res.status(404).json({ message: `${error}` });
   }

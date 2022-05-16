@@ -16,6 +16,7 @@ const Tweets = (props) => {
   useEffect(() => {
     const getData = async () => {
       try {
+        debugger;
         let limit = 10;
         const url = `/tweets/${props.exchange}`;
         const data = await axios.get(url);

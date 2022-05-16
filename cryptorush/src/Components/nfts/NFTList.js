@@ -16,10 +16,17 @@ const NFTList = (props) => {
   return (
     <CardGroup>
       {props.nftData.map((data, i) => {
+        let widthVal;
+        if (props.styleclass === "dashboard") {
+          widthVal = "10rem";
+        } else {
+          widthVal = "16rem";
+        }
+
         return (
           <Col md={3} key={i}>
             <div key={i} className="col sm-4">
-              <Card style={{ width: "16rem" }}>
+              <Card className="nftCards" style={{ width: widthVal }}>
                 {data.image ? (
                   <Card.Img alt={data.nftName} variant="top" src={data.image} />
                 ) : (
