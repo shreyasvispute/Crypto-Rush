@@ -56,8 +56,9 @@ const SignUp = () => {
         usernameField.value = "";
       }
     } catch (e) {
+      debugger;
       setFirebaseError(true);
-      setfirebaseErrorMessage(e.message);
+      setfirebaseErrorMessage(e.response.data.error);
       console.log(firebaseErrorMessage);
     }
   };
