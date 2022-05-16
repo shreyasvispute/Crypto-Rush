@@ -5,7 +5,7 @@ import axios from "axios";
 import { Card, CardGroup } from "react-bootstrap";
 import twitterLogo from "../img/twitter_logo.png";
 
-const Tweets = () => {
+const Tweets = (props) => {
   const [loading, setLoading] = useState(true);
   const [showsData, setShowsData] = useState(undefined);
 
@@ -16,8 +16,9 @@ const Tweets = () => {
   useEffect(() => {
     const getData = async () => {
       try {
+        debugger;
         let limit = 10;
-        const url = `/tweets/${id}`;
+        const url = `/tweets/${props.exchange}`;
         const data = await axios.get(url);
 
         if (data.data.length === 0) {

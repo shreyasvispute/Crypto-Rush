@@ -34,9 +34,13 @@ router.get("/:address/:tokenId/:chain", async (req, res) => {
     const collectionData = await nftData.getNFT(address, tokenId, chain);
     res.status(200).json(collectionData);
   } catch (error) {
-    res
-      .status(error.response.status)
-      .json({ message: error.response.statusText });
+    if (error.response) {
+      return res
+        .status(error.response.status)
+        .json({ message: error.response.statusText });
+    } else {
+      res.status(500).json({ error: error.message });
+    }
   }
 });
 

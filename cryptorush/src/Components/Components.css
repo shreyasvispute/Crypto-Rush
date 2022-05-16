@@ -12,7 +12,6 @@ html {
   color: red;
 
   margin: 0 auto;
-
 }
 
 .positiveChange {
@@ -135,11 +134,25 @@ h1 {
   max-height: 30%;
 }
 .newsCards {
-  margin-right: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
 }
 .cryptoRow {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-content: space-around;
+}
+
+.publishDate {
+  font-size: 12px;
+}
+.newsCards {
+  margin-bottom: 5px;
+}
+.searchComponent {
+  margin: 0 auto;
+}
+.symbolwidth {
+  width: 150px !important;
 }
