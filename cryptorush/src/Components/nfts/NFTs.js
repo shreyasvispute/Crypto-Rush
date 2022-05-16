@@ -15,7 +15,6 @@ const NFTs = () => {
   const [searchData, setSearchData] = useState(undefined);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
-  const [totalRecords, setTotalRecords] = useState("");
   const [pageError, setPageError] = useState(false);
   const [apiData, setApiData] = useState([]);
 
@@ -61,7 +60,6 @@ const NFTs = () => {
 
         setPages(data.data.pageSize);
         setApiData(data.data.results);
-        setTotalRecords(data.data.total);
 
         setLoading(false);
 
@@ -88,7 +86,6 @@ const NFTs = () => {
         const data = await axios.get(url, {
           headers: { authorization: `Bearer ${token}` },
         });
-        setTotalRecords(data.data.total);
         setPages(data.data.pageSize);
         setLoading(false);
         setSearchData(data.data.results);
@@ -142,11 +139,19 @@ const NFTs = () => {
         <Container>
           <Container className="headRow">
             <Row>
-              <Col>
+              <Col md={4} className="searchComponent">
                 <Search page="NFT" searchValue={searchValue}></Search>
               </Col>
+            </Row>
+            {searchTerm && searchData.length > 0 ? (
+              <NFTList nftData={searchData} styleclass="nfts"></NFTList>
+            ) : (
+              <NFTList nftData={currentItems} styleclass="nfts"></NFTList>
+            )}
+            <Row>
+              <Col></Col>
 
-              <Col sm className="makeCenter">
+              <Col md={8} className="paginateComponent">
                 <ReactPaginate
                   nextLabel="Next >"
                   onPageChange={handlePageClick}
@@ -168,16 +173,8 @@ const NFTs = () => {
                   renderOnZeroPageCount={null}
                 />{" "}
               </Col>
-              <Col sm className="makeCenter filterMargin">
-                Total Records Count: {totalRecords}
-              </Col>
             </Row>
           </Container>
-          {searchTerm && searchData.length > 0 ? (
-            <NFTList nftData={searchData}></NFTList>
-          ) : (
-            <NFTList nftData={currentItems}></NFTList>
-          )}
         </Container>
       );
     }

@@ -15,6 +15,7 @@ import { Link, useParams } from "react-router-dom";
 import AddToDashboard from "../dashboard/AddToDashboard";
 
 import "../Components.css";
+import NewsScroll from "../NewsScroll";
 
 const NFT = () => {
   const [loading, setLoading] = useState(true);
@@ -214,6 +215,7 @@ const NFT = () => {
               </Row>
             </Col>
           </Row>
+          <NewsScroll exchange={"nft"}></NewsScroll>
         </Container>
       </div>
     );

@@ -4,21 +4,22 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Card, CardGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import dashboard from "../../src/dashboard.css";
 
-const NewsScroll = () => {
+const NewsScroll = (props) => {
   const [loading, setLoading] = useState(true);
   const [showsData, setShowsData] = useState(undefined);
   const [pageError, setPageError] = useState(false);
   const [apiData, setApiData] = useState([]);
 
-  let { id } = useParams();
-  if (id === undefined) {
-    id = "cryptocurrencies";
-  }
+  let { exchange } = useParams();
+  // if (exchange === undefined) {
+  //   exchange = "cryptocurrencies";
+  // }
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await axios.get(`/news/${id}`);
+        const data = await axios.get(`/news/${props.exchange}`);
 
         if (data.data.length === 0) {
           setPageError(true);
@@ -34,7 +35,7 @@ const NewsScroll = () => {
       }
     };
     getData();
-  }, [id]);
+  }, [exchange]);
 
   const buildCard = (data) => {
     console.log(data);
@@ -56,6 +57,10 @@ const NewsScroll = () => {
           </Card.Subtitle>
         </Card.Body>
         <Card.Body className="twitterText">{data.excerpt}</Card.Body>
+        <Card.Footer className="text-muted publishDate">
+          Published At{"  "}
+          {data.published_date?.split(" ")[0]}
+        </Card.Footer>
       </Card>
     );
   };
@@ -64,16 +69,16 @@ const NewsScroll = () => {
 
   card =
     apiData &&
-    apiData.slice(0, 5).map((newsData) => {
+    apiData.slice(0, 4).map((newsData) => {
       return buildCard(newsData);
     });
 
   if (apiData.length > 0) {
     return (
-      <Container>
+      <>
         <h3>Related News</h3>
         <CardGroup>{card}</CardGroup>
-      </Container>
+      </>
     );
   } else {
     return (
