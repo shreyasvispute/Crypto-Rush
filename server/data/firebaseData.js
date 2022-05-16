@@ -64,7 +64,7 @@ async function updateStateInDB(state) {
 
 async function fetchStateFromDB(user) {
   try {
-    // validations.validate(user);
+    validations.validateString(user);
     const doc = await db.collection("dashboard").doc(user).get();
     if (doc) {
       return doc.data();

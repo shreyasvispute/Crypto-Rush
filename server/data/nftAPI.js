@@ -12,6 +12,8 @@ const ipfsURL = "https://ipfs.io/ipfs/";
 
 //Returns the all NFT search results
 async function getAllNFT(keyword, chain) {
+  validations.validateString(keyword, "keyword");
+  validations.validateString(chain, "chain");
   const options = {
     q: keyword,
     chain: chain,

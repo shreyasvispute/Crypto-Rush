@@ -13,6 +13,9 @@ router.get(
     const keyword = req.params.keyword;
     const chain = req.params.chain;
     try {
+      validations.validateString(keyword, "keyword");
+      validations.validateString(chain, "chain");
+
       let collectionsData = await nftData.getAllNFT(keyword, chain);
       res.status(200).json(collectionsData);
     } catch (error) {
