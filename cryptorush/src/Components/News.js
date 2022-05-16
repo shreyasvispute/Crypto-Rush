@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Card, CardGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import noImage from "../img/no_image.jpg";
 
-const NewsScroll = () => {
+const News = () => {
   const [loading, setLoading] = useState(true);
   const [showsData, setShowsData] = useState(undefined);
   const [pageError, setPageError] = useState(false);
@@ -18,9 +19,7 @@ const NewsScroll = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const url = `http://localhost:4000/news/${id}`;
-        //const token = await getUserToken(currentUser);
-        const data = await axios.get(url);
+        const data = await axios.get(`/news`);
 
         if (data.data.length === 0) {
           setPageError(true);
@@ -39,34 +38,67 @@ const NewsScroll = () => {
   }, [id]);
 
   const buildCard = (data) => {
+    debugger;
     return (
       <div key={data.url} className="col sm-4">
-        <CardGroup>
-          <Card style={{ width: "3rem", height: "3rem" }}>
-            <Card.Img variant="top" src={data.urlToImage} />
-            <Card.Body>
-              <Card.Title>{data.title}</Card.Title>
-              <Card.Link href={data.url}>Read News</Card.Link>
-            </Card.Body>
-          </Card>
-        </CardGroup>
+        <Row>
+          <Col>
+            <CardGroup>
+              <Card style={{ width: "3rem", height: "3rem" }}>
+                <Card.Img
+                  variant="top"
+                  src={data.urlToImage}
+                  alt={data.title}
+                />
+                <Card.Body>
+                  <Card.Title>{data.title}</Card.Title>
+                  <Card.Link href={data.url}>Read News</Card.Link>
+                </Card.Body>
+              </Card>
+            </CardGroup>
+          </Col>
+        </Row>
       </div>
     );
   };
 
   const buildCard1 = (data) => {
     return (
-      <div key={data.url} className="col sm-4">
-        <Card style={{ width: "16rem" }}>
-          <Card.Img variant="top" src={data.urlToImage} />
+      <div key={data._id} className="col sm-4 newsCards">
+        <Card key={data._id} className="text-center" style={{ width: "16rem" }}>
+          {data.media ? (
+            <Card.Img
+              alt={data._id}
+              className="newsImage"
+              variant="top"
+              src={data.media}
+            />
+          ) : (
+            <Card.Img
+              className="newsImage"
+              alt="image"
+              variant="top"
+              src={noImage}
+            />
+          )}
           <Card.Body>
-            <Card.Title>{data.title}</Card.Title>
-            <Card.Link href={data.url}>Read News</Card.Link>
+            <Card.Title>
+              {" "}
+              <a target="blank" href={`${data.link}`}>
+                {data.title}
+              </a>
+            </Card.Title>
+            <Card.Text className="twitterText">{data.excerpt}</Card.Text>
           </Card.Body>
+          <Card.Footer className="text-muted publishDate">
+            Published At{"  "}
+            {data.published_date?.split(" ")[0]}
+          </Card.Footer>
         </Card>
       </div>
     );
   };
+
   let card;
   if (id === "cryptocurrencies") {
     card =
@@ -83,11 +115,10 @@ const NewsScroll = () => {
   }
 
   return (
-    <Container>
-      <Container className="headRow">
-        <CardGroup>{card}</CardGroup>
-      </Container>
+    <Container className="headRow">
+      <h1>Headlines</h1>
+      <CardGroup>{card}</CardGroup>
     </Container>
   );
 };
-export default NewsScroll;
+export default News;

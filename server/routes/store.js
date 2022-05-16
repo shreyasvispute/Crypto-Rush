@@ -18,6 +18,7 @@ router.post("/setState", checkIfAuthenticated, async (req, res) => {
 });
 
 router.get("/getState/:user", checkIfAuthenticated, async (req, res) => {
+  validations.validateString(req.params.user);
   try {
     let fetchedState = await firebaseData.fetchStateFromDB(req.params.user);
     res.status(200).json(fetchedState);

@@ -56,9 +56,9 @@ const CryptocurrencyList = (props) => {
             <tr>
               <th></th>
               <th>Rank(#)</th>
-              <th>Symbol</th>
-              <th>Name</th>
-              <th>Price</th>
+              <th className="symbolwidth">Symbol</th>
+              <th className="symbolwidth">Name</th>
+              <th className="symbolwidth">Price</th>
               <th>Market Cap</th>
               <th>24H Volume</th>
               <th>24H Change</th>

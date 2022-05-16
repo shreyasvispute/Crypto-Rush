@@ -32,6 +32,8 @@ const AddToDashboard = (props) => {
   }
 
   async function addToDashboard(element, asset) {
+    // userCryptoInfo = context.dashboard[0].dashboard.Cryptocurrency;
+    // userNFTInfo = context.dashboard[0].dashboard.NFT;
     if (asset === "Cryptocurrency") {
       await context.dashboardDispatch({
         type: "ADD_CRYPTO_TO_DASHBOARD",
@@ -56,7 +58,6 @@ const AddToDashboard = (props) => {
   }
 
   async function removeFromDashboard(element, asset) {
-    debugger;
     if (asset === "Cryptocurrency") {
       await context.dashboardDispatch({
         type: "REMOVE_CRYPTO_FROM_DASHBOARD",

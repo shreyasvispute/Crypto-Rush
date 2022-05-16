@@ -29,12 +29,16 @@ function App() {
 
   async function fetchStateFromDB() {
     try {
-      let url = getStateURL.replace("USER", currentUser.uid);
-      const token = await getUserToken(currentUser);
-      const { data } = await axios.get(url, {
-        headers: { authorization: `Bearer ${token}` },
-      });
-      return data;
+      if (currentUser) {
+        let url = getStateURL.replace("USER", currentUser.uid);
+        const token = await getUserToken(currentUser);
+        const { data } = await axios.get(url, {
+          headers: { authorization: `Bearer ${token}` },
+        });
+        return data;
+      } else {
+        return undefined;
+      }
     } catch (ex) {
       console.log(ex);
     }
@@ -43,9 +47,14 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-        state.push(await fetchStateFromDB());
+        let DBState = await fetchStateFromDB();
+        if (DBState) {
+          state.push(DBState);
+        } else {
+          state = reducer.initialState;
+        }
       } catch (e) {
-        console.log(e);
+        alert(e);
       }
     }
     fetchData();
@@ -131,6 +140,7 @@ function App() {
                   </PrivateRoute>
                 }
               />
+
               <Route
                 path="*"
                 element={

@@ -13,5 +13,5 @@ module.exports = {
   validations: validations,
   exchangeData: exchangeData,
   database: database,
-  newsData: newsData
+  newsData: newsData,
 };

@@ -10,6 +10,8 @@ html {
 
 .negativeChange {
   color: red;
+
+  margin: 0 auto;
 }
 
 .positiveChange {
@@ -21,8 +23,7 @@ html {
 }
 
 .chartDropdown {
-  padding-top: 20px;
-  padding-left: 88px !important;
+  padding-left: 40px !important;
 }
 
 .searchBox {
@@ -113,4 +114,45 @@ h1 {
 .chartComponent {
   width: 800px;
   float: right;
+}
+.twitterProfileLogo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.twitterText {
+  font-size: 12px;
+}
+.tweetsContainer {
+  height: 500px;
+  overflow-y: scroll;
+}
+.twitterusername {
+  font-size: 12px;
+}
+.newsImg {
+  max-height: 30%;
+}
+.newsCards {
+  padding: 20px;
+  margin-bottom: 10px;
+}
+.cryptoRow {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: space-around;
+}
+
+.publishDate {
+  font-size: 12px;
+}
+.newsCards {
+  margin-bottom: 5px;
+}
+.searchComponent {
+  margin: 0 auto;
+}
+.symbolwidth {
+  width: 150px !important;
 }

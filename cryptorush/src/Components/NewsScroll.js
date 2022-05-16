@@ -1,30 +1,25 @@
 import { Container, Col, Row } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
-import {useParams} from 'react-router-dom'
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Card, CardGroup } from "react-bootstrap";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import dashboard from "../../src/dashboard.css";
 
-
-
-
-
-
-const NewsScroll = () => {
+const NewsScroll = (props) => {
   const [loading, setLoading] = useState(true);
   const [showsData, setShowsData] = useState(undefined);
   const [pageError, setPageError] = useState(false);
   const [apiData, setApiData] = useState([]);
- const {id} = useParams()
- console.log(id)
+
+  let { exchange } = useParams();
+  // if (exchange === undefined) {
+  //   exchange = "cryptocurrencies";
+  // }
   useEffect(() => {
     const getData = async () => {
       try {
-        const url = `http://localhost:4000/news/${id}`;
-        //const token = await getUserToken(currentUser);
-        const data = await axios.get(url);
-      
-
+        const data = await axios.get(`/news/${props.exchange}`);
 
         if (data.data.length === 0) {
           setPageError(true);
@@ -40,43 +35,61 @@ const NewsScroll = () => {
       }
     };
     getData();
-  }, [id]);
-
- 
-
- 
+  }, [exchange]);
 
   const buildCard = (data) => {
+    console.log(data);
+
     return (
-      <div key={data.url} className="col sm-4">
-        <CardGroup>
-        <Card style={{ width: '3rem',height: '3rem' } }>
-  <Card.Img variant="top" src = {data.urlToImage}  />
-  <Card.Body>
-    <Card.Title>{data.title}</Card.Title>
-    <Card.Link href={data.url}>Read News</Card.Link>
-    
-  </Card.Body>
-</Card>
-</CardGroup>
-      </div>
+      <Card className="newsCards" style={{ width: "16rem" }}>
+        <Card.Img
+          variant="top"
+          className="newsImg"
+          alt="news-topic"
+          src={data.media}
+        />
+
+        <Card.Body>
+          <Card.Subtitle>
+            <a target="blank" href={`${data.link}`}>
+              {data.title}
+            </a>
+          </Card.Subtitle>
+        </Card.Body>
+        <Card.Body className="twitterText">{data.excerpt}</Card.Body>
+        <Card.Footer className="text-muted publishDate">
+          Published At{"  "}
+          {data.published_date?.split(" ")[0]}
+        </Card.Footer>
+      </Card>
     );
   };
 
   let card;
 
   card =
-      apiData &&
-      apiData.slice(0,5).map((characterData) => {
-        return buildCard(characterData);
-      });
+    apiData &&
+    apiData.slice(0, 4).map((newsData) => {
+      return buildCard(newsData);
+    });
 
-  return(
-    <Container>
-          <Container className="headRow">
-             <CardGroup>{card}</CardGroup>
-          </Container>        
-    </Container>     
-  )
+  if (apiData.length > 0) {
+    return (
+      <>
+        <h3>Related News</h3>
+        <CardGroup>{card}</CardGroup>
+      </>
+    );
+  } else {
+    return (
+      <Container>
+        <Row>
+          <Col>
+            <h3>No News found</h3>
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
 };
 export default NewsScroll;

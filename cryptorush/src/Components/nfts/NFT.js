@@ -9,10 +9,13 @@ import {
   Card,
   Tooltip,
   Table,
+  Spinner,
 } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import AddToDashboard from "../dashboard/AddToDashboard";
 
 import "../Components.css";
+import NewsScroll from "../NewsScroll";
 
 const NFT = () => {
   const [loading, setLoading] = useState(true);
@@ -62,7 +65,15 @@ const NFT = () => {
     return "";
   };
 
-  if (nftData) {
+  if (loading) {
+    return (
+      <div>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  } else if (nftData) {
     return (
       <div>
         <Container className="mainContainer">
@@ -74,6 +85,7 @@ const NFT = () => {
                   <Image
                     className="nftimg"
                     src={getImage(nftData.metadata.image)}
+                    alt={nftData.metadata.name}
                   ></Image>
                 </Col>
               </Row>
@@ -83,6 +95,9 @@ const NFT = () => {
                 <Col>
                   {" "}
                   <h1>{nftData.metadata.name}</h1>
+                </Col>
+                <Col md={1}>
+                  <AddToDashboard element={nftData} asset="Cryptocurrency" />
                 </Col>
               </Row>
               <Row>
@@ -167,30 +182,32 @@ const NFT = () => {
                     <Card.Body>
                       <Card.Subtitle>Details</Card.Subtitle>
                       <Table borderless className="nft_details">
-                        <tr>
-                          <td>Token Address</td>
+                        <tbody>
+                          <tr>
+                            <td>Token Address</td>
 
-                          <td>
-                            <a
-                              target="blank"
-                              href={`https://etherscan.io/address/${nftData.token_address}`}
-                            >
-                              {getEllipsisTxt(nftData.token_address)}{" "}
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Token Id</td>
-                          <td>{getEllipsisTxt(nftData.token_id)}</td>
-                        </tr>
-                        <tr>
-                          <td>Contract</td>
-                          <td>{nftData.contract_type}</td>
-                        </tr>
-                        <tr>
-                          <td>Blockchain</td>
-                          <td>Ethereum</td>
-                        </tr>
+                            <td>
+                              <a
+                                target="blank"
+                                href={`https://etherscan.io/address/${nftData.token_address}`}
+                              >
+                                {getEllipsisTxt(nftData.token_address)}{" "}
+                              </a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Token Id</td>
+                            <td>{getEllipsisTxt(nftData.token_id)}</td>
+                          </tr>
+                          <tr>
+                            <td>Contract</td>
+                            <td>{nftData.contract_type}</td>
+                          </tr>
+                          <tr>
+                            <td>Blockchain</td>
+                            <td>Ethereum</td>
+                          </tr>
+                        </tbody>
                       </Table>
                     </Card.Body>
                   </Card>
@@ -198,6 +215,7 @@ const NFT = () => {
               </Row>
             </Col>
           </Row>
+          <NewsScroll exchange={"nft"}></NewsScroll>
         </Container>
       </div>
     );

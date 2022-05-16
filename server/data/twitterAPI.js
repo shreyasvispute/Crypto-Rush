@@ -1,5 +1,6 @@
 const Twit = require("twit");
 require("dotenv").config();
+const validations = require("./validations");
 
 const Twitter_client = new Twit({
   consumer_key: process.env.consumer_key,
@@ -10,6 +11,7 @@ const Twitter_client = new Twit({
 
 function getAlltweets(keyword) {
   return new Promise((resolve, reject) => {
+    validations.validateString(keyword, "Seacrch keyword");
     if (keyword) {
       Twitter_client.get(
         "search/tweets",
