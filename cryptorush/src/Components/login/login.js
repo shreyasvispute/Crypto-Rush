@@ -172,7 +172,7 @@ const Login = () => {
                   Submit
                 </Button>
               </Col>
-              <Col className="loginButton">
+              {/* <Col className="loginButton">
                 {" "}
                 <Button
                   variant="light"
@@ -191,7 +191,7 @@ const Login = () => {
                   </svg>
                   {"  "}Sign In
                 </Button>
-              </Col>
+              </Col> */}
             </Row>
           </Form>
         </Col>

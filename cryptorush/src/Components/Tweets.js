@@ -12,7 +12,7 @@ const Tweets = (props) => {
   const [pageError, setPageError] = useState(false);
   const [apiData, setApiData] = useState([]);
   const [isClick, setClick] = useState(false);
-  const { id } = useParams();
+  // const { id } = useParams();
   useEffect(() => {
     const getData = async () => {
       try {
