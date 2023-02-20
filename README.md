@@ -73,7 +73,8 @@ Sources Used:
 - Hamza Buch
 - Ashwin Joshi
 - Alokit Gupta
-- Kamal Nayal
+- Kamal Nayak
+
 
 ### Folder Structure
 
